@@ -38,7 +38,7 @@ const Auth = () => {
   const handleMouseLeave = () => setIsPressed(false);
 
   return (
-    <div className="flex w-full items-center justify-center">
+    <div className="discord-container">
       <div className="discord-card">
         <h2 className="minnie-title">Connect to Discord</h2>
         <p className="text-xl">
@@ -51,7 +51,7 @@ const Auth = () => {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeave}
           onClick={initOAuth}
-          className="relative flex justify-center items-center w-16 h-16 mx-auto"
+          className="discord-btn"
           style={{
             backgroundImage: `url(${isPressed ? clickedImg : unclickedImg})`,
             backgroundSize: "contain",

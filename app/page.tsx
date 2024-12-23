@@ -8,7 +8,7 @@ import GameSteps from "./components/GameSteps";
 import Home from "./components/Home";
 
 const HomePage: React.FC = () => {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen bg-gags-pattern bg-repeat overflow-y-auto">
+    <div className="page-container">
       {/* Authentication */}
       {!isAuth && <Auth />}
 
