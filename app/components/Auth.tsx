@@ -38,17 +38,13 @@ const Auth = () => {
   const handleMouseLeave = () => setIsPressed(false);
 
   return (
-    <div className="flex w-full max-w-xl mx-auto">
-      <div className="bg-white p-6 md:p-10 rounded-lg shadow-lg text-center border border-gray-300 space-y-6 md:space-y-5 mt-10">
-        <h2 className="text-3xl font-semibold font-minnie text-gray-800 mb-6">
-          Connect to Discord
-        </h2>
-        <p className="text-xl text-gray-600 font-impress">
+    <div className="flex w-full items-center justify-center">
+      <div className="discord-card">
+        <h2 className="minnie-title">Connect to Discord</h2>
+        <p className="text-xl">
           ToonScout needs a Discord connection to function.
         </p>
-        <p className="text-xl text-gray-600 font-impress">
-          Click the button below to begin!
-        </p>
+        <p className="text-xl">Click the button below to begin!</p>
         <button
           id="login"
           onMouseDown={handleMouseDown}
