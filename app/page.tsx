@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { handleOAuthToken } from "./api/oauth";
 import { initWebSocket } from "./api/websocket";
-import { initOAuth } from "./components/Auth";
 import "./styles/fonts.css";
 import Auth from "./components/Auth";
 import GameSteps from "./components/GameSteps";
