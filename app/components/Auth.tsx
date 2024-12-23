@@ -40,7 +40,7 @@ const Auth = () => {
   return (
     <div className="discord-container">
       <div className="discord-card">
-        <h2 className="minnie-title">Connect to Discord</h2>
+        <h2 className="minnie-title text-3xl mb-6">Connect to Discord</h2>
         <p className="text-xl">
           ToonScout needs a Discord connection to function.
         </p>

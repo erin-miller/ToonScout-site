@@ -5,7 +5,7 @@ const GameSteps: React.FC = () => (
   <div className="flex max-w-7xl mx-auto">
     <div className="connect-container">
       <LoadingDots
-        className="minnie-title"
+        className="minnie-title text-4xl pb-4"
         text="Connecting to Toontown Rewritten"
       />
       <div className="step-container">
