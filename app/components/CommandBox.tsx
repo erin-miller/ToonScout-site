@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface CommandBoxProps {
   command: {
@@ -11,7 +11,7 @@ interface CommandBoxProps {
 const CommandBox: React.FC<CommandBoxProps> = ({ command }) => (
   <div
     className="bg-gray-100 p-4 md:p-6 rounded-xl shadow-md border border-gray-300"
-    style={{ borderColor: command.color }} 
+    style={{ borderColor: command.color }}
   >
     <h3
       className="text-2xl font-semibold font-impress mb-2 md:mb-2"
@@ -19,7 +19,9 @@ const CommandBox: React.FC<CommandBoxProps> = ({ command }) => (
     >
       {command.title}
     </h3>
-    <p className="text-lg text-gray-600 font-impress mb-2">{command.description}</p>
+    <p className="text-lg text-gray-600 font-impress mb-2">
+      {command.description}
+    </p>
   </div>
 );
 

@@ -3,7 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "ToonScout",
-  description: "Find and share your current Toontown Rewritten toon in Discord.",
+  description:
+    "Find and share your current Toontown Rewritten toon in Discord.",
 };
 
 export default function RootLayout({
@@ -13,9 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
