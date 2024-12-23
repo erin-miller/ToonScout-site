@@ -77,8 +77,26 @@ html, body {
     border-gray-300 space-y-6 md:space-y-5 mt-10
 }
 
+.cmd-container {
+    @apply grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 
+    lg:grid-cols-3 gap-4 md:gap-6
+}
+
+.text-block {
+    @apply block pb-2
+}
+
+.add-btn {
+    @apply scale-up shadow-md py-1 px-3 bg-indigo-500 text-white rounded-full cursor-pointer
+}
+
 .scale-up {
-    @apply hover:transition hover:delay-150 hover:scale-105
+    @apply transition hover:delay-150 hover:scale-105 scale-100
+}
+
+.disclaimer-text {
+    @apply text-xs text-gray-400 mt-4 
+    bg-gray-100 p-1 rounded-full
 }
 
 .test-outline {

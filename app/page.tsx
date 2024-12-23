@@ -9,7 +9,7 @@ import Home from "./components/Home";
 
 const HomePage: React.FC = () => {
   const [isAuth, setIsAuth] = useState(true);
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
 
   useEffect(() => {
     const checkAccessToken = async () => {
