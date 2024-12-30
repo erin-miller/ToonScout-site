@@ -101,6 +101,26 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
     }
   };
 
+  function formatPromo() {
+    if (suit?.level === 50) {
+      return <div className="promo-activity">Maxed!</div>;
+    } else if (suit?.promotion?.current >= suit?.promotion?.target) {
+      return <div className="promo-activity">Ready for promotion!</div>;
+    } else if (promo) {
+      return getPromo();
+    } else {
+      return <div>Loading...</div>;
+    }
+  }
+
+  function formatRemaining() {
+    const remainingNeeded = suit?.promotion?.target - suit?.promotion?.current;
+    if (promo && remainingNeeded < promo.total && remainingNeeded > 0) {
+      return <div>Remaining Needed: {remainingNeeded}</div>;
+    }
+    return null;
+  }
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -156,31 +176,13 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
             <div className="font-minnie text-4xl pb-5 pt-1">
               Recommended Activities
             </div>
-            <div className="flex-1 flex-grow">
-              {suit?.promotion?.current >= suit?.promotion?.target ? (
-                <div className="promo-activity">Ready for promotion!</div>
-              ) : promo ? (
-                getPromo()
-              ) : (
-                <div>Loading...</div>
-              )}
-            </div>
+            <div className="flex-1 flex-grow">{formatPromo()}</div>
             <div className="footer pb-2 text-2xl text-center">
               <div>
                 {suit?.promotion?.current < suit?.promotion?.target &&
                   `Estimated Total: ${promo?.total}`}
               </div>
-              <div>
-                {promo &&
-                  suit?.promotion?.target - suit?.promotion?.current <
-                    promo.total &&
-                  suit?.promotion?.target - suit?.promotion?.current > 0 && (
-                    <div>
-                      Remaining Needed:{" "}
-                      {suit?.promotion?.target - suit?.promotion?.current}
-                    </div>
-                  )}
-              </div>
+              <div>{formatRemaining()}</div>
             </div>
           </div>
         </div>
