@@ -96,13 +96,13 @@ const TabContainer = () => {
           <div className="info-container">
             <div className="left-info-container">
               <div>
-                <p className="text-3xl bg-violet-600 text-white rounded-lg py-1">
+                <p className="text-4xl bg-pink-900 text-gray-100 dark:text-blue-100 dark:bg-pink-900 rounded-lg py-1 break-words overflow-hidden">
                   {toonData.toon.name}
                 </p>
                 <p className="text-2xl pt-1">
                   {toonData.laff.current} / {toonData.laff.max} laff
                 </p>
-                <p className="text-xl">
+                <p className="text-2xl">
                   {toonData.location.zone}, {toonData.location.district}
                 </p>
               </div>

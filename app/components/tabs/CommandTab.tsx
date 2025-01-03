@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CommandBox from "../TabContainer/CommandBox";
 import AnimatedTabContent from "../animations/AnimatedTab";
 import "../../styles/tabs.css";
@@ -7,47 +7,47 @@ const commands = [
   {
     title: "/info",
     description: "Displays your toon photo, laff, and location.",
-    color: "#4A90E2",
+    color: "blue-400",
   },
   {
     title: "/fish",
     description: "Find the best place to catch new fish.",
-    color: "#4c7fe2",
+    color: "blue-500 dark:blue-300",
   },
   {
     title: "/suit",
     description: "Get suit progress and recommendations.",
-    color: "#4d6de2",
+    color: "blue-600 dark:blue-200",
   },
   {
     title: "/gags",
     description: "Displays current gags and progress.",
-    color: "#504AE2",
+    color: "blue-700 dark:blue-100",
   },
   {
     title: "/tasks",
     description: "Lists your active toontasks and progress.",
-    color: "#764AE2",
+    color: "pink-400 dark:pink-100",
   },
   {
     title: "/race",
     description: "Provides advising on racing trophies.",
-    color: "#9C4AE2",
+    color: "pink-500 dark:pink-200",
   },
   {
     title: "/golf",
     description: "Provides advising on golfing trophies.",
-    color: "#BF4ADF",
+    color: "pink-300",
   },
   {
     title: "/hidden",
     description: "Set if your info can be viewed by others.",
-    color: "#E24ADC",
+    color: "pink-400",
   },
   {
     title: "...and more!",
     description: "You can see all other commands in Discord!",
-    color: "#E24AB6",
+    color: "pink-500",
   },
 ];
 

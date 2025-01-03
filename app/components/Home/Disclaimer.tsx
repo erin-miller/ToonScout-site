@@ -10,7 +10,7 @@ const Disclaimer: React.FC = () => (
         href="https://discord.gg/Qb929SrdRP"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-blue-400 hover:underline"
+        className="text-blue-300 hover:underline"
       >
         support server
       </a>

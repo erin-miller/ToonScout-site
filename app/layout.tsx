@@ -15,8 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="font-impress text-gray-600">
+    <html lang="en" className="transition-all ease-in-out duration-500">
+      <body className="font-impress text-gray-600 dark:text-gray-100">
         <ToonProvider>
           <ConnectionProvider>{children}</ConnectionProvider>
         </ToonProvider>

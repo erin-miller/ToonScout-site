@@ -2,12 +2,20 @@ import React from "react";
 import Disclaimer from "./Disclaimer";
 import TabContainer from "../TabContainer/TabComponent";
 import "../../styles/home.css";
+import ThemeToggle from "../Theme";
 
 const Home = () => {
   return (
     <div className="card-container">
       <div className="home-card">
-        <h2 className="text-4xl minnie-title">Welcome to ToonScout!</h2>
+        <div className="relative flex flex-row justify-center items-center">
+          <h2 className="text-4xl minnie-title dark:text-gray-100 w-full text-center">
+            Welcome to ToonScout!
+          </h2>
+          <div className="absolute right-0">
+            <ThemeToggle />
+          </div>
+        </div>
         <p>
           <a
             href="https://discord.com/oauth2/authorize?client_id=1286517155315322950"

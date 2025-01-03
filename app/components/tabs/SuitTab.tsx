@@ -173,7 +173,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
             <div className="w-1/3 text-4xl text-right">{formatProgress()}</div>
           </div>
           <div className="promo-rec">
-            <div className="font-minnie text-4xl pb-5 pt-1">
+            <div className="font-minnie text-4xl pb-5 pt-1 text-blue-900 dark:text-blue-500">
               Recommended Activities
             </div>
             <div className="flex-1 flex-grow">{formatPromo()}</div>

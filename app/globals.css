@@ -3,15 +3,62 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --blue-100: #d7eaff;
+  --blue-200: #c3dfff;
+  --blue-300: #abcefa;
+  --blue-400: #69a3e7;
+  --blue-500: #5a9ae5;
+  --blue-600: #4a90e2;
+  --blue-700: #4c7fe2;
+  --blue-800: #4d6de2;
+  --blue-900: #504ae2;
+
+  --pink-100: #e2d0ff;
+  --pink-200: #d3b9f3;
+  --pink-300: #b68de9;
+  --pink-400: #a677e7;
+  --pink-500: #9b69e5;
+  --pink-600: #8362e0;
+  --pink-700: #7e4ade;
+  --pink-800: #6c3fde;
+  --pink-900: #5e1bc2;
+
+  --gray-100: #fafafa;
+  --gray-200: #f4f4f4;
+  --gray-300: #ededed;
+  --gray-400: #e0e0e0;
+  --gray-500: #c6c6c6;
+  --gray-600: #a6a6a6;
+  --gray-700: #8b8b8b;
+  --gray-800: #686868;
+  --gray-900: #434343;
+  --gray-1000: #343434;
+  --gray-1100: #2d2d2d;
+  --gray-1200: #242424;
+  --gray-1300: #1b1b1b;
+  --gray-1400: #131313;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root.dark {
+  --blue-100: #d9efff;
+  --blue-200: #bbdefb;
+  --blue-300: #90caf9;
+  --blue-400: #64b5f6;
+  --blue-500: #42a5f5;
+  --blue-600: #1e88e5;
+  --blue-700: #1976d2;
+  --blue-800: #1565c0;
+  --blue-900: #0d47a1;
+
+  --pink-100: #dec9e9;
+  --pink-200: #d2b7e5;
+  --pink-300: #c19ee0;
+  --pink-400: #b185db;
+  --pink-500: #a174d3;
+  --pink-600: #9163cb;
+  --pink-700: #815ac0;
+  --pink-800: #7251b5;
+  --pink-900: #6247aa;
 }
 
 body {
@@ -23,6 +70,10 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .scale-up {
+    @apply transition hover:delay-150 hover:scale-105 scale-100;
   }
 }
 
@@ -36,19 +87,32 @@ body {
   height: 100%;
   overflow-x: hidden;
 }
+@layer utilities {
+  .scale-up {
+    @apply transition hover:delay-150 hover:scale-105 scale-100;
+  }
+
+  .test-outline {
+    @apply outline outline-red-500;
+  }
+}
 
 .page-container {
-  @apply flex flex-col h-screen bg-gags-pattern bg-repeat overflow-y-scroll;
+  @apply flex flex-col h-screen gags-pattern bg-repeat overflow-y-scroll;
+}
+
+.gags-pattern {
+  background-image: url("https://cdn.toontownrewritten.com/static/images/base/gags_pattern.png");
+}
+
+.dark .gags-pattern {
+  background-image: url("/images/gags_pattern_dark.png");
 }
 
 .minnie-title {
-  @apply font-semibold font-minnie text-gray-800;
+  @apply font-semibold font-minnie text-gray-1200;
 }
 
 .card-container {
   @apply flex w-full items-center justify-center;
-}
-
-.test-outline {
-  @apply outline outline-red-500;
 }
