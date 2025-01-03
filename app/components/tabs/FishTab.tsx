@@ -19,7 +19,7 @@ const FishTab: React.FC<TabProps> = ({ toonData }) => {
 
   useEffect(() => {
     const getFish = async () => {
-      const response = await fetch("http://localhost:3001/get-fish", {
+      const response = await fetch("https://api.scouttoon.info/get-fish", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

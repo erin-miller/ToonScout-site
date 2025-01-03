@@ -43,7 +43,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
     setSuit(currentSuit);
 
     const getPromo = async () => {
-      const response = await fetch("http://localhost:3001/get-promo", {
+      const response = await fetch("https://api.scouttoon.info/get-promo", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

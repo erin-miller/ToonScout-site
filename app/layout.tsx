@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="transition-all ease-in-out duration-500">
-      <body className="font-impress text-gray-600 dark:text-gray-100">
+      <body className="font-impress text-gray-800 dark:text-gray-100">
         <ToonProvider>
           <ConnectionProvider>{children}</ConnectionProvider>
         </ToonProvider>
