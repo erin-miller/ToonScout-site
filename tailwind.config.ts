@@ -9,6 +9,7 @@ const config: Config = {
     "./app/styles/*.css",
   ],
   safelist: [
+    "dark",
     "bg-blue-400",
     "bg-blue-500",
     "bg-blue-600",

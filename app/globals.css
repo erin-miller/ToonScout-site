@@ -67,16 +67,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .scale-up {
-    @apply transition hover:delay-150 hover:scale-105 scale-100;
-  }
-}
-
 html {
   height: 100%;
   margin: 0;
@@ -110,7 +100,7 @@ body {
 }
 
 .minnie-title {
-  @apply font-semibold font-minnie text-gray-1200;
+  @apply font-semibold font-minnie text-gray-1200 dark:text-gray-100;
 }
 
 .card-container {

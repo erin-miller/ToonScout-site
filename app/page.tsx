@@ -10,7 +10,7 @@ import GameSteps from "./components/GameSteps";
 import Home from "./components/Home/Home";
 
 const HomePage: React.FC = () => {
-  const [isAuth, setIsAuth] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
   const { setIsConnected, isConnected } = useConnectionContext();
   const { setToonData } = useToonContext();
 
@@ -33,13 +33,13 @@ const HomePage: React.FC = () => {
     };
 
     const fragment = new URLSearchParams(window.location.hash.slice(1));
-    // const accessToken = fragment.get("access_token");
-    const accessToken = "1";
+    const accessToken = fragment.get("access_token");
+    // const accessToken = "1";
 
     if (accessToken) {
       handleOAuthToken(fragment).then((userId) => {
         setIsAuth(true);
-        userId = "2";
+        // userId = "2";
         if (userId) {
           initWebSocket(setIsConnected, setToonData, userId);
         } else {

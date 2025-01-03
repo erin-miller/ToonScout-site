@@ -1,14 +1,20 @@
 import React from "react";
 import LoadingDots from "./animations/LoadingDots";
 import "../styles/gamesteps.css";
+import ThemeToggle from "./Theme";
 
 const GameSteps: React.FC = () => (
   <div className="flex max-w-7xl mx-auto">
     <div className="connect-container">
-      <LoadingDots
-        className="minnie-title text-4xl pb-4"
-        text="Connecting to Toontown Rewritten"
-      />
+      <div className="relative flex flex-row justify-center items-center w-full">
+        <LoadingDots
+          className="minnie-title text-4xl pb-4 w-full text-center"
+          text="Connecting to Toontown Rewritten"
+        />
+        <div className="absolute right-0 pb-5">
+          <ThemeToggle />
+        </div>
+      </div>
       <div className="step-container">
         <Step
           title="1. Enable Companion App Support"
