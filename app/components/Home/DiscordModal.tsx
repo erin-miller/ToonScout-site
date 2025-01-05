@@ -55,8 +55,8 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
   }, []);
 
   return (
-    <div className="fixed transition ease-in-out inset-0 bg-gray-500 bg-opacity-70 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg w-96 border-blue-700 border-4 relative">
+    <div className="fixed transition ease-in-out inset-0 bg-gray-500 bg-opacity-70 dark:bg-gray-1200 dark:bg-opacity-70 dark:text-gray-100 flex justify-center items-center z-50">
+      <div className="bg-gray-100 dark:bg-gray-1100 p-6 rounded-lg w-96 border-blue-700 border-4 relative">
         {/* Step 1: OAuth */}
         {step === 1 && <OAuth />}
 
