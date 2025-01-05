@@ -10,7 +10,10 @@ let contReqInterval: NodeJS.Timeout | null = null;
 export const initWebSocket = (
   setIsConnected: (isConnected: boolean) => void,
   setToonData: (data: any) => void,
+<<<<<<< HEAD
   userId?: string | null
+=======
+>>>>>>> b545765f286c77b934e79fd71ad662e144f8c188
 ) => {
   const connectWebSocket = () => {
     if (socket && socket.readyState !== WebSocket.CLOSED) {
