@@ -4,20 +4,29 @@ import "./styles/fonts.css";
 import GameSteps from "./components/GameSteps/GameSteps";
 import Home from "./components/Home/Home";
 import { initWebSocket } from "./api/LocalWebSocket";
-import { initScoutWebSocket } from "./api/ScoutWebSocket";
+import { initScoutWebSocket, sendScoutData } from "./api/ScoutWebSocket";
 import { useConnectionContext } from "./context/ConnectionContext";
 import { useDiscordContext } from "./context/DiscordContext";
 import { useToonContext } from "./context/ToonContext";
 
 const HomePage: React.FC = () => {
   const { isConnected, setIsConnected } = useConnectionContext();
-  const { setToonData } = useToonContext();
+  const { toonData, setToonData } = useToonContext();
   const { userId } = useDiscordContext();
 
   useEffect(() => {
     initScoutWebSocket();
-    initWebSocket(setIsConnected, setToonData, userId);
+    initWebSocket(setIsConnected, setToonData);
   }, []);
+
+  useEffect(() => {
+    const sendData = () => {
+      if (userId && toonData) {
+	sendScoutData(userId, toonData); // Await the async call
+      } 
+     };
+     sendData();
+  }, [userId, toonData]);
 
   return (
     <div className="page-container">

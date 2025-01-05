@@ -10,7 +10,6 @@ let contReqInterval: NodeJS.Timeout | null = null;
 export const initWebSocket = (
   setIsConnected: (isConnected: boolean) => void,
   setToonData: (data: any) => void,
-  userId?: string | null
 ) => {
   const connectWebSocket = () => {
     if (socket && socket.readyState !== WebSocket.CLOSED) {
@@ -32,9 +31,6 @@ export const initWebSocket = (
       const toon = JSON.parse(event.data);
       if (toon.event === "all") {
         setToonData(toon.data);
-        if (userId) {
-          sendScoutData(userId, toon.data);
-        }
         setIsConnected(true);
       }
     });
