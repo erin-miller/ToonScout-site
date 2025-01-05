@@ -2,8 +2,8 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type DiscordContextType = {
-  isAuth: boolean;
-  setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
+  userId: string | null;
+  setUserId: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const DiscordContext = createContext<DiscordContextType | undefined>(undefined);
@@ -11,10 +11,10 @@ const DiscordContext = createContext<DiscordContextType | undefined>(undefined);
 export const DiscordProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
   return (
-    <DiscordContext.Provider value={{ isAuth: isAuth, setIsAuth: setIsAuth }}>
+    <DiscordContext.Provider value={{ userId, setUserId }}>
       {children}
     </DiscordContext.Provider>
   );

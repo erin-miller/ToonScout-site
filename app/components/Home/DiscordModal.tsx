@@ -5,6 +5,7 @@ import OAuth from "../OAuth/OAuth";
 import ArrowButton from "../ArrowButton";
 import { sendScoutData } from "@/app/api/ScoutWebSocket";
 import AnimatedTabContent from "../animations/AnimatedTab";
+import { useDiscordContext } from "@/app/context/DiscordContext";
 
 interface DiscordModalProps {
   isOpen: boolean;
@@ -15,7 +16,7 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<1 | 2>(1); // 1: OAuth, 2: Add Bot
-  const [userId, setUserId] = useState<string | null>(null);
+  const { userId, setUserId } = useDiscordContext();
   const { toonData } = useToonContext();
 
   useEffect(() => {
