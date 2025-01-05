@@ -3,7 +3,7 @@ import { golf_trophies } from "../../../data/golf_trophies";
 import { race_trophies } from "../../../data/race_trophies";
 
 export const displaySuit = (toonData: ToonData, type: string) => {
-  if (!toonData.cogsuits[type].hasDisguise) {
+  if (!toonData.data.cogsuits[type].hasDisguise) {
     return;
   }
 
@@ -17,7 +17,7 @@ export const displaySuit = (toonData: ToonData, type: string) => {
     }
   };
 
-  let dept = toonData.cogsuits[type];
+  let dept = toonData.data.cogsuits[type];
   return (
     <div className="flex justify-center py-7 text-2xl w-full">
       <div className="text-2xl w-full">
@@ -37,7 +37,7 @@ export const hasNoSuit = (toonData: ToonData) => {
   const depts = ["s", "m", "l", "c"];
   let count = 0;
   for (const dept of depts) {
-    if (toonData.cogsuits[dept].hasDisguise) {
+    if (toonData.data.cogsuits[dept].hasDisguise) {
       count += 1;
     }
   }
@@ -47,7 +47,7 @@ export const hasNoSuit = (toonData: ToonData) => {
 export const findSuit = (toonData: ToonData) => {
   const depts = ["s", "m", "l", "c"];
   for (const dept of depts) {
-    if (toonData.cogsuits[dept].hasDisguise) {
+    if (toonData.data.cogsuits[dept].hasDisguise) {
       return dept;
     }
   }
@@ -55,10 +55,10 @@ export const findSuit = (toonData: ToonData) => {
 };
 
 export const getSuitName = (toonData: ToonData, type: string) => {
-  if (!toonData.cogsuits[type].hasDisguise) {
+  if (!toonData.data.cogsuits[type].hasDisguise) {
     return;
   }
-  let dept = toonData.cogsuits[type];
+  let dept = toonData.data.cogsuits[type];
   if (dept.version == 2) {
     return `${dept.suit.name} v2.0`;
   }
@@ -67,8 +67,8 @@ export const getSuitName = (toonData: ToonData, type: string) => {
 
 export const sumFish = (toonData: ToonData) => {
   const fish = [];
-  for (const key in toonData.fish.collection) {
-    const album = toonData.fish.collection[key].album;
+  for (const key in toonData.data.fish.collection) {
+    const album = toonData.data.fish.collection[key].album;
     for (const type in album) {
       fish.push(album[type].name);
     }
@@ -80,7 +80,8 @@ export const sumGolf = (toonData: ToonData) => {
   let count = 0;
   for (const trophy of golf_trophies) {
     const earned =
-      toonData.golf.find((item) => item.name == trophy.description)?.num || 0;
+      toonData.data.golf.find((item) => item.name == trophy.description)?.num ||
+      0;
     for (const val of trophy.values) {
       if (earned >= val) {
         count += 1;
@@ -94,7 +95,8 @@ export const sumRace = (toonData: ToonData) => {
   let count = 0;
   for (const trophy of race_trophies) {
     const earned =
-      toonData.racing.find((item) => item.name == trophy.description)?.num || 0;
+      toonData.data.racing.find((item) => item.name == trophy.description)
+        ?.num || 0;
     for (const val of trophy.values) {
       if (earned >= val) {
         count += 1;
@@ -105,7 +107,7 @@ export const sumRace = (toonData: ToonData) => {
 };
 
 export const sumFlowers = (toonData: ToonData) => {
-  let collection = toonData.flowers.collection;
+  let collection = toonData.data.flowers.collection;
   let count = 0;
   for (const key in collection) {
     if (collection.hasOwnProperty(key)) {

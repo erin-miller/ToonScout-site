@@ -63,7 +63,7 @@ const TabContainer = () => {
   ];
 
   const getImage = () => {
-    const dna = toonData.toon.style;
+    const dna = toonData.data.toon.style;
     return `https://rendition.toontownrewritten.com/render/${dna}/${pose}/1024x1024.png`;
   };
 
@@ -99,19 +99,20 @@ const TabContainer = () => {
             <div className="left-info-container">
               <div>
                 <p className="text-4xl bg-pink-900 text-gray-100 dark:text-blue-100 dark:bg-pink-900 rounded-lg py-1 break-words overflow-hidden">
-                  {toonData.toon.name}
+                  {toonData.data.toon.name}
                 </p>
                 <p className="text-2xl pt-1">
-                  {toonData.laff.current} / {toonData.laff.max} laff
+                  {toonData.data.laff.current} / {toonData.data.laff.max} laff
                 </p>
                 <p className="text-2xl">
-                  {toonData.location.zone}, {toonData.location.district}
+                  {toonData.data.location.zone},{" "}
+                  {toonData.data.location.district}
                 </p>
               </div>
               <div className="toon-photo">
                 <img
                   src={getImage()}
-                  alt={`${toonData.toon.name} in pose ${pose}`}
+                  alt={`${toonData.data.toon.name} in pose ${pose}`}
                   className="w-512 h-512"
                   onClick={handleImageClick}
                 />

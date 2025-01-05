@@ -120,20 +120,23 @@ interface Racing {
 }
 
 export interface ToonData {
-  toon: Toon;
-  laff: {
-    current: number;
-    max: number;
+  event: string;
+  data: {
+    toon: Toon;
+    laff: {
+      current: number;
+      max: number;
+    };
+    location: Location;
+    gags: {
+      [key: string]: Gag | null;
+    };
+    tasks: Task[];
+    invasion: any;
+    fish: Fish;
+    flowers: Flower;
+    cogsuits: Record<string, Cogsuit>;
+    golf: Golf[];
+    racing: Racing[];
   };
-  location: Location;
-  gags: {
-    [key: string]: Gag | null;
-  };
-  tasks: Task[];
-  invasion: any;
-  fish: Fish;
-  flowers: Flower;
-  cogsuits: Record<string, Cogsuit>;
-  golf: Golf[];
-  racing: Racing[];
 }
