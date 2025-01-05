@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../styles/auth.css";
-import ThemeToggle from "./Theme";
 
 const generateRandomString = (length = 16) => {
   const characters =
