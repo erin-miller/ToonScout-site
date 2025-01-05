@@ -1,3 +1,8 @@
+import { useConnectionContext } from "../context/ConnectionContext";
+import { useDiscordContext } from "../context/DiscordContext";
+import { useToonContext } from "../context/ToonContext";
+import { sendScoutData } from "./ScoutWebSocket";
+
 const DEFAULT_PORT = 1547;
 const RECONNECT_DELAY = 10000;
 const RECONNECT_INTERVAL = 5000;
@@ -5,14 +10,14 @@ const RECONNECT_INTERVAL = 5000;
 let socket: WebSocket | null = null;
 let contReqInterval: NodeJS.Timeout | null = null;
 
-export const initWebSocket = (
-  setIsConnected: (isConnected: boolean) => void,
-  setToonData: (data: any) => void
-) => {
+export const initWebSocket = () => {
   const connectWebSocket = () => {
     if (socket && socket.readyState !== WebSocket.CLOSED) {
       return;
     }
+    const { setIsConnected } = useConnectionContext();
+    const { setToonData } = useToonContext();
+    const { userId } = useDiscordContext();
 
     socket = new WebSocket(`ws://localhost:${DEFAULT_PORT}`);
 
@@ -29,6 +34,9 @@ export const initWebSocket = (
       const toon = JSON.parse(event.data);
       if (toon.event === "all") {
         setToonData(toon.data);
+        if (userId) {
+          sendScoutData(userId, toon.data);
+        }
         setIsConnected(true);
       }
     });
