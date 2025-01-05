@@ -25,22 +25,22 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
   const [dept, setDept] = useState(first || "s");
   const [promo, setPromo] = useState<PromotionPath | null>(null);
   const [loading, setLoading] = useState(true);
-  const [suit, setSuit] = useState(toonData.cogsuits[dept]);
+  const [suit, setSuit] = useState(toonData.data.cogsuits[dept]);
 
   useEffect(() => {
-    const avail = Object.keys(toonData.cogsuits);
+    const avail = Object.keys(toonData.data.cogsuits);
     const currAvail = avail.includes(dept);
 
-    if (!currAvail || !toonData.cogsuits[dept]?.hasDisguise) {
+    if (!currAvail || !toonData.data.cogsuits[dept]?.hasDisguise) {
       const firstAvail = avail.find(
-        (department) => toonData.cogsuits[department]?.hasDisguise
+        (department) => toonData.data.cogsuits[department]?.hasDisguise
       );
       if (firstAvail) {
         setDept(firstAvail);
       }
     }
 
-    const currentSuit = toonData.cogsuits[dept];
+    const currentSuit = toonData.data.cogsuits[dept];
     setSuit(currentSuit);
 
     const getPromo = async () => {
@@ -61,7 +61,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
       setLoading(false);
     };
 
-    if (toonData.cogsuits[dept]?.hasDisguise) {
+    if (toonData.data.cogsuits[dept]?.hasDisguise) {
       getPromo();
     }
   }, [toonData, dept]);
@@ -134,7 +134,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
             onClick={() => setDept(deptChars.sellbot)}
             className="suit-btn"
             aria-selected={dept === deptChars.sellbot}
-            disabled={!toonData.cogsuits[deptChars.sellbot]?.hasDisguise}
+            disabled={!toonData.data.cogsuits[deptChars.sellbot]?.hasDisguise}
           >
             <img src="/images/emblem_sell.png" className="dept-photo" />
           </button>
@@ -142,7 +142,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
             onClick={() => setDept(deptChars.cashbot)}
             className="suit-btn"
             aria-selected={dept === deptChars.cashbot}
-            disabled={!toonData.cogsuits[deptChars.cashbot]?.hasDisguise}
+            disabled={!toonData.data.cogsuits[deptChars.cashbot]?.hasDisguise}
           >
             <img src="/images/emblem_cash.png" className="dept-photo" />
           </button>
@@ -150,7 +150,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
             onClick={() => setDept(deptChars.lawbot)}
             className="suit-btn"
             aria-selected={dept === deptChars.lawbot}
-            disabled={!toonData.cogsuits[deptChars.lawbot]?.hasDisguise}
+            disabled={!toonData.data.cogsuits[deptChars.lawbot]?.hasDisguise}
           >
             <img src="/images/emblem_law.png" className="dept-photo" />
           </button>
@@ -158,7 +158,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
             onClick={() => setDept(deptChars.bossbot)}
             className="suit-btn"
             aria-selected={dept === deptChars.bossbot}
-            disabled={!toonData.cogsuits[deptChars.bossbot]?.hasDisguise}
+            disabled={!toonData.data.cogsuits[deptChars.bossbot]?.hasDisguise}
           >
             <img src="/images/emblem_boss.png" className="dept-photo" />
           </button>
