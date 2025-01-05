@@ -39,7 +39,7 @@ const Home = () => {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
-                  className="w-5 h-5 absolute top-0 right-0 translate-x-3 translate-y-3 text-green-500"
+                  className="w-5 h-5 absolute top-5 right-2 translate-x-3 translate-y-3 text-gray-100 bg-green-800 dark:bg-green-600 dark:text-gray-200 rounded-full"
                   fill="currentColor"
                 >
                   <path
