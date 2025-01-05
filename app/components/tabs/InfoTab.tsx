@@ -6,8 +6,8 @@ import {
   sumFlowers,
   sumGolf,
   sumRace,
-} from "../TabContainer/utils";
-import { TabProps } from "../TabContainer/TabComponent";
+} from "./TabContainer/utils";
+import { TabProps } from "./TabContainer/TabComponent";
 
 const InfoTab: React.FC<TabProps> = ({ toonData }) => {
   return (

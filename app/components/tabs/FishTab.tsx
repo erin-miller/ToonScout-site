@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AnimatedTabContent from "../animations/AnimatedTab";
-import { TabProps } from "../TabContainer/TabComponent";
-import { sumFish } from "../TabContainer/utils";
+import { TabProps } from "./TabContainer/TabComponent";
+import { sumFish } from "./TabContainer/utils";
 import { FishRarity } from "@/app/types";
 const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
 

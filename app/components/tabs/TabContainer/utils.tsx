@@ -1,6 +1,6 @@
 import { ToonData } from "@/app/types";
-import { golf_trophies } from "../../data/golf_trophies";
-import { race_trophies } from "../../data/race_trophies";
+import { golf_trophies } from "../../../data/golf_trophies";
+import { race_trophies } from "../../../data/race_trophies";
 
 export const displaySuit = (toonData: ToonData, type: string) => {
   if (!toonData.cogsuits[type].hasDisguise) {

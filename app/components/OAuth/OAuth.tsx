@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/auth.css";
+import "../../styles/auth.css";
 
 const generateRandomString = (length = 16) => {
   const characters =
@@ -29,7 +29,7 @@ export const initOAuth = () => {
   window.location.href = url;
 };
 
-const Auth = () => {
+const OAuth = () => {
   const clickedImg = "/images/button-clicked.png";
   const unclickedImg = "/images/button-unclicked.png";
 
@@ -39,32 +39,28 @@ const Auth = () => {
   const handleMouseLeave = () => setIsPressed(false);
 
   return (
-    <div className="card-container">
-      <div className="discord-card">
-        <h2 className="minnie-title text-3xl mb-6 w-full">
-          Connect to Discord
-        </h2>
-        <p className="text-xl">
-          ToonScout needs a Discord connection to function.
-        </p>
-        <p className="text-xl">Click the button below to begin!</p>
-        <button
-          id="login"
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
-          onClick={initOAuth}
-          className="discord-btn"
-          style={{
-            backgroundImage: `url(${isPressed ? clickedImg : unclickedImg})`,
-            backgroundSize: "contain",
-            backgroundPosition: "center",
-            cursor: "pointer",
-          }}
-        ></button>
-      </div>
+    <div className="text-gray-800 dark:text-gray-100">
+      <h2 className="minnie-title text-3xl mb-6 w-full">Connect to Discord</h2>
+      <p className="text-xl">
+        ToonScout needs a Discord connection to function.
+      </p>
+      <p className="text-xl py-2">Click the button below to begin!</p>
+      <button
+        id="login"
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        onClick={initOAuth}
+        className="discord-btn"
+        style={{
+          backgroundImage: `url(${isPressed ? clickedImg : unclickedImg})`,
+          backgroundSize: "contain",
+          backgroundPosition: "center",
+          cursor: "pointer",
+        }}
+      ></button>
     </div>
   );
 };
 
-export default Auth;
+export default OAuth;

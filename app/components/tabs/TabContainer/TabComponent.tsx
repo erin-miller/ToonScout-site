@@ -1,14 +1,16 @@
-import InfoTab from "../tabs/InfoTab";
-import FishTab from "../tabs/FishTab";
-import SuitTab from "../tabs/SuitTab";
-import GagsTab from "../tabs/GagsTab";
-import TasksTab from "../tabs/TasksTab";
-import CommandTab from "../tabs/CommandTab";
-import ActivityTab from "../tabs/ActivityTab";
+import {
+  InfoTab,
+  FishTab,
+  SuitTab,
+  GagsTab,
+  TasksTab,
+  CommandTab,
+  ActivityTab,
+} from "./TabList";
+import AnimatedTabContent from "../../animations/AnimatedTab";
+import "../../../styles/tabs.css";
 import { useState } from "react";
-import { useToonContext } from "../../context/ToonContext";
-import AnimatedTabContent from "../animations/AnimatedTab";
-import "../../styles/tabs.css";
+import { useToonContext } from "../../../context/ToonContext";
 import { ToonData } from "@/app/types";
 import { hasNoSuit } from "./utils";
 

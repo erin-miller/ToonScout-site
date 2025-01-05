@@ -1,5 +1,5 @@
 import React from "react";
-import CommandBox from "../TabContainer/CommandBox";
+import CommandBox from "./TabContainer/CommandBox";
 import AnimatedTabContent from "../animations/AnimatedTab";
 import "../../styles/tabs.css";
 

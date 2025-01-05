@@ -23,6 +23,11 @@
   text-gray-100 rounded-full cursor-pointer text-xl;
 }
 
+.exit-btn {
+  @apply scale-up shadow-md py-1 px-3 bg-red-700
+    text-gray-100 rounded-full cursor-pointer text-xl;
+}
+
 .dark .add-btn {
   @apply text-gray-1300 bg-blue-500;
 }
@@ -37,4 +42,8 @@
 
 .scale-up {
   @apply transition hover:delay-150 hover:scale-105 scale-100;
+}
+
+.home-btn {
+  @apply p-2 bg-blue-500 rounded-full shadow-md hover:shadow-lg transition-colors duration-500 ease-in-out scale-up;
 }

@@ -126,8 +126,6 @@ async function sendData(userId: string, data: any) {
   }
 }
 
-connectScoutWebSocket();
-
 export default initWebSocket;
 
 function initAuthToken() {
