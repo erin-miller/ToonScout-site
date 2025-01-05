@@ -6,16 +6,24 @@ import { initWebSocket } from "./api/LocalWebSocket";
 import "./styles/fonts.css";
 import GameSteps from "./components/GameSteps/GameSteps";
 import Home from "./components/Home/Home";
-import { initScoutWebSocket } from "./api/ScoutWebSocket";
+import { initScoutWebSocket, sendScoutData } from "./api/ScoutWebSocket";
+import { useDiscordContext } from "./context/DiscordContext";
 
 const HomePage: React.FC = () => {
   const { setIsConnected, isConnected } = useConnectionContext();
-  const { setToonData } = useToonContext();
+  const { toonData, setToonData } = useToonContext();
+  const { userId } = useDiscordContext();
 
   useEffect(() => {
     initScoutWebSocket();
     initWebSocket(setIsConnected, setToonData);
   }, []);
+
+  useEffect(() => {
+    if (userId && toonData) {
+      sendScoutData(userId, toonData);
+    }
+  }, [toonData, userId]);
 
   return (
     <div className="page-container">
