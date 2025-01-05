@@ -10,7 +10,6 @@ import GameSteps from "./components/GameSteps";
 import Home from "./components/Home/Home";
 
 const HomePage: React.FC = () => {
-  const [isAuth, setIsAuth] = useState(true);
   const { setIsConnected, isConnected } = useConnectionContext();
   const { setToonData } = useToonContext();
 
@@ -27,7 +26,6 @@ const HomePage: React.FC = () => {
       if (response.ok) {
         console.log("Token found.");
         const { userId } = await response.json();
-        setIsAuth(true);
         initWebSocket(setIsConnected, setToonData, userId);
       } else {
         console.log("No token found.");
@@ -41,7 +39,6 @@ const HomePage: React.FC = () => {
 
     if (accessToken) {
       handleOAuthToken(fragment).then((userId) => {
-        setIsAuth(true);
         userId = "2";
         if (userId) {
           initWebSocket(setIsConnected, setToonData, userId);
@@ -56,14 +53,11 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="page-container">
-      {/* Authentication */}
-      {!isAuth && <Auth />}
-
       {/* Connecting Steps */}
-      {isAuth && !isConnected && <GameSteps />}
+      {!isConnected && <GameSteps />}
 
       {/* Home Screen */}
-      {isAuth && isConnected && <Home />}
+      {isConnected && <Home />}
     </div>
   );
 };

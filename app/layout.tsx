@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { ConnectionProvider } from "./context/ConnectionContext";
-import { ToonProvider } from "./context/ToonContext";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Providers from "./components/Providers";
 
 export const metadata: Metadata = {
   title: "ToonScout",
@@ -18,9 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="transition-all ease-in-out duration-500">
       <body className="font-impress text-gray-800 dark:text-gray-100">
-        <ToonProvider>
-          <ConnectionProvider>{children}</ConnectionProvider>
-        </ToonProvider>
+        <Providers>{children}</Providers>
         <GoogleAnalytics gaId="G-SNDEYLE0QL" />
       </body>
     </html>
