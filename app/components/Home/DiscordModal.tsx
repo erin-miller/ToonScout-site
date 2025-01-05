@@ -12,7 +12,7 @@ interface DiscordModalProps {
 const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
   const [error, setError] = useState<string | null>(null);
-  const [step, setStep] = useState<1 | 2>(2); // 1: OAuth, 2: Add Bot
+  const [step, setStep] = useState<1 | 2>(1); // 1: OAuth, 2: Add Bot
 
   useEffect(() => {
     const checkAccessToken = async () => {
@@ -72,9 +72,7 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
         {/* Step 2: Add Bot */}
         {step === 2 && (
           <div>
-            <h3 className="text-2xl mb-2 minnie-title">
-              Add ToonScout on Discord
-            </h3>
+            <h3 className="text-2xl mb-2 minnie-title">You're connected!</h3>
             <p className="py-2">
               Click the button below to add the bot to your Discord account.
             </p>
