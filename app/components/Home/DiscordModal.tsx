@@ -1,8 +1,9 @@
 import { handleOAuthToken } from "@/app/api/DiscordOAuth";
-import { initScoutWebSocket } from "@/app/api/ScoutWebSocket";
+import { useToonContext } from "../../context/ToonContext";
 import React, { useEffect, useState } from "react";
 import OAuth from "../OAuth/OAuth";
 import ArrowButton from "../ArrowButton";
+import { sendScoutData } from "@/app/api/ScoutWebSocket";
 
 interface DiscordModalProps {
   isOpen: boolean;
@@ -13,6 +14,14 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<1 | 2>(1); // 1: OAuth, 2: Add Bot
+  const [userId, setUserId] = useState<string | null>(null);
+  const { toonData } = useToonContext();
+
+  useEffect(() => {
+    if (userId && toonData) {
+      sendScoutData(userId, toonData);
+    }
+  }, [toonData, userId]);
 
   useEffect(() => {
     const checkAccessToken = async () => {
@@ -28,8 +37,8 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
         console.log("Token found.");
         const { userId } = await response.json();
         if (userId) {
-          setStep(2); // add bot
-          initScoutWebSocket();
+          setStep(2);
+          setUserId(userId);
         } else {
           setError("No user ID found.");
         }
@@ -45,7 +54,7 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
       handleOAuthToken(fragment).then((userId) => {
         if (userId) {
           setStep(2);
-          initScoutWebSocket();
+          setUserId(userId);
         } else {
           setError("ID error: failed to find data in cookie");
         }

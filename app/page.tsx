@@ -6,12 +6,14 @@ import { initWebSocket } from "./api/LocalWebSocket";
 import "./styles/fonts.css";
 import GameSteps from "./components/GameSteps/GameSteps";
 import Home from "./components/Home/Home";
+import { initScoutWebSocket } from "./api/ScoutWebSocket";
 
 const HomePage: React.FC = () => {
   const { setIsConnected, isConnected } = useConnectionContext();
   const { setToonData } = useToonContext();
 
   useEffect(() => {
+    initScoutWebSocket();
     initWebSocket(setIsConnected, setToonData);
   }, []);
 
