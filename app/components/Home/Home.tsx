@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Disclaimer from "./Disclaimer";
 import TabContainer from "../tabs/TabContainer/TabComponent";
 import "../../styles/home.css";
 import ThemeToggle from "../Theme";
 import DiscordModal from "./DiscordModal";
 import { useDiscordContext } from "@/app/context/DiscordContext";
+import { handleOAuthToken } from "@/app/api/DiscordOAuth";
 
 const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { userId } = useDiscordContext();
+  const { userId, setUserId } = useDiscordContext();
 
   const onClose = () => {
     setIsOpen(false);
@@ -17,6 +18,45 @@ const Home = () => {
   const handleDiscordClick = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    const checkAccessToken = async () => {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_HTTP + "/get-token",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        console.log("Token found.");
+        const { userId } = await response.json();
+        if (userId) {
+          setUserId(userId); // Set userId from the response
+        } else {
+          console.log("No user ID found.");
+        }
+      } else {
+        console.log("No token found.");
+      }
+    };
+
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    const accessToken = fragment.get("access_token");
+
+    if (accessToken) {
+      handleOAuthToken(fragment).then((userId) => {
+        if (userId) {
+          setUserId(userId);
+        } else {
+          console.log("ID error: failed to find data in cookie");
+        }
+      });
+    } else {
+      checkAccessToken();
+    }
+  }, []);
 
   return (
     <div className="card-container">

@@ -12,50 +12,14 @@ interface DiscordModalProps {
 
 const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
-  const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<1 | 2>(1); // 1: OAuth, 2: Add Bot
-  const { setUserId } = useDiscordContext();
+  const { userId } = useDiscordContext();
 
   useEffect(() => {
-    const checkAccessToken = async () => {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_API_HTTP + "/get-token",
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-
-      if (response.ok) {
-        console.log("Token found.");
-        const { userId } = await response.json();
-        if (userId) {
-          setStep(2);
-          setUserId(userId);
-        } else {
-          setError("No user ID found.");
-        }
-      } else {
-        console.log("No token found.");
-      }
-    };
-
-    const fragment = new URLSearchParams(window.location.hash.slice(1));
-    const accessToken = fragment.get("access_token");
-
-    if (accessToken) {
-      handleOAuthToken(fragment).then((userId) => {
-        if (userId) {
-          setStep(2);
-          setUserId(userId);
-        } else {
-          setError("ID error: failed to find data in cookie");
-        }
-      });
-    } else {
-      checkAccessToken();
+    if (userId) {
+      setStep(2);
     }
-  }, []);
+  }, [userId]);
 
   const handleClick = () => {
     window.open(
@@ -82,9 +46,6 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
               <div className="space-x-2">
                 <ArrowButton onClick={handleClick} />
               </div>
-
-              {/* Error Message */}
-              {error && <p className="text-red-500 pt-2">{error}</p>}
             </div>
           )}
 
