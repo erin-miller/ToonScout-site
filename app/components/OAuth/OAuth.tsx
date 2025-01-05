@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../../styles/auth.css";
+import ArrowButton from "../ArrowButton";
 
 const generateRandomString = (length = 16) => {
   const characters =
@@ -30,35 +31,12 @@ export const initOAuth = () => {
 };
 
 const OAuth = () => {
-  const clickedImg = "/images/button-clicked.png";
-  const unclickedImg = "/images/button-unclicked.png";
-
-  const [isPressed, setIsPressed] = useState(false);
-  const handleMouseDown = () => setIsPressed(true);
-  const handleMouseUp = () => setIsPressed(false);
-  const handleMouseLeave = () => setIsPressed(false);
-
   return (
-    <div className="text-gray-800 dark:text-gray-100">
+    <div>
       <h2 className="minnie-title text-3xl mb-6 w-full">Connect to Discord</h2>
-      <p className="text-xl">
-        ToonScout needs a Discord connection to function.
-      </p>
-      <p className="text-xl py-2">Click the button below to begin!</p>
-      <button
-        id="login"
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
-        onClick={initOAuth}
-        className="discord-btn"
-        style={{
-          backgroundImage: `url(${isPressed ? clickedImg : unclickedImg})`,
-          backgroundSize: "contain",
-          backgroundPosition: "center",
-          cursor: "pointer",
-        }}
-      ></button>
+      <p>ToonScout needs a Discord connection to function.</p>
+      <p className="py-2">Click the button below to begin!</p>
+      <ArrowButton onClick={initOAuth} />
     </div>
   );
 };

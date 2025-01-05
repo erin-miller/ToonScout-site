@@ -2,6 +2,7 @@ import { handleOAuthToken } from "@/app/api/DiscordOAuth";
 import { initScoutWebSocket } from "@/app/api/ScoutWebSocket";
 import React, { useEffect, useState } from "react";
 import OAuth from "../OAuth/OAuth";
+import ArrowButton from "../ArrowButton";
 
 interface DiscordModalProps {
   isOpen: boolean;
@@ -11,7 +12,7 @@ interface DiscordModalProps {
 const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
   const [error, setError] = useState<string | null>(null);
-  const [step, setStep] = useState<1 | 2>(1); // 1: OAuth, 2: Add Bot
+  const [step, setStep] = useState<1 | 2>(2); // 1: OAuth, 2: Add Bot
 
   useEffect(() => {
     const checkAccessToken = async () => {
@@ -54,9 +55,17 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
     }
   }, []);
 
+  const handleClick = () => {
+    window.open(
+      "https://discord.com/oauth2/authorize?client_id=1286517155315322950",
+      "_blank",
+      "noopener noreferrer"
+    );
+  };
+
   return (
     <div className="fixed transition ease-in-out inset-0 bg-gray-500 bg-opacity-70 dark:bg-gray-1200 dark:bg-opacity-70 dark:text-gray-100 flex justify-center items-center z-50">
-      <div className="bg-gray-100 dark:bg-gray-1100 p-6 rounded-lg w-96 border-blue-700 border-4 relative">
+      <div className="text-gray-800 dark:text-gray-100 bg-gray-100 dark:bg-gray-1100 p-6 rounded-lg w-96 border-blue-700 border-4 relative text-xl">
         {/* Step 1: OAuth */}
         {step === 1 && <OAuth />}
 
@@ -66,14 +75,11 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
             <h3 className="text-2xl mb-2 minnie-title">
               Add ToonScout on Discord
             </h3>
+            <p className="py-2">
+              Click the button below to add the bot to your Discord account.
+            </p>
             <div className="space-x-2">
-              <a
-                href="https://discord.com/oauth2/authorize?client_id=1286517155315322950"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <button className="add-btn mt-4">Add</button>
-              </a>
+              <ArrowButton onClick={handleClick} />
             </div>
 
             {/* Error Message */}
