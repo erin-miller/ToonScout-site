@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TabProps } from "../TabContainer/TabComponent";
 import { findSuit, getSuitName, hasNoSuit } from "../TabContainer/utils";
 import AnimatedTabContent from "../animations/AnimatedTab";
+const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
 
 interface PromotionPath {
   path: Array<string>;
@@ -43,7 +44,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
     setSuit(currentSuit);
 
     const getPromo = async () => {
-      const response = await fetch("https://api.scouttoon.info/get-promo", {
+      const response = await fetch(API_LINK + "/get-promo", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

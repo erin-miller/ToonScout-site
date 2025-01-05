@@ -8,7 +8,8 @@ let scoutAttempts = 0;
 const MAX_SCOUT_ATTEMPTS = 10;
 const RECONNECT_DELAY = 10000;
 const RECONNECT_INTERVAL = 5000;
-const SCOUT_LINK = "wss://api.scouttoon.info";
+const SCOUT_LINK =
+  process.env.NEXT_PUBLIC_API_WSS || "wss://api.scouttoon.info";
 
 export const initWebSocket = (
   setIsConnected: (isConnected: boolean) => void,

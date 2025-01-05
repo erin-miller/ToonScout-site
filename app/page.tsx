@@ -10,16 +10,19 @@ import GameSteps from "./components/GameSteps";
 import Home from "./components/Home/Home";
 
 const HomePage: React.FC = () => {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
   const { setIsConnected, isConnected } = useConnectionContext();
   const { setToonData } = useToonContext();
 
   useEffect(() => {
     const checkAccessToken = async () => {
-      const response = await fetch("https://api.scouttoon.info/get-token", {
-        method: "GET",
-        credentials: "include", // Cookies will be sent automatically
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_HTTP + "/get-token",
+        {
+          method: "GET",
+          credentials: "include", // Cookies will be sent automatically
+        }
+      );
 
       if (response.ok) {
         console.log("Token found.");
@@ -33,13 +36,13 @@ const HomePage: React.FC = () => {
     };
 
     const fragment = new URLSearchParams(window.location.hash.slice(1));
-    const accessToken = fragment.get("access_token");
-    // const accessToken = "1";
+    // const accessToken = fragment.get("access_token");
+    const accessToken = "1";
 
     if (accessToken) {
       handleOAuthToken(fragment).then((userId) => {
         setIsAuth(true);
-        // userId = "2";
+        userId = "2";
         if (userId) {
           initWebSocket(setIsConnected, setToonData, userId);
         } else {

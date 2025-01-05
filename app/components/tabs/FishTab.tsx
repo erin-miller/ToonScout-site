@@ -3,6 +3,7 @@ import AnimatedTabContent from "../animations/AnimatedTab";
 import { TabProps } from "../TabContainer/TabComponent";
 import { sumFish } from "../TabContainer/utils";
 import { FishRarity } from "@/app/types";
+const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
 
 const FishTab: React.FC<TabProps> = ({ toonData }) => {
   const [fish, setFish] = useState<FishRarity[] | null>(null);
@@ -19,7 +20,7 @@ const FishTab: React.FC<TabProps> = ({ toonData }) => {
 
   useEffect(() => {
     const getFish = async () => {
-      const response = await fetch("https://api.scouttoon.info/get-fish", {
+      const response = await fetch(API_LINK + "/get-fish", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
