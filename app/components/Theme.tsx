@@ -2,27 +2,32 @@ import { useState, useEffect } from "react";
 import "../styles/home.css";
 
 function ThemeToggle() {
-  const getInitialTheme = () => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      return savedTheme;
-    }
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    return prefersDark ? "dark" : "light";
-  };
-
-  const [theme, setTheme] = useState(getInitialTheme);
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        setTheme(savedTheme);
+      } else {
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        setTheme(prefersDark ? "dark" : "light");
+      }
     }
-    localStorage.setItem("theme", theme);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const root = window.document.documentElement;
+      if (theme === "dark") {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
+      localStorage.setItem("theme", theme);
+    }
   }, [theme]);
 
   const toggleTheme = () => {

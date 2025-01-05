@@ -1,6 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { handleOAuthToken } from "./api/DiscordOAuth";
+import React, { useEffect } from "react";
 import { useToonContext } from "./context/ToonContext";
 import { useConnectionContext } from "./context/ConnectionContext";
 import { initWebSocket } from "./api/LocalWebSocket";
