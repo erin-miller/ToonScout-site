@@ -14,27 +14,29 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
       <AnimatedTabContent>
         <div className="modal-content">
           <h3 className="text-3xl mb-2 minnie-title">Hi there!</h3>
-          <div className="flex space-x-4 mt-4 items-center justify-center">
-            <img
-              src="/images/sunny.png"
-              alt="Sunny"
-              className="w-auto max-h-64 rounded-lg shadow-lg"
-            />
-            <img
-              src="/images/rainy.png"
-              alt="Rainy"
-              className="w-auto max-h-64 rounded-lg shadow-lg"
-            />
-            <img
-              src="/images/meerkataclysm.png"
-              alt="Meerkataclysm"
-              className="w-auto max-h-64 rounded-lg shadow-lg"
-            />
-            <img
-              src="/images/cloudy.png"
-              alt="Cloudy"
-              className="w-auto max-h-64 rounded-lg shadow-lg"
-            />
+          <div className="flex mt-4 items-center justify-center overflow-x-auto privacy-scrollbar">
+            <div className="flex space-x-4">
+              <img
+                src="/images/sunny.png"
+                alt="Sunny"
+                className="w-auto max-h-64 rounded-lg shadow-lg"
+              />
+              <img
+                src="/images/rainy.png"
+                alt="Rainy"
+                className="w-auto max-h-64 rounded-lg shadow-lg"
+              />
+              <img
+                src="/images/meerkataclysm.png"
+                alt="Meerkataclysm"
+                className="w-auto max-h-64 rounded-lg shadow-lg"
+              />
+              <img
+                src="/images/cloudy.png"
+                alt="Cloudy"
+                className="w-auto max-h-64 rounded-lg shadow-lg"
+              />
+            </div>
           </div>
 
           <div className="space-y-4 pt-8">
