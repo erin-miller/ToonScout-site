@@ -30,11 +30,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="page-container">
-      {/* Connecting Steps */}
-      {!isConnected && <GameSteps />}
-
-      {/* Home Screen */}
-      {isConnected && toonData && <Home />}
+      {isConnected && toonData ? <Home /> : <GameSteps />}
     </div>
   );
 };

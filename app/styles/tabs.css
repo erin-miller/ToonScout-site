@@ -35,7 +35,7 @@
 }
 
 .info-container {
-  @apply flex w-full h-full overflow-hidden justify-center space-x-2
+  @apply flex w-full h-full overflow-hidden justify-center md:space-x-2
    text-pink-900 bg-pink-100 border-pink-500
    p-2 shadow-md rounded-xl border-4;
 }
@@ -45,7 +45,7 @@
 }
 
 .left-info-container {
-  @apply flex flex-col w-1/4 py-1;
+  @apply hidden lg:flex flex-col flex-none w-24 md:w-48 xl:w-64 py-1;
 }
 
 .right-info-container {
@@ -63,7 +63,7 @@
 
 */
 .activity-info-container {
-  @apply flex justify-center text-3xl space-x-4 pb-2;
+  @apply flex justify-center md:text-xl lg:text-2xl xl:text-3xl space-x-4 pb-2;
 }
 
 .activity-bubble {
@@ -97,7 +97,7 @@
   @apply flex flex-col h-full px-1;
 }
 .fish-header {
-  @apply flex text-3xl pb-2 justify-between;
+  @apply flex text-xl md:text-2xl xl:text-3xl pb-2 justify-between;
 }
 
 .fish-item {
@@ -105,7 +105,7 @@
 }
 
 .fish-table-header {
-  @apply fish-item w-2/3 text-2xl text-pink-900;
+  @apply fish-item w-2/3 text-xl md:text-2xl text-pink-900;
 }
 
 .dark .fish-table-header {
@@ -169,7 +169,8 @@
 
 .suit-overview {
   @apply flex bg-blue-200 rounded-full p-4 border-4 border-blue-400 space-x-5
-  justify-between items-center shadow-md;
+  justify-between items-center shadow-md
+  text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl;
 }
 
 .dark .suit-overview {
@@ -196,11 +197,11 @@
 
 .promo-count {
   @apply flex bg-pink-900 text-gray-100 px-2 rounded-full justify-center items-center
-  text-2xl;
+  text-lg md:text-xl lg:text-2xl;
 }
 
 .promo-activity {
-  @apply text-3xl;
+  @apply text-2xl sm:text-2xl md:text-2xl lg:text-3xl;
 }
 
 .suit-btn {
