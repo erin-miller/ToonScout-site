@@ -34,7 +34,7 @@ const HomePage: React.FC = () => {
       {!isConnected && <GameSteps />}
 
       {/* Home Screen */}
-      {isConnected && <Home />}
+      {isConnected && toonData && <Home />}
     </div>
   );
 };
