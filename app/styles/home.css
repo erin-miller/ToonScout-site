@@ -62,7 +62,7 @@
 }
 
 .modal-btn {
-  @apply hover:underline;
+  @apply hover:underline text-gray-800 dark:text-gray-400;
 }
 
 .close-btn {
