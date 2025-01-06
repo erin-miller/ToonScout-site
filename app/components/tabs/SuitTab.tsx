@@ -165,18 +165,16 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
         </div>
         <div className="suit-container">
           <div className="suit-overview">
-            <div className="w-1/2 sm:text-2xl lg:text-3xl 2xl:text-4xl text-left">
+            <div className="w-1/2  text-left">
               {getSuitName(toonData, dept)}
             </div>
-            <div className="w-1/5 sm:text-2xl lg:text-3xl 2xl:text-4xl text-left text-nowrap">
+            <div className="w-1/5  text-left text-nowrap">
               {suit ? `Level ${suit.level}` : "No suit available"}
             </div>
-            <div className="w-1/3 sm:text-2xl lg:text-3xl 2xl:text-4xl text-right">
-              {formatProgress()}
-            </div>
+            <div className="w-1/3  text-right">{formatProgress()}</div>
           </div>
           <div className="promo-rec">
-            <div className="font-minnie sm:text-2xl lg:text-3xl 2xl:text-4xl pb-5 pt-1 text-blue-900 dark:text-blue-500">
+            <div className="font-minnie sm:text-3xl 2xl:text-4xl pb-5 pt-1 text-blue-900 dark:text-blue-500">
               Recommended Activities
             </div>
             <div className="flex-1 flex-grow pb-4 md:pb-0">{formatPromo()}</div>
