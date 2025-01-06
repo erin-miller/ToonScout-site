@@ -16,6 +16,11 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
           <h3 className="text-3xl mb-2 minnie-title">Hi there!</h3>
           <div className="flex space-x-4 mt-4 items-center justify-center">
             <img
+              src="/images/sunny.png"
+              alt="Sunny"
+              className="w-auto max-h-64 rounded-lg shadow-lg"
+            />
+            <img
               src="/images/rainy.png"
               alt="Rainy"
               className="w-auto max-h-64 rounded-lg shadow-lg"
@@ -25,7 +30,13 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
               alt="Meerkataclysm"
               className="w-auto max-h-64 rounded-lg shadow-lg"
             />
+            <img
+              src="/images/cloudy.png"
+              alt="Cloudy"
+              className="w-auto max-h-64 rounded-lg shadow-lg"
+            />
           </div>
+
           <div className="space-y-4 pt-8">
             <p>My name is Erin! I've been playing Toontown since 2008.</p>
             <p>

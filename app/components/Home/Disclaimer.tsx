@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PrivacyModal from "./modals/PrivacyModal";
 import AboutModal from "./modals/AboutModal";
+import ContactModal from "./modals/ContactModal";
 
 const Disclaimer: React.FC = () => {
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -17,6 +18,9 @@ const Disclaimer: React.FC = () => {
         <button onClick={() => openModal("privacy")} className="modal-btn">
           Privacy Policy
         </button>
+        <button onClick={() => openModal("contact")} className="modal-btn">
+          Contact
+        </button>
       </div>
       <p className="pt-1">
         This website and the Discord app are not affiliated with Toontown
@@ -29,6 +33,9 @@ const Disclaimer: React.FC = () => {
       )}
       {activeModal === "privacy" && (
         <PrivacyModal isOpen={true} onClose={closeModal} />
+      )}
+      {activeModal === "contact" && (
+        <ContactModal isOpen={true} onClose={closeModal} />
       )}
     </div>
   );
