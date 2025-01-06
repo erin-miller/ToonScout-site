@@ -3,7 +3,7 @@ import Disclaimer from "./Disclaimer";
 import TabContainer from "../tabs/TabContainer/TabComponent";
 import "../../styles/home.css";
 import ThemeToggle from "../Theme";
-import DiscordModal from "./DiscordModal";
+import DiscordModal from "./modals/DiscordModal";
 import { useDiscordContext } from "@/app/context/DiscordContext";
 import { handleOAuthToken } from "@/app/api/DiscordOAuth";
 
@@ -90,9 +90,9 @@ const Home = () => {
                 </svg>
               )}
             </button>
-            {isOpen && <DiscordModal isOpen={isOpen} onClose={onClose} />}
             <ThemeToggle />
           </div>
+          {isOpen && <DiscordModal isOpen={isOpen} onClose={onClose} />}
         </div>
         <p>
           <span className="text-block">

@@ -1,8 +1,7 @@
-import { handleOAuthToken } from "@/app/api/DiscordOAuth";
 import React, { useEffect, useState } from "react";
-import OAuth from "../OAuth/OAuth";
-import ArrowButton from "../ArrowButton";
-import AnimatedTabContent from "../animations/AnimatedTab";
+import OAuth from "../../OAuth/OAuth";
+import ArrowButton from "../../ArrowButton";
+import AnimatedTabContent from "../../animations/AnimatedTab";
 import { useDiscordContext } from "@/app/context/DiscordContext";
 
 interface DiscordModalProps {
@@ -30,9 +29,9 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed transition ease-in-out inset-0 bg-gray-500 bg-opacity-70 dark:bg-gray-1200 dark:bg-opacity-70 dark:text-gray-100 flex justify-center items-center z-50">
+    <div className="modal-container">
       <AnimatedTabContent>
-        <div className="text-gray-800 dark:text-gray-100 bg-gray-100 dark:bg-gray-1100 p-6 rounded-lg w-96 border-blue-700 border-4 relative text-xl">
+        <div className="modal-content">
           {/* Step 1: OAuth */}
           {step === 1 && <OAuth />}
 
@@ -50,10 +49,7 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
           )}
 
           {/* Close button in the top-right corner */}
-          <button
-            onClick={onClose}
-            className="absolute top-2 right-2 text-2xl text-blue-700 hover:text-blue-900"
-          >
+          <button onClick={onClose} className="close-btn">
             &times;
           </button>
         </div>
