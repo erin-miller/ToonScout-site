@@ -8,6 +8,8 @@ import { initScoutWebSocket, sendScoutData } from "./api/ScoutWebSocket";
 import { useConnectionContext } from "./context/ConnectionContext";
 import { useDiscordContext } from "./context/DiscordContext";
 import { useToonContext } from "./context/ToonContext";
+import { isMobile, isSafari } from "react-device-detect";
+import Incompatible from "./components/Incompatible";
 
 const HomePage: React.FC = () => {
   const { isConnected, setIsConnected } = useConnectionContext();
@@ -30,7 +32,13 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="page-container">
-      {isConnected && toonData ? <Home /> : <GameSteps />}
+      {isMobile || isSafari ? (
+        <Incompatible />
+      ) : isConnected && toonData ? (
+        <Home />
+      ) : (
+        <GameSteps />
+      )}
     </div>
   );
 };
