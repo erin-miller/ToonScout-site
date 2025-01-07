@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import "./styles/fonts.css";
+import "/styles/fonts.css";
 import GameSteps from "./components/GameSteps/GameSteps";
 import Home from "./components/Home/Home";
 import { initWebSocket } from "./api/LocalWebSocket";

@@ -7,10 +7,10 @@ import {
   CommandTab,
   ActivityTab,
 } from "./TabList";
-import AnimatedTabContent from "../../animations/AnimatedTab";
-import "../../../styles/tabs.css";
+import AnimatedTabContent from "@/app/components/animations/AnimatedTab";
+import "/styles/tabs.css";
 import { useState } from "react";
-import { useToonContext } from "../../../context/ToonContext";
+import { useToonContext } from "@/app/context/ToonContext";
 import { ToonData } from "@/app/types";
 import { hasNoSuit } from "./utils";
 
@@ -36,7 +36,7 @@ const TabContainer = () => {
     { title: "Overview", component: InfoTab },
     { title: "Fishing", component: FishTab },
     { title: "Suits", component: SuitTab, disabled: hasNoSuit(toonData) },
-    { title: "Gags", component: GagsTab, disabled: true },
+    { title: "Gags", component: GagsTab },
     { title: "Tasks", component: TasksTab, disabled: true },
     { title: "Activities", component: ActivityTab, disabled: true },
   ];

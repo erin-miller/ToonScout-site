@@ -1,7 +1,7 @@
 import React from "react";
 import CommandBox from "./TabContainer/CommandBox";
-import AnimatedTabContent from "../animations/AnimatedTab";
-import "../../styles/tabs.css";
+import AnimatedTabContent from "@/app/components/animations/AnimatedTab";
+import "/styles/tabs.css";
 
 const commands = [
   {

@@ -1,4 +1,4 @@
-@import "../globals.css";
+@import "@/app/globals.css";
 
 .tab-container {
   @apply flex flex-wrap justify-center items-center gap-3;

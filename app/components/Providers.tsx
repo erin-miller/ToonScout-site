@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import { ToonProvider } from "../context/ToonContext";
-import { ConnectionProvider } from "../context/ConnectionContext";
-import { DiscordProvider } from "../context/DiscordContext";
+import { ToonProvider } from "@/app/context/ToonContext";
+import { ConnectionProvider } from "@/app/context/ConnectionContext";
+import { DiscordProvider } from "@/app/context/DiscordContext";
 
 interface ProvidersProps {
   children: ReactNode;

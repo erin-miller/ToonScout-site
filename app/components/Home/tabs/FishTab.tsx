@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AnimatedTabContent from "../animations/AnimatedTab";
+import AnimatedTabContent from "@/app/components/animations/AnimatedTab";
 import { TabProps } from "./TabContainer/TabComponent";
 import { sumFish } from "./TabContainer/utils";
 import { FishRarity } from "@/app/types";

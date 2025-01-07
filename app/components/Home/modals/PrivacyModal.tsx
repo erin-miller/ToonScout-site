@@ -1,5 +1,5 @@
 import React from "react";
-import AnimatedTabContent from "../../animations/AnimatedTab";
+import AnimatedTabContent from "@/app/components/animations/AnimatedTab";
 
 interface PrivacyModalProps {
   isOpen: boolean;

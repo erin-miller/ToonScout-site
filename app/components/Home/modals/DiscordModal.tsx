@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import OAuth from "../../OAuth/OAuth";
-import ArrowButton from "../../ArrowButton";
-import AnimatedTabContent from "../../animations/AnimatedTab";
+import OAuth from "./OAuthModal";
+import ArrowButton from "@/app/components/ArrowButton";
+import AnimatedTabContent from "@/app/components/animations/AnimatedTab";
 import { useDiscordContext } from "@/app/context/DiscordContext";
 
 interface DiscordModalProps {

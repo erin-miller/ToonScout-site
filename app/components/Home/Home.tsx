@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Disclaimer from "./Disclaimer";
-import TabContainer from "../tabs/TabContainer/TabComponent";
-import "../../styles/home.css";
-import ThemeToggle from "../Theme";
+import TabContainer from "./tabs/TabContainer/TabComponent";
+import "/styles/home.css";
+import ThemeToggle from "@/app/components/Theme";
 import DiscordModal from "./modals/DiscordModal";
 import { useDiscordContext } from "@/app/context/DiscordContext";
 import { handleOAuthToken } from "@/app/api/DiscordOAuth";

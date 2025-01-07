@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TabProps } from "./TabContainer/TabComponent";
 import { findSuit, getSuitName, hasNoSuit } from "./TabContainer/utils";
-import AnimatedTabContent from "../animations/AnimatedTab";
+import AnimatedTabContent from "@/app/components/animations/AnimatedTab";
 const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
 
 interface PromotionPath {

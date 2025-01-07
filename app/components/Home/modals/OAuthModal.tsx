@@ -1,6 +1,6 @@
 import React from "react";
-import "../../styles/auth.css";
-import ArrowButton from "../ArrowButton";
+import "/styles/auth.css";
+import ArrowButton from "@/app/components/ArrowButton";
 
 const generateRandomString = (length = 16) => {
   const characters =
