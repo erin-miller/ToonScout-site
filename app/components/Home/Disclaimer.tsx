@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PrivacyModal from "./modals/PrivacyModal";
 import AboutModal from "./modals/AboutModal";
 import ContactModal from "./modals/ContactModal";
+import FAQModal from "./modals/FAQModal";
 
 const Disclaimer: React.FC = () => {
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -14,6 +15,9 @@ const Disclaimer: React.FC = () => {
       <div className="space-x-4">
         <button onClick={() => openModal("about")} className="modal-btn">
           About
+        </button>
+        <button onClick={() => openModal("faq")} className="modal-btn">
+          FAQ
         </button>
         <button onClick={() => openModal("privacy")} className="modal-btn">
           Privacy Policy
@@ -37,6 +41,7 @@ const Disclaimer: React.FC = () => {
       {activeModal === "contact" && (
         <ContactModal isOpen={true} onClose={closeModal} />
       )}
+      {activeModal === "faq" && <FAQModal isOpen={true} onClose={closeModal} />}
     </div>
   );
 };
