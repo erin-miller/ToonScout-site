@@ -43,10 +43,26 @@ const config: Config = {
     "text-blue-300",
     "text-blue-200",
     "text-blue-100",
+    "bg-toon-up",
+    "bg-trap",
+    "bg-lure",
+    "bg-sound",
+    "bg-throw",
+    "bg-squirt",
+    "bg-drop",
+    "bg-gagblue",
   ],
   theme: {
     extend: {
       colors: {
+        "toon-up": "var(--toon-up)",
+        trap: "var(--trap)",
+        lure: "var(--lure)",
+        sound: "var(--sound)",
+        throw: "var(--throw)",
+        squirt: "var(--squirt)",
+        drop: "var(--drop)",
+        gagblue: "var(--gagblue)",
         blue: {
           100: "var(--blue-100)",
           200: "var(--blue-200)",

@@ -223,6 +223,13 @@
   cursor: not-allowed;
 }
 
+/* 
+ 
+            GAGS
+
+
+*/
+
 .scale-up {
   @apply transition hover:delay-150 hover:scale-105 scale-100;
 }

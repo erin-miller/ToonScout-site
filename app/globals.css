@@ -37,6 +37,15 @@
   --gray-1200: #242424;
   --gray-1300: #1b1b1b;
   --gray-1400: #131313;
+
+  --toon-up: #d496fd;
+  --trap: #f8fe61;
+  --lure: #4dbd4e;
+  --sound: #5e6ced;
+  --throw: #ff9043;
+  --squirt: #ff42c5;
+  --drop: #4df3ff;
+  --gagblue: #148bdd;
 }
 
 :root.dark {
