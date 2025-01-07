@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Disclaimer from "./Disclaimer";
-import TabContainer from "./tabs/TabContainer/TabComponent";
+import TabContainer from "./tabs/components/TabComponent";
 import "/styles/home.css";
 import ThemeToggle from "@/app/components/Theme";
 import DiscordModal from "./modals/DiscordModal";

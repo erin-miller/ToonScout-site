@@ -68,6 +68,15 @@
   --pink-700: #815ac0;
   --pink-800: #7251b5;
   --pink-900: #6247aa;
+
+  --toon-up: #a47bb2; /* Softer lavender */
+  --trap: #c8c98b; /* Muted yellow-green */
+  --lure: #7da97f; /* Desaturated green */
+  --sound: #737ab8; /* Duller periwinkle */
+  --throw: #d07a5c; /* Softer orange */
+  --squirt: #c564a3; /* Muted pink */
+  --drop: #7fb2ba; /* Soft cyan */
+  --gagblue: #43779a; /* Desaturated blue */
 }
 
 body {

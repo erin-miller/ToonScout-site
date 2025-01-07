@@ -1,5 +1,5 @@
 import React from "react";
-import { TabProps } from "./TabContainer/TabComponent";
+import { TabProps } from "./components/TabComponent";
 
 const TasksTab: React.FC<TabProps> = ({ toonData }) => {
   return (
