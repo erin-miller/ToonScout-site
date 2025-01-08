@@ -16,6 +16,7 @@ import { hasNoSuit } from "./utils";
 
 export interface TabProps {
   toonData: ToonData;
+  setSelectedTab?: React.Dispatch<React.SetStateAction<TabComponent>>;
 }
 
 export type TabComponent = {
@@ -33,7 +34,12 @@ const TabContainer = () => {
 
   const TabList: TabComponent[] = [
     { title: "Commands", component: CommandTab },
-    { title: "Overview", component: InfoTab },
+    {
+      title: "Overview",
+      component: (props) => (
+        <InfoTab {...props} setSelectedTab={setSelectedTab} />
+      ),
+    },
     { title: "Fishing", component: FishTab },
     { title: "Suits", component: SuitTab, disabled: hasNoSuit(toonData) },
     { title: "Gags", component: GagsTab },

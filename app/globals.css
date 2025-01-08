@@ -97,7 +97,7 @@ body {
 }
 @layer utilities {
   .scale-up {
-    @apply transition hover:delay-150 hover:scale-105 scale-100;
+    @apply transform hover:scale-105 cursor-pointer;
   }
 
   .test-outline {
