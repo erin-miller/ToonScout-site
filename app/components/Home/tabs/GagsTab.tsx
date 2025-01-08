@@ -54,7 +54,9 @@ const GagsTab: React.FC<TabProps> = ({ toonData }) => {
                       {/* gag slot */}
                       {isImageVisible ? (
                         <img
-                          src={`/gags/${track}-${gagIndex + 1}.png`}
+                          src={`/gags/${track.toLowerCase()}-${
+                            gagIndex + 1
+                          }.png`}
                           alt={`${track} gag ${gagIndex + 1}`}
                           className="w-12 h-12 object-contain"
                         />
