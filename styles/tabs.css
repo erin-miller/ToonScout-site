@@ -234,6 +234,10 @@
   @apply w-1/2 bg-blue-200 border-4 border-blue-300 rounded-xl p-2;
 }
 
+.dark .activity-container {
+  @apply bg-gray-1100 border-gray-900 text-pink-500;
+}
+
 .activity-header {
   @apply text-3xl;
 }
@@ -254,6 +258,10 @@
   @apply rounded-full px-2 py-3 space-x-2 md:text-xl 
   flex flex-row overflow-hidden
   bg-blue-300;
+}
+
+.dark .trophies {
+  @apply bg-gray-700 text-gray-1200;
 }
 
 .scale-up {

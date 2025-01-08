@@ -14,7 +14,9 @@ const ActivityTab: React.FC<TabProps> = ({ toonData }) => {
           <svg
             fill="currentColor"
             className={`w-10 h-10 ${
-              index < earned ? "text-blue-900" : "text-blue-300"
+              index < earned
+                ? "text-blue-900 dark:text-pink-400"
+                : "text-blue-300 dark:text-gray-900"
             }`}
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
@@ -51,11 +53,14 @@ const ActivityTab: React.FC<TabProps> = ({ toonData }) => {
           return (
             <li key={index} className="trophies relative z-5">
               <div
-                className="bg-blue-900 absolute inset-0 opacity-15 z-0"
+                className="bg-blue-900 dark:bg-gray-1200 absolute inset-0 opacity-15 z-0"
                 style={{ width: `${progress}%` }}
               ></div>
               <div className="text-xl w-full text-left z-50">{item.name}</div>
-              <div className="flex z-50 text-gray-100 w-36 text-nowrap justify-center items-center bg-blue-800 rounded-full">
+              <div
+                className="flex z-50 w-36 text-nowrap justify-center items-center  rounded-full
+              text-gray-100 dark:text-gray-400 bg-blue-800 dark:bg-pink-900"
+              >
                 {curr}
               </div>
             </li>
