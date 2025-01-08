@@ -88,21 +88,31 @@ export const sumGolf = (toonData: ToonData) => {
       }
     }
   }
-  return count >= 10 ? Math.floor(count / 10) : 0;
+  return count;
 };
 
 export const sumRace = (toonData: ToonData) => {
   let count = 0;
   for (const trophy of race_trophies) {
     const earned =
-      toonData.data.racing.find((item) => item.name == trophy.description)
-        ?.num || 0;
+      toonData.data.golf.find((item) => item.name == trophy.description)?.num ||
+      0;
     for (const val of trophy.values) {
       if (earned >= val) {
         count += 1;
       }
     }
   }
+  return count;
+};
+
+export const getGolfTrophies = (toonData: ToonData) => {
+  const count = sumGolf(toonData);
+  return count >= 10 ? Math.floor(count / 10) : 0;
+};
+
+export const getRaceTrophies = (toonData: ToonData) => {
+  const count = sumRace(toonData);
   return count >= 10 ? Math.floor(count / 10) : 0;
 };
 

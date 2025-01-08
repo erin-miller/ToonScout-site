@@ -251,7 +251,7 @@
 }
 
 .activity-name {
-  @apply w-full text-left;
+  @apply flex flex-row text-left items-center space-x-2 w-full text-3xl;
 }
 
 .trophies {

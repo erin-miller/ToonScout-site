@@ -4,8 +4,10 @@ import {
   displaySuit,
   sumFish,
   sumFlowers,
-  sumGolf,
+  getGolfTrophies,
+  getRaceTrophies,
   sumRace,
+  sumGolf,
 } from "./components/utils";
 import { TabProps } from "./components/TabComponent";
 
