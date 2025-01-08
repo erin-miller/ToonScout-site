@@ -225,10 +225,36 @@
 
 /* 
  
-            GAGS
+            ACTIVITIES
 
 
 */
+
+.activity-container {
+  @apply w-1/2 bg-blue-200 border-4 border-blue-300 rounded-xl p-2;
+}
+
+.activity-header {
+  @apply text-3xl;
+}
+
+.activity-header-container {
+  @apply flex flex-row justify-center pb-2;
+}
+
+.trophy-total {
+  @apply w-1/2 text-right;
+}
+
+.activity-name {
+  @apply w-full text-left;
+}
+
+.trophies {
+  @apply rounded-full px-2 py-3 space-x-2 md:text-xl 
+  flex flex-row overflow-hidden
+  bg-blue-300;
+}
 
 .scale-up {
   @apply transition hover:delay-150 hover:scale-105 scale-100;

@@ -88,7 +88,7 @@ export const sumGolf = (toonData: ToonData) => {
       }
     }
   }
-  return count;
+  return count >= 10 ? Math.floor(count / 10) : 0;
 };
 
 export const sumRace = (toonData: ToonData) => {
@@ -103,7 +103,7 @@ export const sumRace = (toonData: ToonData) => {
       }
     }
   }
-  return count;
+  return count >= 10 ? Math.floor(count / 10) : 0;
 };
 
 export const sumFlowers = (toonData: ToonData) => {

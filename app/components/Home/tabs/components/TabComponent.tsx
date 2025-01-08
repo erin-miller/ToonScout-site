@@ -38,7 +38,7 @@ const TabContainer = () => {
     { title: "Suits", component: SuitTab, disabled: hasNoSuit(toonData) },
     { title: "Gags", component: GagsTab },
     { title: "Tasks", component: TasksTab, disabled: true },
-    { title: "Activities", component: ActivityTab, disabled: true },
+    { title: "Activities", component: ActivityTab },
   ];
 
   const [selectedTab, setSelectedTab] = useState<TabComponent>(TabList[1]); // Default to "Overview"
