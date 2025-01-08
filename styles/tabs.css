@@ -263,3 +263,26 @@
 .dark .trophies {
   @apply bg-gray-700 text-gray-1200;
 }
+
+/* 
+ 
+            TASKS
+
+
+*/
+
+.task-container {
+  @apply w-full h-full;
+}
+
+.left-task {
+  @apply text-right;
+}
+
+.right-task {
+  @apply items-start;
+}
+
+.task {
+  @apply h-96 w-96;
+}
