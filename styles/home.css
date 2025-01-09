@@ -41,7 +41,7 @@
 }
 
 .home-btn {
-  @apply p-2 bg-blue-500 rounded-full shadow-md hover:shadow-lg transition-colors duration-500 ease-in-out scale-up;
+  @apply p-2 bg-blue-500 rounded-full shadow-md hover:shadow-lg scale-up;
 }
 
 .modal-container {
