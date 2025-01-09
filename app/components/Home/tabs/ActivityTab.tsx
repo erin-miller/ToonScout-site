@@ -61,10 +61,13 @@ const ActivityTab: React.FC<TabProps> = ({ toonData }) => {
                 className="bg-blue-900 dark:bg-gray-1200 absolute inset-0 opacity-15 z-0"
                 style={{ width: `${progress}%` }}
               ></div>
-              <div className="text-xl w-full text-left z-50">{item.name}</div>
+              <div className="flex text-xl w-full text-left z-50 justify-content items-center">
+                {item.name}
+              </div>
               <div
-                className="flex z-50 w-36 text-nowrap justify-center items-center  rounded-full
-              text-gray-100 dark:text-gray-400 bg-blue-800 dark:bg-pink-900"
+                className="flex z-50 w-36 text-nowrap justify-center items-center rounded-full border-4
+              text-gray-100 bg-blue-800 border-blue-900
+               dark:text-gray-400 dark:bg-pink-800 dark:border-pink-900"
               >
                 {curr}
               </div>
