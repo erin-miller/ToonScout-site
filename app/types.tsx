@@ -33,7 +33,7 @@ interface TaskProgress {
   target: number;
 }
 
-interface Task {
+export interface Task {
   objective: {
     text: string;
     where: string;
