@@ -59,7 +59,7 @@ const ActivityTab: React.FC<TabProps> = ({ toonData }) => {
             <li key={index} className="trophies relative z-5">
               <div
                 className="bg-blue-900 dark:bg-gray-1200 absolute inset-0 opacity-15 z-0"
-                style={{ width: `${40}%` }}
+                style={{ width: `${progress}%` }}
               ></div>
               <div className="text-xl w-full text-left z-50">{item.name}</div>
               <div

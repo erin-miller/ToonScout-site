@@ -141,7 +141,7 @@
 }
 
 .dark .fish-table {
-  @apply bg-gray-1100 border-gray-900;
+  @apply bg-gray-1000 border-pink-800;
 }
 
 .fish-info {
@@ -174,7 +174,7 @@
 }
 
 .dark .suit-overview {
-  @apply bg-gray-1000 border-pink-900;
+  @apply bg-gray-1000 border-pink-700;
 }
 
 .promo-rec {
@@ -184,7 +184,7 @@
 }
 
 .dark .promo-rec {
-  @apply border-pink-900 bg-gray-1000;
+  @apply border-pink-700 bg-gray-1000;
 }
 
 .dept-photo {
@@ -235,7 +235,7 @@
 }
 
 .dark .activity-container {
-  @apply bg-gray-1100 border-gray-900 text-pink-500;
+  @apply bg-gray-1100 border-pink-700 text-pink-500;
 }
 
 .activity-header {
@@ -277,17 +277,17 @@
 }
 
 .dark .task-container {
-  @apply bg-pink-400 border-pink-600 text-pink-500;
+  @apply bg-gray-1000 border-pink-600 text-pink-500;
 }
 
 .task-title {
   @apply text-base sm:text-xl lg:text-xl xl:text-2xl 
-  text-pink-900 dark:text-blue-100;
+  text-pink-900 dark:text-pink-100;
 }
 
 .task-location {
   @apply text-base sm:text-xl lg:text-xl xl:text-2xl 
-  text-pink-800 dark:text-blue-200 pb-2;
+  text-pink-800 dark:text-pink-200 pb-2;
 }
 
 .task-progress {
@@ -296,9 +296,9 @@
 }
 
 .dark .task-progress {
-  @apply bg-pink-400 text-pink-900 border-pink-900;
+  @apply bg-pink-400 text-gray-1100 border-pink-900;
 }
 
 .task-reward {
-  @apply text-red-500 dark:text-red-800 lg:text-lg xl:text-xl;
+  @apply text-red-500 dark:text-red-600 lg:text-lg xl:text-xl;
 }
