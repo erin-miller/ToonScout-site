@@ -109,7 +109,7 @@
 }
 
 .dark .fish-table-header {
-  @apply text-pink-500;
+  @apply text-pink-100;
 }
 
 .fishtank {
@@ -128,12 +128,12 @@
 
 .fish {
   @apply rounded-full px-5 py-2 space-x-2 md:text-xl 
-  flex flex-row overflow-hidden
-  bg-blue-300;
+  flex flex-row overflow-hidden border-2
+  bg-blue-300 border-blue-400;
 }
 
 .dark .fish {
-  @apply bg-gray-700 text-gray-1200;
+  @apply bg-pink-400 text-gray-1200 border-pink-900;
 }
 
 .fish-table {
@@ -272,17 +272,31 @@
 */
 
 .task-container {
-  @apply w-full h-full;
+  @apply h-64 w-full bg-blue-200 border-blue-300 border-4 rounded-xl p-2
+  flex flex-col justify-between overflow-hidden;
 }
 
-.left-task {
-  @apply text-right;
+.dark .task-container {
+  @apply bg-gray-1100 border-gray-900 text-pink-500;
 }
 
-.right-task {
-  @apply items-start;
+.task-title {
+  @apply text-base sm:text-xl lg:text-xl xl:text-2xl text-pink-900 dark:text-pink-100;
 }
 
-.task {
-  @apply h-96 w-96;
+.task-location {
+  @apply text-base sm:text-xl lg:text-xl xl:text-2xl text-pink-800 dark:text-pink-200 pb-2;
+}
+
+.task-progress {
+  @apply text-base sm:text-xl lg:text-xl xl:text-2xl items-center p-2 rounded-xl
+  bg-blue-300 bg-opacity-10 border-pink-800 border-2;
+}
+
+.dark .task-progress {
+  @apply bg-pink-400 text-gray-1200 border-pink-900;
+}
+
+.task-reward {
+  @apply text-red-500 dark:text-red-300 lg:text-lg xl:text-xl;
 }
