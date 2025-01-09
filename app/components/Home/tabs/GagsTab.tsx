@@ -57,7 +57,6 @@ const GagsTab: React.FC<TabProps> = ({ toonData }) => {
                           src={`/gags/${track.toLowerCase()}-${
                             gagIndex + 1
                           }.png`}
-                          alt={`${track} gag ${gagIndex + 1}`}
                           className="w-12 h-12 object-contain"
                         />
                       ) : null}
