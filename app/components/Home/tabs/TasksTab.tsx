@@ -27,7 +27,7 @@ const TasksTab: React.FC<TabProps> = ({ toonData }) => {
   function getTaskType(task: Task) {
     const progress = task.objective.progress.text;
     const obj = task.objective.text;
-    console.log(obj);
+
     if (obj.includes("Visit") || progress.includes("Complete")) {
       // display npc values for a visit task
       return {
