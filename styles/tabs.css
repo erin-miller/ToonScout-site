@@ -129,7 +129,7 @@
 .fish {
   @apply rounded-full px-5 py-2 space-x-2 md:text-xl 
   flex flex-row overflow-hidden border-2
-  bg-blue-300 border-blue-400;
+  bg-blue-300 border-pink-700;
 }
 
 .dark .fish {
