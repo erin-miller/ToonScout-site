@@ -7,42 +7,42 @@ const commands = [
   {
     title: "/info",
     description: "Displays your toon photo, laff, and location.",
-    color: "blue-400",
+    color: "toon-up",
   },
   {
     title: "/fish",
     description: "Find the best place to catch new fish.",
-    color: "blue-500 dark:blue-300",
+    color: "yellow-400",
   },
   {
     title: "/suit",
     description: "Get suit progress and recommendations.",
-    color: "blue-600 dark:blue-200",
+    color: "lure",
   },
   {
     title: "/gags",
     description: "Displays current gags and progress.",
-    color: "blue-700 dark:blue-100",
+    color: "sound",
   },
   {
     title: "/tasks",
     description: "Lists your active toontasks and progress.",
-    color: "pink-400 dark:pink-100",
+    color: "throw",
   },
   {
     title: "/race",
     description: "Provides advising on racing trophies.",
-    color: "pink-500 dark:pink-200",
+    color: "squirt",
   },
   {
     title: "/golf",
     description: "Provides advising on golfing trophies.",
-    color: "pink-300",
+    color: "drop",
   },
   {
     title: "/hidden",
     description: "Set if your info can be viewed by others.",
-    color: "pink-400",
+    color: "blue-400",
   },
   {
     title: "...and more!",

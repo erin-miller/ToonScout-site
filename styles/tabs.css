@@ -294,7 +294,7 @@
 }
 
 .dark .task-progress {
-  @apply bg-pink-400 text-gray-1200 border-pink-900;
+  @apply bg-pink-400 text-pink-900 border-pink-900;
 }
 
 .task-reward {
