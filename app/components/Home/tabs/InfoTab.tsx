@@ -6,6 +6,7 @@ import {
   sumFlowers,
   sumRace,
   sumGolf,
+  hasNoSuit,
 } from "./components/utils";
 import { TabComponent, TabProps } from "./components/TabComponent";
 import FishTab from "./FishTab";
@@ -91,12 +92,18 @@ const InfoTab: React.FC<TabProps> = ({ toonData, setSelectedTab }) => {
           <p>{sumFlowers(toonData)} / 40</p>
         </button>
       </div>
-      <div className="suits-info-container">
-        <div className="suit-card">{displaySuit(toonData, "s")}</div>
-        <div className="suit-card">{displaySuit(toonData, "m")}</div>
-        <div className="suit-card">{displaySuit(toonData, "l")}</div>
-        <div className="suit-card">{displaySuit(toonData, "c")}</div>
-      </div>
+      {hasNoSuit(toonData) ? (
+        <div className="flex items-center justify-center h-full text-3xl">
+          You haven't unlocked any cog suits!
+        </div>
+      ) : (
+        <div className="suits-info-container">
+          <div className="suit-card">{displaySuit(toonData, "s")}</div>
+          <div className="suit-card">{displaySuit(toonData, "m")}</div>
+          <div className="suit-card">{displaySuit(toonData, "l")}</div>
+          <div className="suit-card">{displaySuit(toonData, "c")}</div>
+        </div>
+      )}
     </AnimatedTabContent>
   );
 };
