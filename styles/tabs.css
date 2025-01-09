@@ -277,15 +277,17 @@
 }
 
 .dark .task-container {
-  @apply bg-gray-1100 border-gray-900 text-pink-500;
+  @apply bg-pink-400 border-pink-600 text-pink-500;
 }
 
 .task-title {
-  @apply text-base sm:text-xl lg:text-xl xl:text-2xl text-pink-900 dark:text-pink-100;
+  @apply text-base sm:text-xl lg:text-xl xl:text-2xl 
+  text-pink-900 dark:text-blue-100;
 }
 
 .task-location {
-  @apply text-base sm:text-xl lg:text-xl xl:text-2xl text-pink-800 dark:text-pink-200 pb-2;
+  @apply text-base sm:text-xl lg:text-xl xl:text-2xl 
+  text-pink-800 dark:text-blue-200 pb-2;
 }
 
 .task-progress {
@@ -298,5 +300,5 @@
 }
 
 .task-reward {
-  @apply text-red-500 dark:text-red-300 lg:text-lg xl:text-xl;
+  @apply text-red-500 dark:text-red-800 lg:text-lg xl:text-xl;
 }

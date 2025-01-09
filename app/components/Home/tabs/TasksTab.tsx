@@ -92,7 +92,10 @@ const TasksTab: React.FC<TabProps> = ({ toonData }) => {
         {tasks.map((task, index) => (
           <div key={index} className="task-container">
             <div className="absolute justify-center items-center pt-52">
-              <span className="flex items-center justify-center w-6 h-6 bg-red-500 dark:bg-red-900 rounded-full text-gray-100 text-lg">
+              <span
+                className="flex items-center justify-center w-6 h-6
+               bg-red-500 dark:bg-red-900 rounded-full text-gray-100 text-lg"
+              >
                 {getIndex(index)}
               </span>
             </div>
