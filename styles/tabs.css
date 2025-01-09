@@ -256,7 +256,7 @@
 
 .trophies {
   @apply rounded-full px-2 py-3 space-x-2 md:text-xl 
-  flex flex-row overflow-hidden
+  flex flex-row overflow-hidden justify-center items-center
   bg-blue-300;
 }
 

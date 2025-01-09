@@ -65,18 +65,18 @@
   --pink-400: #b185db;
   --pink-500: #a174d3;
   --pink-600: #9163cb;
-  --pink-700: #815ac0;
-  --pink-800: #7251b5;
-  --pink-900: #6247aa;
+  --pink-700: #9471cc;
+  --pink-800: #8468bb;
+  --pink-900: #6d59a7;
 
-  --toon-up: #a47bb2; /* Softer lavender */
-  --trap: #c8c98b; /* Muted yellow-green */
-  --lure: #7da97f; /* Desaturated green */
-  --sound: #737ab8; /* Duller periwinkle */
-  --throw: #d07a5c; /* Softer orange */
-  --squirt: #c564a3; /* Muted pink */
-  --drop: #7fb2ba; /* Soft cyan */
-  --gagblue: #43779a; /* Desaturated blue */
+  --toon-up: #d2adeb;
+  --trap: #ecec8a;
+  --lure: #77b477;
+  --sound: #7f8bd3;
+  --throw: #f1a27b;
+  --squirt: #f07fc4;
+  --drop: #7bd5de;
+  --gagblue: #57aad1;
 }
 
 body {
