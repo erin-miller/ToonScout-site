@@ -43,7 +43,11 @@ const TabContainer = () => {
     { title: "Fishing", component: FishTab },
     { title: "Suits", component: SuitTab, disabled: hasNoSuit(toonData) },
     { title: "Gags", component: GagsTab },
-    { title: "Tasks", component: TasksTab },
+    {
+      title: "Tasks",
+      component: TasksTab,
+      disabled: toonData.data.tasks.length <= 0,
+    },
     { title: "Activities", component: ActivityTab },
   ];
 

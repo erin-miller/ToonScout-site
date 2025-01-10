@@ -7,17 +7,6 @@ const TasksTab: React.FC<TabProps> = ({ toonData }) => {
   // pulled from ToonScout bot
   function getTasks(toonData: ToonData) {
     const toontasks = toonData.data.tasks;
-    if (toontasks.length === 0) {
-      return [
-        {
-          title: "",
-          progress: "This toon has no tasks right now!",
-          reward: "",
-          deletable: false,
-        },
-      ];
-    }
-
     return toontasks.map((task) => getTaskType(task));
   }
 
@@ -86,7 +75,6 @@ const TasksTab: React.FC<TabProps> = ({ toonData }) => {
     [tasks[1], tasks[2]] = [tasks[2], tasks[1]];
   }
 
-  console.log(toonData.data.tasks);
   return (
     <AnimatedTabContent>
       <div className="grid grid-rows-2 grid-cols-2">
