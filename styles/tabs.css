@@ -272,29 +272,34 @@
 */
 
 .task-container {
-  @apply justify-center items-center rounded-xl
-  flex flex-col;
+  @apply flex flex-col justify-center items-center relative;
 }
 
 .task-title {
-  @apply text-base sm:text-xl lg:text-xl xl:text-2xl 
-  text-pink-900 dark:text-pink-100;
+  @apply font-semibold text-sm sm:text-xl lg:text-xl 2xl:text-2xl 
+  mt-8 sm:mt-12 2xl:mt-24
+  text-pink-900;
 }
 
 .task-location {
-  @apply text-base sm:text-xl lg:text-xl xl:text-2xl 
-  text-pink-800 dark:text-pink-200 pb-2;
+  @apply text-sm sm:text-xl lg:text-xl 2xl:text-2xl 
+  text-pink-800 pb-2;
 }
 
 .task-progress {
-  @apply text-base sm:text-xl lg:text-xl xl:text-2xl items-center p-2 rounded-xl
-  bg-blue-300 bg-opacity-10 border-pink-800 border-2;
+  @apply text-sm sm:text-xl lg:text-xl 2xl:text-2xl items-center p-2
+  bg-opacity-10 border-2 
+  border-t-gray-800 border-l-gray-800 border-b-white border-r-white;
 }
 
 .dark .task-progress {
-  @apply bg-pink-400 text-gray-1100 border-pink-900;
+  @apply text-blue-900;
 }
 
 .task-reward {
-  @apply text-red-500 dark:text-red-600 lg:text-lg xl:text-xl;
+  @apply text-red-500 dark:text-red-600 text-sm sm:text-lg 2xl:text-xl;
+}
+
+.task-size {
+  @apply w-52 h-52 sm:w-72 sm:h-72 2xl:w-96 2xl:h-96;
 }

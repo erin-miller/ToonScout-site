@@ -13,15 +13,12 @@ const TasksTab: React.FC<TabProps> = ({ toonData }) => {
           title: "",
           progress: "This toon has no tasks right now!",
           reward: "",
+          deletable: false,
         },
       ];
     }
 
     return toontasks.map((task) => getTaskType(task));
-  }
-
-  function getForFun(task: Task) {
-    return task.deletable ? ` (Just For Fun)` : ``;
   }
 
   function getTaskType(task: Task) {
@@ -34,14 +31,16 @@ const TasksTab: React.FC<TabProps> = ({ toonData }) => {
         title: `Visit ${task.to.name} in ${task.to.building}`,
         progress: `${task.to.zone}, ${task.to.neighborhood}`,
         reward: task.reward,
+        deletable: task.deletable,
       };
     } else {
       // not a visit task, don't display npc values
       return {
-        title: task.objective.text + getForFun(task),
+        title: task.objective.text,
         progress: progress,
         location: task.objective.where,
         reward: task.reward,
+        deletable: task.deletable,
       };
     }
   }
@@ -62,10 +61,10 @@ const TasksTab: React.FC<TabProps> = ({ toonData }) => {
       return (
         <div className="task-progress relative z-5 overflow-hidden">
           <div
-            className="bg-blue-900 dark:bg-pink-900 absolute inset-0 opacity-25 z-0"
+            className="bg-emerald-700 absolute inset-0 opacity-30 z-0"
             style={{ width: `${progress}%` }}
           ></div>
-          <div className="w-full z-50 ">{text}</div>
+          <div className="w-full z-50">{text}</div>
         </div>
       );
     } else {
@@ -86,32 +85,43 @@ const TasksTab: React.FC<TabProps> = ({ toonData }) => {
   if (tasks.length > 2) {
     [tasks[1], tasks[2]] = [tasks[2], tasks[1]];
   }
+
+  console.log(toonData.data.tasks);
   return (
     <AnimatedTabContent>
       <div className="grid grid-rows-2 grid-cols-2">
         {tasks.map((task, index) => (
-          <div key={index} className="task-container relative">
-            <img src="/images/task.png" className="w-96 h-96 object-cover" />
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-10">
-              <div className="absolute top-4 left-4 flex justify-center items-center">
-                <span className="flex items-center justify-center w-8 h-8 bg-red-500 dark:bg-red-900 rounded-full text-gray-100 text-lg">
+          <div key={index} className="task-container">
+            <img src="/images/task.png" className="task-size object-cover" />
+            <div className="flex flex-col absolute justify-center items-center text-center task-size px-4 pb-8 xl:pb-10">
+              <span className="absolute inset-0 mt-2 2xl:mt-4 font-semibold font-minnie text-gray-1200 text-sm sm:text-xl 2xl:text-2xl">
+                TOONTASK
+              </span>
+
+              {task.deletable && (
+                <span className="hidden 2xl:flex absolute inset-0 font-semibold text-blue-900 -rotate-[25deg] translate-x-[70px] translate-y-[-40px]">
+                  Just for fun!
+                </span>
+              )}
+              <div className="flex absolute top-4 left-4 justify-center items-center">
+                <span
+                  className="hidden 2xl:flex items-center justify-center w-8 h-8 border-4 shadow-lg
+                bg-red-500 border-red-600 rounded-full text-gray-100 
+                xl:text-lg mt-12 mx-6"
+                >
                   {getIndex(index)}
                 </span>
               </div>
-              <div className="relative flex flex-row w-full px-4">
-                <h3 className="task-title text-xl font-semibold">
-                  {task.title}
-                </h3>
-              </div>
-              <div className="flex flex-col justify-center items-center flex-grow w-full">
+              <h3 className="task-title">{task.title}</h3>
+              <div className="flex flex-col justify-center items-center flex-grow">
                 {task.location && (
-                  <p className="task-location text-sm">{task.location}</p>
+                  <p className="task-location">{task.location}</p>
                 )}
                 {task.progress && renderProgress(task.progress)}
               </div>
-              <div className="mt-auto w-full px-4">
+              <div className="mt-auto">
                 {task.reward && (
-                  <p className="task-reward text-sm">Reward: {task.reward}</p>
+                  <p className="task-reward">Reward: {task.reward}</p>
                 )}
               </div>
             </div>
