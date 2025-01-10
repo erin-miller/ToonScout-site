@@ -272,12 +272,8 @@
 */
 
 .task-container {
-  @apply h-64 w-full bg-blue-200 border-blue-300 border-4 rounded-xl p-2
-  flex flex-col justify-between overflow-hidden;
-}
-
-.dark .task-container {
-  @apply bg-gray-1000 border-pink-600 text-pink-500;
+  @apply justify-center items-center rounded-xl
+  flex flex-col;
 }
 
 .task-title {

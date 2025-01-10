@@ -88,30 +88,32 @@ const TasksTab: React.FC<TabProps> = ({ toonData }) => {
   }
   return (
     <AnimatedTabContent>
-      <div className="grid grid-rows-2 grid-cols-2 gap-2">
+      <div className="grid grid-rows-2 grid-cols-2">
         {tasks.map((task, index) => (
-          <div key={index} className="task-container">
-            <div className="absolute justify-center items-center pt-52">
-              <span
-                className="flex items-center justify-center w-6 h-6
-               bg-red-500 dark:bg-red-900 rounded-full text-gray-100 text-lg"
-              >
-                {getIndex(index)}
-              </span>
-            </div>
-            <div className="relative flex flex-row">
-              <h3 className="task-title w-full">{task.title}</h3>
-            </div>
-            <div className="flex flex-col justify-center items-center flex-grow">
-              {task.location && (
-                <p className="task-location">{task.location}</p>
-              )}
-              {task.progress && renderProgress(task.progress)}
-            </div>
-            <div className="mt-auto">
-              {task.reward && (
-                <p className="task-reward">Reward: {task.reward}</p>
-              )}
+          <div key={index} className="task-container relative">
+            <img src="/images/task.png" className="w-96 h-96 object-cover" />
+            <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-10">
+              <div className="absolute top-4 left-4 flex justify-center items-center">
+                <span className="flex items-center justify-center w-8 h-8 bg-red-500 dark:bg-red-900 rounded-full text-gray-100 text-lg">
+                  {getIndex(index)}
+                </span>
+              </div>
+              <div className="relative flex flex-row w-full px-4">
+                <h3 className="task-title text-xl font-semibold">
+                  {task.title}
+                </h3>
+              </div>
+              <div className="flex flex-col justify-center items-center flex-grow w-full">
+                {task.location && (
+                  <p className="task-location text-sm">{task.location}</p>
+                )}
+                {task.progress && renderProgress(task.progress)}
+              </div>
+              <div className="mt-auto w-full px-4">
+                {task.reward && (
+                  <p className="task-reward text-sm">Reward: {task.reward}</p>
+                )}
+              </div>
             </div>
           </div>
         ))}
