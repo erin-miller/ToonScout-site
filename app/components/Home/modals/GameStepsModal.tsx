@@ -11,7 +11,7 @@ const GameStepsModal: React.FC<GameStepsModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="text-3xl font-semibold text-gray-1200 pb-4">
+      <div className="text-3xl font-semibold text-gray-1200 dark:text-gray-100 pb-4">
         To connect to Toontown Rewritten, follow the steps below!
       </div>
       <div className="grid grid-cols-2 gap-8">
