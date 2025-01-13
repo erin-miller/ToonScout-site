@@ -50,13 +50,16 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
     <div className="flex items-center justify-center">
       <button className="scale-up" onClick={handleStatusClick}>
         <div
-          className={`flex flex-row text-lg items-center justify-center px-2 rounded-full text-gray-1200 
-            border-2
-            ${isConnected ? "border-green-500" : "border-red-800"}`}
+          className={`flex flex-row text-lg items-center justify-center px-2 rounded-full border-2
+            ${
+              isConnected
+                ? "border-green-600 bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
+                : "border-red-500 bg-red-100 dark:bg-red-900 text-red-900 dark:text-red-100"
+            }`}
         >
           <div
             className={`w-2.5 h-2.5 rounded-full mr-2 ${
-              isConnected ? "bg-green-900" : "bg-red-800"
+              isConnected ? "bg-green-600" : "bg-red-500"
             }`}
           />
           <div>{toonData ? `Last updated ${modified}` : "No data found."}</div>
