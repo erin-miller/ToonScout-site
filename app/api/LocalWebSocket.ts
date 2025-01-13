@@ -28,6 +28,9 @@ export const initWebSocket = (
     socket.addEventListener("message", (event) => {
       const toon = JSON.parse(event.data);
       if (toon.event === "all") {
+        const timestamp = Date.now();
+        const localToon = { data: toon, timestamp };
+        localStorage.setItem("toonData", JSON.stringify(localToon));
         setToonData(toon);
         setIsConnected(true);
       }

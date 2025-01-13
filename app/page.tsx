@@ -12,13 +12,24 @@ import { isMobile, isSafari } from "react-device-detect";
 import Incompatible from "./components/Incompatible";
 
 const HomePage: React.FC = () => {
-  const { isConnected, setIsConnected } = useConnectionContext();
+  const { setIsConnected } = useConnectionContext();
   const { toonData, setToonData } = useToonContext();
   const { userId } = useDiscordContext();
 
   useEffect(() => {
     initScoutWebSocket();
     initWebSocket(setIsConnected, setToonData);
+
+    const existingToon = localStorage.getItem("toonData");
+    if (existingToon) {
+      try {
+        const storedData = JSON.parse(existingToon);
+        const { data } = storedData;
+        setToonData(data);
+      } catch (error) {
+        console.error("Error parsing existing toon data.");
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -34,7 +45,7 @@ const HomePage: React.FC = () => {
     <div className="page-container">
       {isMobile || isSafari ? (
         <Incompatible />
-      ) : isConnected && toonData ? (
+      ) : toonData ? (
         <Home />
       ) : (
         <GameSteps />
