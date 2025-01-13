@@ -7,6 +7,7 @@ import DiscordModal from "./modals/DiscordModal";
 import { useDiscordContext } from "@/app/context/DiscordContext";
 import { handleOAuthToken } from "@/app/api/DiscordOAuth";
 import GameStepsModal from "./modals/GameStepsModal";
+import ConnectionStatus from "./tabs/components/ConnectionStatus";
 
 const Home = () => {
   const { userId, setUserId } = useDiscordContext();
@@ -101,12 +102,13 @@ const Home = () => {
             real-time information.
           </span>
           <span className="text-block">
-            If you close it, you can still access your last saved data any time
-            on Discord.
+            You can access the most recent data from the same computer or on
+            Discord at any time.
           </span>
         </p>
+        <ConnectionStatus setActiveModal={setActiveModal} />
 
-        <TabContainer setActiveModal={setActiveModal} />
+        <TabContainer />
 
         <Disclaimer />
       </div>
