@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import OAuth from "./OAuthModal";
+import OAuth from "../OAuth";
 import ArrowButton from "@/app/components/ArrowButton";
-import AnimatedTabContent from "@/app/components/animations/AnimatedTab";
 import { useDiscordContext } from "@/app/context/DiscordContext";
+import Modal from "../../Modal";
 
 interface DiscordModalProps {
   isOpen: boolean;
@@ -29,32 +29,23 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="modal-container">
-      <AnimatedTabContent>
-        <div className="modal-content">
-          {/* Step 1: OAuth */}
-          {step === 1 && <OAuth />}
+    <Modal isOpen={isOpen} onClose={onClose}>
+      {/* Step 1: OAuth */}
+      {step === 1 && <OAuth />}
 
-          {/* Step 2: Add Bot */}
-          {step === 2 && (
-            <div>
-              <h3 className="text-2xl mb-2 minnie-title">You're connected!</h3>
-              <p className="py-2">
-                Click the button below to add the bot to your Discord account.
-              </p>
-              <div className="space-x-2">
-                <ArrowButton onClick={handleClick} />
-              </div>
-            </div>
-          )}
-
-          {/* Close button in the top-right corner */}
-          <button onClick={onClose} className="close-btn">
-            &times;
-          </button>
+      {/* Step 2: Add Bot */}
+      {step === 2 && (
+        <div>
+          <h3 className="text-2xl mb-2 minnie-title">You're connected!</h3>
+          <p className="py-2">
+            Click the button below to add the bot to your Discord account.
+          </p>
+          <div className="space-x-2">
+            <ArrowButton onClick={handleClick} />
+          </div>
         </div>
-      </AnimatedTabContent>
-    </div>
+      )}
+    </Modal>
   );
 };
 
