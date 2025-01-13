@@ -22,7 +22,7 @@ const GagsTab: React.FC<TabProps> = ({ toonData }) => {
           return (
             <div
               key={track}
-              className={`flex items-center bg-${track.toLowerCase()} rounded-3xl py-2 space-x-1 shadow-lg relative overflow-hidden`}
+              className={`flex items-center bg-${track.toLowerCase()} rounded-3xl py-2 space-x-1 shadow-lg relative overflow-hidden inline-flex max-w-max pr-4`}
             >
               <div className="flex flex-col px-2">
                 <h3
