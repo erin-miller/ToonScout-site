@@ -6,18 +6,14 @@ import ThemeToggle from "@/app/components/Theme";
 import DiscordModal from "./modals/DiscordModal";
 import { useDiscordContext } from "@/app/context/DiscordContext";
 import { handleOAuthToken } from "@/app/api/DiscordOAuth";
+import GameStepsModal from "./modals/GameStepsModal";
 
 const Home = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const { userId, setUserId } = useDiscordContext();
+  const [activeModal, setActiveModal] = useState<string | null>(null);
 
-  const onClose = () => {
-    setIsOpen(false);
-  };
-
-  const handleDiscordClick = () => {
-    setIsOpen(!isOpen);
-  };
+  const openModal = (modalName: string) => setActiveModal(modalName);
+  const closeModal = () => setActiveModal(null);
 
   useEffect(() => {
     const checkAccessToken = async () => {
@@ -66,7 +62,7 @@ const Home = () => {
             Welcome to ToonScout!
           </h2>
           <div className="relative md:absolute right-0 space-x-2 text-white dark: text-blue-900">
-            <button className="home-btn" onClick={handleDiscordClick}>
+            <button className="home-btn" onClick={() => openModal("discord")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 127.14 96.36"
@@ -92,7 +88,12 @@ const Home = () => {
             </button>
             <ThemeToggle />
           </div>
-          {isOpen && <DiscordModal isOpen={isOpen} onClose={onClose} />}
+          {activeModal == "discord" && (
+            <DiscordModal isOpen={true} onClose={closeModal} />
+          )}
+          {activeModal == "connect" && (
+            <GameStepsModal isOpen={true} onClose={closeModal} />
+          )}
         </div>
         <p>
           <span className="text-block">
@@ -105,7 +106,7 @@ const Home = () => {
           </span>
         </p>
 
-        <TabContainer />
+        <TabContainer setActiveModal={setActiveModal} />
 
         <Disclaimer />
       </div>

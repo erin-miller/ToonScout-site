@@ -1,8 +1,13 @@
 import { useConnectionContext } from "@/app/context/ConnectionContext";
 import { useToonContext } from "@/app/context/ToonContext";
 import React, { useEffect, useState } from "react";
+interface ConnectionStatusProps {
+  setActiveModal: React.Dispatch<React.SetStateAction<string | null>>;
+}
 
-const ConnectionStatus: React.FC = () => {
+const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
+  setActiveModal,
+}) => {
   const { isConnected } = useConnectionContext();
   const { toonData } = useToonContext();
   const [modified, setModified] = useState<string>("");
@@ -15,8 +20,8 @@ const ConnectionStatus: React.FC = () => {
         const storedData = JSON.parse(existingToon);
         const { timestamp } = storedData;
 
-        const timeDifference = Date.now() - timestamp;
-        const timeAgo = getTimeAgo(timeDifference);
+        const diff = Date.now() - timestamp;
+        const timeAgo = getTimeAgo(diff);
 
         setModified(timeAgo);
       } catch (error) {
@@ -24,6 +29,10 @@ const ConnectionStatus: React.FC = () => {
       }
     }
   }, []);
+
+  const handleStatusClick = () => {
+    setActiveModal("connect");
+  };
 
   const getTimeAgo = (timeDifference: number): string => {
     if (timeDifference < 60000) {
@@ -38,14 +47,17 @@ const ConnectionStatus: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center pt-6 scale-up">
+    <button
+      className="flex items-center justify-center pt-6 scale-up"
+      onClick={handleStatusClick}
+    >
       <span
         className={`w-2.5 h-2.5 rounded-full mr-2 ${
           isConnected ? "bg-green-500" : "bg-gray-900"
         }`}
       />
       <span>{toonData ? `Last updated ${modified}` : "No data found."}</span>
-    </div>
+    </button>
   );
 };
 

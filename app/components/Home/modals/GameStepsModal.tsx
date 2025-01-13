@@ -1,6 +1,4 @@
 import React from "react";
-import AnimatedTabContent from "@/app/components/animations/AnimatedTab";
-import GameSteps from "../../GameSteps/GameSteps";
 import Modal from "../../Modal";
 
 interface GameStepsModalProps {
@@ -13,9 +11,28 @@ const GameStepsModal: React.FC<GameStepsModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <GameSteps />
+      <div className="text-3xl font-semibold text-gray-1200 pb-4">
+        To connect to Toontown Rewritten, follow the steps below!
+      </div>
+      <div className="grid grid-cols-2 gap-8">
+        <Step
+          title="1. Enable Companion App Support"
+          image="/images/gameplay-menu.png"
+        />
+        <Step
+          title="2. Click 'OK' on in-game popup and select a toon"
+          image="/images/prompt.png"
+        />
+      </div>
     </Modal>
   );
 };
+
+const Step: React.FC<{ title: string; image: string }> = ({ title, image }) => (
+  <div className="text-2xl">
+    <h2 className="pb-2 ">{title}</h2>
+    <img src={image} alt={title} className="mx-auto" />
+  </div>
+);
 
 export default GameStepsModal;

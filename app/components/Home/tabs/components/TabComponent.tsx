@@ -13,7 +13,6 @@ import { useState } from "react";
 import { useToonContext } from "@/app/context/ToonContext";
 import { ToonData } from "@/app/types";
 import { hasNoSuit } from "./utils";
-import { useConnectionContext } from "@/app/context/ConnectionContext";
 import ConnectionStatus from "./ConnectionStatus";
 
 export interface TabProps {
@@ -27,9 +26,12 @@ export type TabComponent = {
   disabled?: boolean;
 };
 
-const TabContainer = () => {
+interface TabContainerProps {
+  setActiveModal: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+const TabContainer: React.FC<TabContainerProps> = ({ setActiveModal }) => {
   const { toonData } = useToonContext();
-  const { isConnected } = useConnectionContext();
 
   if (!toonData) {
     return "No toon data found. Please try refreshing the page.";
@@ -130,7 +132,7 @@ const TabContainer = () => {
                   onClick={handleImageClick}
                 />
               </div>
-              <ConnectionStatus />
+              <ConnectionStatus setActiveModal={setActiveModal} />
             </div>
 
             <div className="right-info-container">
