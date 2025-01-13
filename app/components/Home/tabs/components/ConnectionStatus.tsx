@@ -28,7 +28,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
         console.error("Error parsing existing toon data.");
       }
     }
-  }, []);
+  }, [toonData]);
 
   const handleStatusClick = () => {
     setActiveModal("connect");
@@ -47,17 +47,22 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   };
 
   return (
-    <button
-      className="flex items-center justify-center pt-6 scale-up"
-      onClick={handleStatusClick}
-    >
-      <span
-        className={`w-2.5 h-2.5 rounded-full mr-2 ${
-          isConnected ? "bg-green-500" : "bg-gray-900"
-        }`}
-      />
-      <span>{toonData ? `Last updated ${modified}` : "No data found."}</span>
-    </button>
+    <div className="flex items-center justify-center">
+      <button className="scale-up" onClick={handleStatusClick}>
+        <div
+          className={`flex flex-row text-lg items-center justify-center px-2 rounded-full text-gray-1200 
+            border-2
+            ${isConnected ? "border-green-500" : "border-red-800"}`}
+        >
+          <div
+            className={`w-2.5 h-2.5 rounded-full mr-2 ${
+              isConnected ? "bg-green-900" : "bg-red-800"
+            }`}
+          />
+          <div>{toonData ? `Last updated ${modified}` : "No data found."}</div>
+        </div>
+      </button>
+    </div>
   );
 };
 

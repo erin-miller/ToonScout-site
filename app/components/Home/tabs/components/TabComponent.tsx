@@ -26,11 +26,7 @@ export type TabComponent = {
   disabled?: boolean;
 };
 
-interface TabContainerProps {
-  setActiveModal: React.Dispatch<React.SetStateAction<string | null>>;
-}
-
-const TabContainer: React.FC<TabContainerProps> = ({ setActiveModal }) => {
+const TabContainer = () => {
   const { toonData } = useToonContext();
 
   if (!toonData) {
@@ -132,7 +128,6 @@ const TabContainer: React.FC<TabContainerProps> = ({ setActiveModal }) => {
                   onClick={handleImageClick}
                 />
               </div>
-              <ConnectionStatus setActiveModal={setActiveModal} />
             </div>
 
             <div className="right-info-container">
