@@ -110,7 +110,7 @@ body {
   }
 
   .dark .site-scrollbar {
-    @apply scrollbar-thumb-blue-900;
+    @apply scrollbar-thumb-gray-800 scrollbar-track-gray-1000;
   }
 }
 
