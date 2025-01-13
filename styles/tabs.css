@@ -67,7 +67,7 @@
 }
 
 .activity-bubble {
-  @apply inline-flex items-center rounded-full px-2 space-x-2 bg-blue-600 text-gray-100 scale-up;
+  @apply inline-flex items-center rounded-xl px-2 space-x-2 bg-blue-600 text-gray-100 scale-up;
 }
 
 .dark .activity-bubble {
