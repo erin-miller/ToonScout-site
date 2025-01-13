@@ -103,10 +103,19 @@ body {
   .test-outline {
     @apply outline outline-red-500;
   }
+
+  .site-scrollbar {
+    @apply scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-500
+      scrollbar-thumb-rounded-full;
+  }
+
+  .dark .site-scrollbar {
+    @apply scrollbar-thumb-blue-900;
+  }
 }
 
 .page-container {
-  @apply flex flex-col h-screen gags-pattern bg-repeat overflow-y-scroll;
+  @apply flex flex-col h-screen gags-pattern bg-repeat overflow-y-scroll site-scrollbar;
 }
 
 .gags-pattern {
