@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "/styles/home.css";
 
 function ThemeToggle() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState<string | null>(null); // Start with null to avoid mismatches during SSR.
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -19,7 +19,7 @@ function ThemeToggle() {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (theme) {
       const root = window.document.documentElement;
       if (theme === "dark") {
         root.classList.add("dark");
@@ -31,8 +31,13 @@ function ThemeToggle() {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
   };
+
+  if (theme === null) {
+    // Avoid rendering mismatched HTML during hydration.
+    return null;
+  }
 
   return (
     <button onClick={toggleTheme} className="home-btn">
