@@ -16,31 +16,31 @@ const deptChars = {
   bossbot: "c",
 };
 
-const SuitTab: React.FC<TabProps> = ({ toonData }) => {
-  if (hasNoSuit(toonData)) {
+const SuitTab: React.FC<TabProps> = ({ toons }) => {
+  if (hasNoSuit(toons)) {
     return null;
   }
 
-  const first = findSuit(toonData);
+  const first = findSuit(toons);
   const [dept, setDept] = useState(first || "s");
   const [promo, setPromo] = useState<PromotionPath | null>(null);
   const [loading, setLoading] = useState(true);
-  const [suit, setSuit] = useState(toonData.data.cogsuits[dept]);
+  const [suit, setSuit] = useState(toons.data.cogsuits[dept]);
 
   useEffect(() => {
-    const avail = Object.keys(toonData.data.cogsuits);
+    const avail = Object.keys(toons.data.cogsuits);
     const currAvail = avail.includes(dept);
 
-    if (!currAvail || !toonData.data.cogsuits[dept]?.hasDisguise) {
+    if (!currAvail || !toons.data.cogsuits[dept]?.hasDisguise) {
       const firstAvail = avail.find(
-        (department) => toonData.data.cogsuits[department]?.hasDisguise
+        (department) => toons.data.cogsuits[department]?.hasDisguise
       );
       if (firstAvail) {
         setDept(firstAvail);
       }
     }
 
-    const currentSuit = toonData.data.cogsuits[dept];
+    const currentSuit = toons.data.cogsuits[dept];
     setSuit(currentSuit);
 
     const getPromo = async () => {
@@ -49,7 +49,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ toonData, dept }),
+        body: JSON.stringify({ toonData: toons, dept }),
       });
 
       if (!response.ok) {
@@ -61,10 +61,10 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
       setLoading(false);
     };
 
-    if (toonData.data.cogsuits[dept]?.hasDisguise) {
+    if (toons.data.cogsuits[dept]?.hasDisguise) {
       getPromo();
     }
-  }, [toonData, dept]);
+  }, [toons, dept]);
 
   const sortPath = () => {
     if (!promo || !suit || suit.promotion?.current >= suit.promotion?.target)
@@ -134,7 +134,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
             onClick={() => setDept(deptChars.sellbot)}
             className="suit-btn"
             aria-selected={dept === deptChars.sellbot}
-            disabled={!toonData.data.cogsuits[deptChars.sellbot]?.hasDisguise}
+            disabled={!toons.data.cogsuits[deptChars.sellbot]?.hasDisguise}
           >
             <img src="/images/emblem_sell.png" className="dept-photo" />
           </button>
@@ -142,7 +142,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
             onClick={() => setDept(deptChars.cashbot)}
             className="suit-btn"
             aria-selected={dept === deptChars.cashbot}
-            disabled={!toonData.data.cogsuits[deptChars.cashbot]?.hasDisguise}
+            disabled={!toons.data.cogsuits[deptChars.cashbot]?.hasDisguise}
           >
             <img src="/images/emblem_cash.png" className="dept-photo" />
           </button>
@@ -150,7 +150,7 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
             onClick={() => setDept(deptChars.lawbot)}
             className="suit-btn"
             aria-selected={dept === deptChars.lawbot}
-            disabled={!toonData.data.cogsuits[deptChars.lawbot]?.hasDisguise}
+            disabled={!toons.data.cogsuits[deptChars.lawbot]?.hasDisguise}
           >
             <img src="/images/emblem_law.png" className="dept-photo" />
           </button>
@@ -158,16 +158,14 @@ const SuitTab: React.FC<TabProps> = ({ toonData }) => {
             onClick={() => setDept(deptChars.bossbot)}
             className="suit-btn"
             aria-selected={dept === deptChars.bossbot}
-            disabled={!toonData.data.cogsuits[deptChars.bossbot]?.hasDisguise}
+            disabled={!toons.data.cogsuits[deptChars.bossbot]?.hasDisguise}
           >
             <img src="/images/emblem_boss.png" className="dept-photo" />
           </button>
         </div>
         <div className="suit-container">
           <div className="suit-overview">
-            <div className="w-1/2  text-left">
-              {getSuitName(toonData, dept)}
-            </div>
+            <div className="w-1/2  text-left">{getSuitName(toons, dept)}</div>
             <div className="w-1/5  text-left text-nowrap">
               {suit ? `Level ${suit.level}` : "No suit available"}
             </div>

@@ -13,23 +13,25 @@ import { useState } from "react";
 import { useToonContext } from "@/app/context/ToonContext";
 import { ToonData } from "@/app/types";
 import { hasNoSuit } from "./utils";
-import ConnectionStatus from "./ConnectionStatus";
 
 export interface TabProps {
-  toonData: ToonData;
+  toons: ToonData;
   setSelectedTab?: React.Dispatch<React.SetStateAction<TabComponent>>;
 }
 
 export type TabComponent = {
   title: string;
-  component: React.FC<{ toonData: ToonData }>;
+  component: React.FC<{ toons: ToonData }>;
   disabled?: boolean;
 };
 
 const TabContainer = () => {
-  const { toonData } = useToonContext();
-
-  if (!toonData) {
+  const { activeIndex, toons } = useToonContext();
+  toons.forEach((toon, index) =>
+    console.log(`${index + 1}. ${toon?.data.toon.id}`)
+  );
+  console.log("active:" + toons[activeIndex]?.data.toon.name);
+  if (!activeIndex) {
     return "No toon data found. Please try refreshing the page.";
   }
 
@@ -42,12 +44,16 @@ const TabContainer = () => {
       ),
     },
     { title: "Fishing", component: FishTab },
-    { title: "Suits", component: SuitTab, disabled: hasNoSuit(toonData) },
+    {
+      title: "Suits",
+      component: SuitTab,
+      disabled: hasNoSuit(toons[activeIndex]),
+    },
     { title: "Gags", component: GagsTab },
     {
       title: "Tasks",
       component: TasksTab,
-      disabled: toonData.data.tasks.length <= 0,
+      disabled: toons[activeIndex].data.tasks.length <= 0,
     },
     { title: "Activities", component: ActivityTab },
   ];
@@ -55,7 +61,7 @@ const TabContainer = () => {
   const [selectedTab, setSelectedTab] = useState<TabComponent>(TabList[1]); // Default to "Overview"
   const [pose, setPose] = useState<string>("waving");
 
-  if (selectedTab.title == "Suits" && hasNoSuit(toonData)) {
+  if (selectedTab.title == "Suits" && hasNoSuit(toons[activeIndex])) {
     setSelectedTab(TabList[1]);
   }
 
@@ -74,7 +80,7 @@ const TabContainer = () => {
   ];
 
   const getImage = () => {
-    const dna = toonData.data.toon.style;
+    const dna = toons[activeIndex]?.data.toon.style;
     return `https://rendition.toontownrewritten.com/render/${dna}/${pose}/1024x1024.png`;
   };
 
@@ -110,20 +116,21 @@ const TabContainer = () => {
             <div className="left-info-container">
               <div>
                 <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl bg-pink-900 text-gray-100 dark:text-blue-100 dark:bg-pink-900 rounded-lg py-1 break-words overflow-hidden">
-                  {toonData.data.toon.name}
+                  {toons[activeIndex].data.toon.name}
                 </p>
                 <p className="text-lg md:text-xl lg:text-2xl pt-1">
-                  {toonData.data.laff.current} / {toonData.data.laff.max} laff
+                  {toons[activeIndex].data.laff.current} /{" "}
+                  {toons[activeIndex].data.laff.max} laff
                 </p>
                 <p className="text-md md:text-xl lg:text-2xl">
-                  {toonData.data.location.zone},{" "}
-                  {toonData.data.location.district}
+                  {toons[activeIndex].data.location.zone},{" "}
+                  {toons[activeIndex].data.location.district}
                 </p>
               </div>
               <div className="toon-photo">
                 <img
                   src={getImage()}
-                  alt={`${toonData.data.toon.name} in pose ${pose}`}
+                  alt={`${toons[activeIndex].data.toon.name} in pose ${pose}`}
                   className="w-512 h-512"
                   onClick={handleImageClick}
                 />
@@ -131,12 +138,12 @@ const TabContainer = () => {
             </div>
 
             <div className="right-info-container">
-              <selectedTab.component toonData={toonData} />
+              <selectedTab.component toons={toons[activeIndex]} />
             </div>
           </div>
         </AnimatedTabContent>
       ) : (
-        <selectedTab.component toonData={toonData} />
+        <selectedTab.component toons={toons[activeIndex]} />
       )}
     </>
   );

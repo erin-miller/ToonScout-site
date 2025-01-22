@@ -1,8 +1,8 @@
-const DEFAULT_PORT = 1547;
+const DEFAULT_PORTS = [1547, 1548, 1549, 1550, 1551, 1552];
 const RECONNECT_DELAY = 10000;
 const RECONNECT_INTERVAL = 5000;
 
-let socket: WebSocket | null = null;
+let sockets: { [port: number]: WebSocket } = {};
 let contReqInterval: NodeJS.Timeout | null = null;
 
 export const initWebSocket = (
@@ -10,54 +10,57 @@ export const initWebSocket = (
   setToonData: (data: any) => void
 ) => {
   const connectWebSocket = () => {
-    if (socket && socket.readyState !== WebSocket.CLOSED) {
-      return;
-    }
-
-    socket = new WebSocket(`ws://localhost:${DEFAULT_PORT}`);
-
-    socket.addEventListener("open", () => {
-      console.log("WebSocket opened");
-      socket?.send(
-        JSON.stringify({ authorization: initAuthToken(), name: "ToonScout" })
-      );
-      socket?.send(JSON.stringify({ request: "all" }));
-      startContinuousRequests();
-    });
-
-    socket.addEventListener("message", (event) => {
-      const toon = JSON.parse(event.data);
-      if (toon.event === "all") {
-        const timestamp = Date.now();
-        const localToon = { data: toon, timestamp };
-        localStorage.setItem("toonData", JSON.stringify(localToon));
-        setToonData(toon);
-        setIsConnected(true);
+    DEFAULT_PORTS.forEach((port) => {
+      // If the socket for the port is already open, skip creating a new one
+      if (sockets[port] && sockets[port].readyState !== WebSocket.CLOSED) {
+        return;
       }
-    });
 
-    socket.addEventListener("error", (error) => {
-      console.error("WebSocket error:", error);
-      setIsConnected(false);
-      cleanupWebSocket();
-    });
+      const socket = new WebSocket(`ws://localhost:${port}`);
+      sockets[port] = socket;
 
-    socket.addEventListener("close", () => {
-      console.log("WebSocket closed");
-      setIsConnected(false);
-      stopContinuousRequests();
-      cleanupWebSocket();
-      setTimeout(connectWebSocket, RECONNECT_DELAY);
+      socket.addEventListener("open", () => {
+        console.log(`WebSocket opened on port ${port}`);
+        socket.send(
+          JSON.stringify({ authorization: initAuthToken(), name: "ToonScout" })
+        );
+        socket.send(JSON.stringify({ request: "all" }));
+        startContinuousRequests();
+      });
+
+      socket.addEventListener("message", (event) => {
+        const toon = JSON.parse(event.data);
+        if (toon.event === "all") {
+          const timestamp = Date.now();
+          const localToon = { data: toon, timestamp };
+          localStorage.setItem("toonData", JSON.stringify(localToon));
+          setToonData(toon);
+          setIsConnected(true);
+        }
+      });
+
+      socket.addEventListener("error", (error) => {
+        setIsConnected(false);
+        cleanupWebSocket(port);
+      });
+
+      socket.addEventListener("close", () => {
+        setIsConnected(false);
+        stopContinuousRequests();
+        cleanupWebSocket(port);
+        setTimeout(() => connectWebSocket(), RECONNECT_DELAY);
+      });
     });
   };
 
-  function cleanupWebSocket() {
+  function cleanupWebSocket(port: number) {
+    const socket = sockets[port];
     if (socket) {
       socket.removeEventListener("open", () => {});
       socket.removeEventListener("message", () => {});
       socket.removeEventListener("error", () => {});
       socket.removeEventListener("close", () => {});
-      socket = null;
+      delete sockets[port];
     }
   }
 
@@ -65,9 +68,12 @@ export const initWebSocket = (
     if (contReqInterval) clearInterval(contReqInterval);
 
     contReqInterval = setInterval(() => {
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({ request: "all" }));
-      }
+      // Send requests for each socket
+      Object.values(sockets).forEach((socket) => {
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(JSON.stringify({ request: "all" }));
+        }
+      });
     }, RECONNECT_INTERVAL);
   }
 
