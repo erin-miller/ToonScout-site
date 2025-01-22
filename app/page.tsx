@@ -13,19 +13,22 @@ import Incompatible from "./components/Incompatible";
 
 const HomePage: React.FC = () => {
   const { setIsConnected } = useConnectionContext();
-  const { toonData, setToonData } = useToonContext();
+  const { activeIndex, setActiveIndex, toons, addToon } = useToonContext();
   const { userId } = useDiscordContext();
 
   useEffect(() => {
     initScoutWebSocket();
-    initWebSocket(setIsConnected, setToonData);
+    initWebSocket(setIsConnected, setActiveIndex);
 
     const existingToon = localStorage.getItem("toonData");
     if (existingToon) {
       try {
         const storedData = JSON.parse(existingToon);
         const { data } = storedData;
-        setToonData(data);
+        addToon(data);
+        setActiveIndex(-1);
+        console.log(`toons: ${toons}`);
+        console.log(`active index: ${activeIndex}`);
       } catch (error) {
         console.error("Error parsing existing toon data.");
       }
@@ -34,18 +37,18 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const sendData = () => {
-      if (userId && toonData) {
-        sendScoutData(userId, toonData);
+      if (userId && activeIndex) {
+        sendScoutData(userId, toons[activeIndex]);
       }
     };
     sendData();
-  }, [userId, toonData]);
+  }, [userId, activeIndex]);
 
   return (
     <div className="page-container">
       {isMobile || isSafari ? (
         <Incompatible />
-      ) : toonData ? (
+      ) : toons.length > 0 ? (
         <Home />
       ) : (
         <GameSteps />

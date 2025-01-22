@@ -3,10 +3,10 @@ import { TabProps } from "./components/TabComponent";
 import AnimatedTabContent from "../../animations/AnimatedTab";
 import { Task, ToonData } from "@/app/types";
 
-const TasksTab: React.FC<TabProps> = ({ toonData }) => {
+const TasksTab: React.FC<TabProps> = ({ toons }) => {
   // pulled from ToonScout bot
-  function getTasks(toonData: ToonData) {
-    const toontasks = toonData.data.tasks;
+  function getTasks(toons: ToonData) {
+    const toontasks = toons.data.tasks;
     return toontasks.map((task) => getTaskType(task));
   }
 
@@ -68,7 +68,7 @@ const TasksTab: React.FC<TabProps> = ({ toonData }) => {
     return index + 1;
   };
 
-  const tasks = getTasks(toonData);
+  const tasks = getTasks(toons);
 
   // match game format
   if (tasks.length > 2) {
