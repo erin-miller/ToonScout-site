@@ -15,23 +15,22 @@ import { ToonData } from "@/app/types";
 import { hasNoSuit } from "./utils";
 
 export interface TabProps {
-  toons: ToonData;
+  toon: ToonData;
   setSelectedTab?: React.Dispatch<React.SetStateAction<TabComponent>>;
 }
 
 export type TabComponent = {
   title: string;
-  component: React.FC<{ toons: ToonData }>;
+  component: React.FC<{ toon: ToonData }>;
   disabled?: boolean;
 };
 
 const TabContainer = () => {
   const { activeIndex, toons } = useToonContext();
-  toons.forEach((toon, index) =>
-    console.log(`${index + 1}. ${toon?.data.toon.id}`)
-  );
-  console.log("active:" + toons[activeIndex]?.data.toon.name);
-  if (!activeIndex) {
+
+  const toon = toons[activeIndex];
+
+  if (!toon) {
     return "No toon data found. Please try refreshing the page.";
   }
 
@@ -47,7 +46,7 @@ const TabContainer = () => {
     {
       title: "Suits",
       component: SuitTab,
-      disabled: hasNoSuit(toons[activeIndex]),
+      disabled: hasNoSuit(toon),
     },
     { title: "Gags", component: GagsTab },
     {
@@ -61,7 +60,7 @@ const TabContainer = () => {
   const [selectedTab, setSelectedTab] = useState<TabComponent>(TabList[1]); // Default to "Overview"
   const [pose, setPose] = useState<string>("waving");
 
-  if (selectedTab.title == "Suits" && hasNoSuit(toons[activeIndex])) {
+  if (selectedTab.title == "Suits" && hasNoSuit(toon)) {
     setSelectedTab(TabList[1]);
   }
 
@@ -80,7 +79,7 @@ const TabContainer = () => {
   ];
 
   const getImage = () => {
-    const dna = toons[activeIndex]?.data.toon.style;
+    const dna = toon.data.toon.style;
     return `https://rendition.toontownrewritten.com/render/${dna}/${pose}/1024x1024.png`;
   };
 
@@ -116,21 +115,19 @@ const TabContainer = () => {
             <div className="left-info-container">
               <div>
                 <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl bg-pink-900 text-gray-100 dark:text-blue-100 dark:bg-pink-900 rounded-lg py-1 break-words overflow-hidden">
-                  {toons[activeIndex].data.toon.name}
+                  {toon.data.toon.name}
                 </p>
                 <p className="text-lg md:text-xl lg:text-2xl pt-1">
-                  {toons[activeIndex].data.laff.current} /{" "}
-                  {toons[activeIndex].data.laff.max} laff
+                  {toon.data.laff.current} / {toon.data.laff.max} laff
                 </p>
                 <p className="text-md md:text-xl lg:text-2xl">
-                  {toons[activeIndex].data.location.zone},{" "}
-                  {toons[activeIndex].data.location.district}
+                  {toon.data.location.zone}, {toon.data.location.district}
                 </p>
               </div>
               <div className="toon-photo">
                 <img
                   src={getImage()}
-                  alt={`${toons[activeIndex].data.toon.name} in pose ${pose}`}
+                  alt={`${toon.data.toon.name} in pose ${pose}`}
                   className="w-512 h-512"
                   onClick={handleImageClick}
                 />
@@ -138,12 +135,12 @@ const TabContainer = () => {
             </div>
 
             <div className="right-info-container">
-              <selectedTab.component toons={toons[activeIndex]} />
+              <selectedTab.component toon={toon} />
             </div>
           </div>
         </AnimatedTabContent>
       ) : (
-        <selectedTab.component toons={toons[activeIndex]} />
+        <selectedTab.component toon={toon} />
       )}
     </>
   );

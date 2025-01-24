@@ -4,19 +4,19 @@ import AnimatedTabContent from "../../animations/AnimatedTab";
 import "/styles/tabs.css";
 import ExpContainer from "./components/ExpContainer";
 
-const GagsTab: React.FC<TabProps> = ({ toons }) => {
-  const tracks = Object.keys(toons.data.gags);
+const GagsTab: React.FC<TabProps> = ({ toon }) => {
+  const tracks = Object.keys(toon.data.gags);
 
   return (
     <AnimatedTabContent>
       <div className="container mx-auto">
         {tracks.map((track) => {
-          const trackData = toons.data.gags[track];
+          const trackData = toon.data.gags[track];
 
           let maxLevel = 0;
 
           if (trackData) {
-            maxLevel = toons.data.gags[track]?.gag.level || 0;
+            maxLevel = toon.data.gags[track]?.gag.level || 0;
           }
 
           return (
@@ -33,7 +33,7 @@ const GagsTab: React.FC<TabProps> = ({ toons }) => {
                   </div>
                 </h3>
 
-                <ExpContainer track={track} toonData={toons} />
+                <ExpContainer track={track} toonData={toon} />
               </div>
               <div className="grid grid-cols-7 gap-2">
                 {Array.from({ length: 7 }).map((_, gagIndex) => {
