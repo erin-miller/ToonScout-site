@@ -5,7 +5,7 @@ import { sumFish } from "./components/utils";
 import { FishRarity } from "@/app/types";
 const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
 
-const FishTab: React.FC<TabProps> = ({ toons }) => {
+const FishTab: React.FC<TabProps> = ({ toon }) => {
   const [fish, setFish] = useState<FishRarity[] | null>(null);
 
   const getBuckets = (fish: FishRarity) => {
@@ -25,7 +25,7 @@ const FishTab: React.FC<TabProps> = ({ toons }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ toonData: toons }),
+        body: JSON.stringify({ toon }),
       });
       if (!response.ok) {
         return "Error loading fish data. Please try again later.";
@@ -35,14 +35,14 @@ const FishTab: React.FC<TabProps> = ({ toons }) => {
     };
 
     getFish();
-  }, [toons]);
+  }, [toon]);
 
   return (
     <AnimatedTabContent>
       <div className="fish-container">
         <div className="fish-header">
           <div className="fish-item">
-            <p>{sumFish(toons)} / 70 caught</p>
+            <p>{sumFish(toon)} / 70 caught</p>
           </div>
 
           <div className="fish-item text-[20px]">

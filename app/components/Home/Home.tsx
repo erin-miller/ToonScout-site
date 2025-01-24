@@ -8,10 +8,13 @@ import { useDiscordContext } from "@/app/context/DiscordContext";
 import { handleOAuthToken } from "@/app/api/DiscordOAuth";
 import GameStepsModal from "./modals/GameStepsModal";
 import ConnectionStatus from "./tabs/components/ConnectionStatus";
+import { useToonContext } from "@/app/context/ToonContext";
 
 const Home = () => {
   const { userId, setUserId } = useDiscordContext();
+  const { toons, setActiveIndex } = useToonContext();
   const [activeModal, setActiveModal] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const openModal = (modalName: string) => setActiveModal(modalName);
   const closeModal = () => setActiveModal(null);
@@ -55,6 +58,8 @@ const Home = () => {
     }
   }, []);
 
+  console.log(toons);
+
   return (
     <div className="card-container">
       <div className="home-card">
@@ -87,6 +92,33 @@ const Home = () => {
                 </svg>
               )}
             </button>
+            <div className="relative inline-block text-left">
+              {/* Button to toggle dropdown */}
+              <button
+                onClick={() => setIsOpen((prev) => !prev)}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Select Toon
+              </button>
+
+              {/* Dropdown menu */}
+              {isOpen && (
+                <div className="absolute mt-2 w-48 bg-white shadow-lg border rounded-md py-2 z-10">
+                  {toons.map((toon, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setActiveIndex(index);
+                        setIsOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    >
+                      {`Toon ${index + 1}`}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
             <ThemeToggle />
           </div>
           {activeModal == "discord" && (

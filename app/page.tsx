@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     initScoutWebSocket();
-    initWebSocket(setIsConnected, setActiveIndex);
+    initWebSocket(setIsConnected, addToon);
 
     const existingToon = localStorage.getItem("toonData");
     if (existingToon) {
@@ -26,12 +26,15 @@ const HomePage: React.FC = () => {
         const storedData = JSON.parse(existingToon);
         const { data } = storedData;
         addToon(data);
-        setActiveIndex(-1);
-        console.log(`toons: ${toons}`);
-        console.log(`active index: ${activeIndex}`);
+        setActiveIndex(0);
       } catch (error) {
         console.error("Error parsing existing toon data.");
       }
+    }
+
+    console.log(`toons: ${toons}`);
+    if (toons.length > 0) {
+      setIsConnected(true);
     }
   }, []);
 
@@ -48,7 +51,7 @@ const HomePage: React.FC = () => {
     <div className="page-container">
       {isMobile || isSafari ? (
         <Incompatible />
-      ) : toons.length > 0 ? (
+      ) : toons && toons.length > 0 ? (
         <Home />
       ) : (
         <GameSteps />

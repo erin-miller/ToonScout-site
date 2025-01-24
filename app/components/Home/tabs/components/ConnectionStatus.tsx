@@ -9,8 +9,10 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   setActiveModal,
 }) => {
   const { isConnected } = useConnectionContext();
-  const { activeToon } = useToonContext();
+  const { toons, activeIndex } = useToonContext();
   const [modified, setModified] = useState<string>("");
+
+  const toon = toons[activeIndex];
 
   useEffect(() => {
     const existingToon = localStorage.getItem("toonData");
@@ -28,7 +30,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
         console.error("Error parsing existing toon data.");
       }
     }
-  }, [activeToon]);
+  }, [toon]);
 
   const handleStatusClick = () => {
     setActiveModal("connect");
@@ -62,9 +64,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
               isConnected ? "bg-green-600" : "bg-red-500"
             }`}
           />
-          <div>
-            {activeToon ? `Last updated ${modified}` : "No data found."}
-          </div>
+          <div>{toon ? `Last updated ${modified}` : "No data found."}</div>
         </div>
       </button>
     </div>

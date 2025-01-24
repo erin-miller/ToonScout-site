@@ -2,8 +2,8 @@ import { ToonData } from "@/app/types";
 import { golf_trophies } from "@/data/golf_trophies";
 import { race_trophies } from "@/data/race_trophies";
 
-export const displaySuit = (toons: ToonData, type: string) => {
-  if (!toons.data.cogsuits[type].hasDisguise) {
+export const displaySuit = (toon: ToonData, type: string) => {
+  if (!toon.data.cogsuits[type].hasDisguise) {
     return;
   }
 
@@ -17,11 +17,11 @@ export const displaySuit = (toons: ToonData, type: string) => {
     }
   };
 
-  let dept = toons.data.cogsuits[type];
+  let dept = toon.data.cogsuits[type];
   return (
     <div className="flex justify-center py-7 text-xl lg:text-xl xl:text-2xl w-full">
       <div className="w-full">
-        <h1>{getSuitName(toons, type)}</h1>
+        <h1>{getSuitName(toon, type)}</h1>
       </div>
       <div className="w-full">
         <h2>Level {dept.level}</h2>
@@ -33,42 +33,42 @@ export const displaySuit = (toons: ToonData, type: string) => {
   );
 };
 
-export const hasNoSuit = (toons: ToonData) => {
+export const hasNoSuit = (toon: ToonData) => {
   const depts = ["s", "m", "l", "c"];
   let count = 0;
   for (const dept of depts) {
-    if (toons.data.cogsuits[dept].hasDisguise) {
+    if (toon.data.cogsuits[dept].hasDisguise) {
       count += 1;
     }
   }
   return count == 0 ? true : false;
 };
 
-export const findSuit = (toons: ToonData) => {
+export const findSuit = (toon: ToonData) => {
   const depts = ["s", "m", "l", "c"];
   for (const dept of depts) {
-    if (toons.data.cogsuits[dept].hasDisguise) {
+    if (toon.data.cogsuits[dept].hasDisguise) {
       return dept;
     }
   }
   return null;
 };
 
-export const getSuitName = (toons: ToonData, type: string) => {
-  if (!toons.data.cogsuits[type].hasDisguise) {
+export const getSuitName = (toon: ToonData, type: string) => {
+  if (!toon.data.cogsuits[type].hasDisguise) {
     return;
   }
-  let dept = toons.data.cogsuits[type];
+  let dept = toon.data.cogsuits[type];
   if (dept.version == 2) {
     return `${dept.suit.name} v2.0`;
   }
   return dept.suit.name;
 };
 
-export const sumFish = (toons: ToonData) => {
+export const sumFish = (toon: ToonData) => {
   const fish = [];
-  for (const key in toons.data.fish.collection) {
-    const album = toons.data.fish.collection[key].album;
+  for (const key in toon.data.fish.collection) {
+    const album = toon.data.fish.collection[key].album;
     for (const type in album) {
       fish.push(album[type].name);
     }
@@ -76,11 +76,11 @@ export const sumFish = (toons: ToonData) => {
   return fish.length;
 };
 
-export const sumGolf = (toons: ToonData) => {
+export const sumGolf = (toon: ToonData) => {
   let count = 0;
   for (const trophy of golf_trophies) {
     const earned =
-      toons.data.golf.find((item) => item.name == trophy.description)?.num || 0;
+      toon.data.golf.find((item) => item.name == trophy.description)?.num || 0;
     for (const val of trophy.values) {
       if (earned >= val) {
         count += 1;
@@ -90,11 +90,11 @@ export const sumGolf = (toons: ToonData) => {
   return count;
 };
 
-export const sumRace = (toons: ToonData) => {
+export const sumRace = (toon: ToonData) => {
   let count = 0;
   for (const trophy of race_trophies) {
     const earned =
-      toons.data.racing.find((item) => item.name == trophy.description)?.num ||
+      toon.data.racing.find((item) => item.name == trophy.description)?.num ||
       0;
     for (const val of trophy.values) {
       if (earned >= val) {
@@ -105,18 +105,18 @@ export const sumRace = (toons: ToonData) => {
   return count;
 };
 
-export const getGolfTrophies = (toons: ToonData) => {
-  const count = sumGolf(toons);
+export const getGolfTrophies = (toon: ToonData) => {
+  const count = sumGolf(toon);
   return count >= 10 ? Math.floor(count / 10) : 0;
 };
 
-export const getRaceTrophies = (toons: ToonData) => {
-  const count = sumRace(toons);
+export const getRaceTrophies = (toon: ToonData) => {
+  const count = sumRace(toon);
   return count >= 10 ? Math.floor(count / 10) : 0;
 };
 
-export const sumFlowers = (toons: ToonData) => {
-  let collection = toons.data.flowers.collection;
+export const sumFlowers = (toon: ToonData) => {
+  let collection = toon.data.flowers.collection;
   let count = 0;
   for (const key in collection) {
     if (collection.hasOwnProperty(key)) {

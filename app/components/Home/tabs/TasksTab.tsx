@@ -3,7 +3,7 @@ import { TabProps } from "./components/TabComponent";
 import AnimatedTabContent from "../../animations/AnimatedTab";
 import { Task, ToonData } from "@/app/types";
 
-const TasksTab: React.FC<TabProps> = ({ toons }) => {
+const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
   // pulled from ToonScout bot
   function getTasks(toons: ToonData) {
     const toontasks = toons.data.tasks;

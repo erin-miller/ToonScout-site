@@ -7,11 +7,10 @@ let contReqInterval: NodeJS.Timeout | null = null;
 
 export const initWebSocket = (
   setIsConnected: (isConnected: boolean) => void,
-  setToonData: (data: any) => void
+  addToon: (data: any) => void
 ) => {
   const connectWebSocket = () => {
     DEFAULT_PORTS.forEach((port) => {
-      // If the socket for the port is already open, skip creating a new one
       if (sockets[port] && sockets[port].readyState !== WebSocket.CLOSED) {
         return;
       }
@@ -34,8 +33,7 @@ export const initWebSocket = (
           const timestamp = Date.now();
           const localToon = { data: toon, timestamp };
           localStorage.setItem("toonData", JSON.stringify(localToon));
-          setToonData(toon);
-          setIsConnected(true);
+          addToon(toon);
         }
       });
 
