@@ -21,8 +21,8 @@ const ToonSelect = () => {
   };
 
   const getRemaining = () => {
-    if (toons.length < 7) {
-      return `Add up to ${7 - toons.length} more toons!`;
+    if (toons.length < 8) {
+      return `Add up to ${8 - toons.length} more toons!`;
     } else {
       return `The oldest toon will be replaced by the next new toon.`;
     }

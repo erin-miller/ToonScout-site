@@ -1,6 +1,6 @@
 import { StoredToonData, ToonData } from "../types";
 
-const DEFAULT_PORTS = [1547, 1548, 1549, 1550, 1551, 1552];
+const DEFAULT_PORTS = [1547, 1548, 1549, 1550, 1551, 1552, 1553, 1554];
 const RECONNECT_DELAY = 10000;
 const RECONNECT_INTERVAL = 5000;
 
@@ -57,7 +57,7 @@ export const initWebSocket = (
               // add new
               curr.push(localToon);
 
-              if (curr.length > 7) {
+              if (curr.length > 8) {
                 curr.shift();
               }
             }
