@@ -30,7 +30,7 @@ const ToonSelect = () => {
       </button>
       {isOpen && (
         <AnimatedTabContent>
-          <div className="absolute -left-[52px] top-7 w-48 bg-white border border-gray-500 rounded-lg shadow-xl z-10 overflow-hidden">
+          <div className="absolute -left-[52px] top-7 w-48 bg-white border border-gray-700 shadow-xl z-10 overflow-hidden">
             {toons.map(
               (toon, index) =>
                 index !== activeIndex && (
@@ -50,6 +50,9 @@ const ToonSelect = () => {
                   </button>
                 )
             )}
+            <div className="flex items-center justify-center w-full p-2">
+              Add up to {7 - toons.length} more toons!
+            </div>
           </div>
         </AnimatedTabContent>
       )}
