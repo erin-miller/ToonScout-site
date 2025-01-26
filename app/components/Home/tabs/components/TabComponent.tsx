@@ -92,6 +92,7 @@ const TabContainer = () => {
 
   return (
     <div>
+      {/* list of tabs */}
       <div className="tab-container">
         {TabList.map((tab) => (
           <button
@@ -106,6 +107,7 @@ const TabContainer = () => {
         ))}
       </div>
 
+      {/* tab display */}
       {selectedTab && (
         <div className="info-container">
           <div className="left-info-container">
