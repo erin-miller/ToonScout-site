@@ -143,6 +143,6 @@ export interface ToonData {
 
 export interface StoredToonData {
   data: ToonData;
-  timestamp: string;
+  timestamp: number;
   port: number;
 }

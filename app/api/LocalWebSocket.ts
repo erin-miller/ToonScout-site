@@ -57,10 +57,15 @@ export const initWebSocket = (
             } else {
               // add new
               curr.push(localToon);
+            }
 
-              if (curr.length > MAX_TOONS) {
-                curr.shift();
-              }
+            curr.sort(
+              (a: StoredToonData, b: StoredToonData) =>
+                a.timestamp - b.timestamp
+            );
+
+            if (curr.length > MAX_TOONS) {
+              curr.shift();
             }
 
             // remove same ports from other toons in the data
