@@ -9,7 +9,7 @@ type ToonContextType = {
   setActiveIndex: (index: number) => void;
 };
 
-const MAX_TOONS = 7;
+const MAX_TOONS = 8;
 
 const ToonContext = createContext<ToonContextType | undefined>(undefined);
 

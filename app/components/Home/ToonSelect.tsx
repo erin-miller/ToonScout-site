@@ -6,6 +6,7 @@ const ToonSelect = () => {
   const { toons, activeIndex, setActiveIndex } = useToonContext();
   const [isOpen, setOpen] = useState(false);
   const curr = toons[activeIndex];
+  const MAX_TOONS = 8;
 
   const getImage = (dna: string) => {
     return `https://rendition.toontownrewritten.com/render/${dna}/portrait/512x512.png`;
@@ -21,8 +22,8 @@ const ToonSelect = () => {
   };
 
   const getRemaining = () => {
-    if (toons.length < 8) {
-      return `Add up to ${8 - toons.length} more toons!`;
+    if (toons.length < MAX_TOONS) {
+      return `Add up to ${MAX_TOONS - toons.length} more toons!`;
     } else {
       return `The oldest toon will be replaced by the next new toon.`;
     }
