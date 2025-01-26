@@ -29,7 +29,7 @@ const ToonSelect = () => {
   };
 
   return (
-    <div className="relative flex items-center text-gray-900 dark:text-gray-100">
+    <div className="relative flex items-center text-gray-900 dark:text-gray-100 z-50">
       <button
         className="border-2 h-12 w-12 border-pink-700 bg-pink-100 dark:bg-pink-900 rounded-full shadow-lg hover:shadow-lg scale-up overflow-hidden"
         onClick={handleDropdown}
@@ -38,7 +38,7 @@ const ToonSelect = () => {
       </button>
       {isOpen && (
         <AnimatedTabContent>
-          <div className="absolute -left-[52px] top-7 w-52 bg-white dark:bg-gray-900 border border-gray-700 dark:border-pink-900 shadow-xl z-25 overflow-hidden">
+          <div className="absolute -left-[52px] top-7 w-52 bg-white dark:bg-gray-900 border border-gray-700 dark:border-pink-900 shadow-xl overflow-hidden">
             {toons.map(
               (toon, index) =>
                 index !== activeIndex && (
@@ -50,15 +50,15 @@ const ToonSelect = () => {
                     <img
                       src={getImage(toon.data.toon.style)}
                       alt="Toon Portrait"
-                      className="w-10 h-10 rounded-full border-2 border-pink-300 bg-pink-100 dark:bg-pink-900"
+                      className="hidden lg:block w-10 h-10 rounded-full border-2 border-pink-300 bg-pink-100 dark:bg-pink-900"
                     />
-                    <span className="text-md text-left">
+                    <span className="text-sm md:text-md text-left">
                       {toon.data.toon.name}
                     </span>
                   </button>
                 )
             )}
-            <div className="flex items-center text-center justify-center w-full p-2">
+            <div className="hidden lg:block items-center text-center justify-center w-full p-2">
               {getRemaining()}
             </div>
           </div>

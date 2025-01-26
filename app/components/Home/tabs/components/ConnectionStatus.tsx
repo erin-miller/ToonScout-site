@@ -62,7 +62,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
     <div className="flex items-center justify-center">
       <button className="scale-up" onClick={handleStatusClick}>
         <div
-          className={`flex flex-row text-lg items-center justify-center px-2 rounded-full border-2
+          className={`flex flex-row text-sm lg:text-lg items-center justify-center px-2 rounded-full border-2
             ${
               checkStatus()
                 ? "border-green-600 bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
