@@ -44,14 +44,15 @@ export const initWebSocket = (
           if (!curr || curr.length <= 0) {
             curr = [localToon];
           } else {
-            const index = curr.findIndex(
+            // check if this toon exists in the storage
+            const toonIndex = curr.findIndex(
               (stored: StoredToonData) =>
                 stored.data.data.toon.id == toon.data.toon.id
             );
 
-            if (index !== -1) {
+            if (toonIndex !== -1) {
               // exists
-              curr[index] = localToon;
+              curr[toonIndex] = localToon;
             } else {
               // add new
               curr.push(localToon);
@@ -59,6 +60,18 @@ export const initWebSocket = (
               if (curr.length > 7) {
                 curr.shift();
               }
+            }
+
+            // remove same ports from other toons in the data
+            const portIndex = curr.findIndex(
+              (stored: StoredToonData) =>
+                stored.port === port &&
+                stored.data.data.toon.id != toon.data.toon.id
+            );
+
+            if (portIndex !== -1) {
+              // there is another toon with the port
+              delete curr[portIndex].port;
             }
           }
           localStorage.setItem("toonData", JSON.stringify(curr));
