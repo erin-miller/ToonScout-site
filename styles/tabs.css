@@ -12,9 +12,9 @@
 }
 
 .dark .tab-btn {
-  @apply aria-selected:text-blue-900 aria-selected:bg-blue-400 
-  disabled:bg-gray-1000 disabled:text-gray-900
-  bg-gray-900 text-gray-600;
+  @apply aria-selected:text-blue-100 aria-selected:bg-blue-600 
+  disabled:bg-gray-1000 disabled:text-gray-800
+  bg-blue-900 text-blue-700;
 }
 
 .tab-btn:not([aria-selected="true"]:hover):not([disabled]):hover {
@@ -22,7 +22,7 @@
 }
 
 .dark .tab-btn:not([aria-selected="true"]:hover):not([disabled]):hover {
-  @apply hover:duration-200 hover:text-pink-500 hover:bg-pink-900;
+  @apply hover:duration-200 hover:text-blue-300 hover:bg-blue-900;
 }
 
 .tab-content {
@@ -36,7 +36,7 @@
 }
 
 .dark .info-container {
-  @apply rounded-xl text-blue-100 bg-gray-1200 shadow-gray-1300 border-pink-900;
+  @apply rounded-xl text-blue-100 bg-gray-1200 shadow-gray-1300 border-blue-600;
 }
 
 .left-info-container {

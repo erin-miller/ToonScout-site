@@ -110,7 +110,7 @@ const TabContainer = () => {
         <div className="info-container">
           <div className="left-info-container">
             <div>
-              <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl bg-pink-900 text-gray-100 dark:text-blue-100 dark:bg-pink-900 rounded-lg py-1 break-words overflow-hidden">
+              <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl bg-pink-900 text-gray-100 dark:text-white dark:bg-pink-900 rounded-lg py-1 break-words overflow-hidden">
                 {toon.data.toon.name}
               </p>
               <p className="text-lg md:text-xl lg:text-2xl pt-1">
