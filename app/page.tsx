@@ -31,6 +31,8 @@ const HomePage: React.FC = () => {
         setActiveIndex(0);
       } catch (error) {
         console.error("Error parsing existing toon data:", error);
+        console.log("Resetting corrupt toon data...");
+        localStorage.removeItem("toonData");
       }
     }
 
