@@ -25,7 +25,7 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ toon }),
+        body: JSON.stringify({ toonData: toon }),
       });
       if (!response.ok) {
         return "Error loading fish data. Please try again later.";
