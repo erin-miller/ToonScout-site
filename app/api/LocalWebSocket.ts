@@ -1,12 +1,17 @@
+import { StoredToonData, ToonData } from "../types";
+
 const DEFAULT_PORTS = [1547, 1548, 1549, 1550, 1551, 1552];
 const RECONNECT_DELAY = 10000;
 const RECONNECT_INTERVAL = 5000;
 
 let sockets: { [port: number]: WebSocket } = {};
 let contReqInterval: NodeJS.Timeout | null = null;
+let active: number[] = [];
 
 export const initWebSocket = (
   setIsConnected: (isConnected: boolean) => void,
+  addActivePort: (port: number) => void,
+  removeActivePort: (port: number) => void,
   addToon: (data: any) => void
 ) => {
   const connectWebSocket = () => {
@@ -19,7 +24,6 @@ export const initWebSocket = (
       sockets[port] = socket;
 
       socket.addEventListener("open", () => {
-        console.log(`WebSocket opened on port ${port}`);
         socket.send(
           JSON.stringify({ authorization: initAuthToken(), name: "ToonScout" })
         );
@@ -28,30 +32,57 @@ export const initWebSocket = (
       });
 
       socket.addEventListener("message", (event) => {
+        addPort(port);
+        updateConnectionStatus();
+
         const toon = JSON.parse(event.data);
         if (toon.event === "all") {
           const timestamp = Date.now();
-          const localToon = { data: toon, timestamp };
-          localStorage.setItem("toonData", JSON.stringify(localToon));
+          const localToon = { data: toon, timestamp, port };
+          const data = localStorage.getItem("toonData");
+          let curr = data ? JSON.parse(data) : [];
+          if (!curr || curr.length <= 0) {
+            curr = [localToon];
+          } else {
+            const index = curr.findIndex(
+              (stored: StoredToonData) =>
+                stored.data.data.toon.id == toon.data.toon.id
+            );
+
+            if (index !== -1) {
+              // exists
+              curr[index] = localToon;
+            } else {
+              // add new
+              curr.push(localToon);
+
+              if (curr.length > 7) {
+                curr.shift();
+              }
+            }
+          }
+          localStorage.setItem("toonData", JSON.stringify(curr));
           addToon(toon);
         }
       });
 
       socket.addEventListener("error", (error) => {
-        setIsConnected(false);
         cleanupWebSocket(port);
       });
 
       socket.addEventListener("close", () => {
-        setIsConnected(false);
-        stopContinuousRequests();
+        updateConnectionStatus();
         cleanupWebSocket(port);
+        if (active.length === 0) {
+          stopContinuousRequests();
+        }
         setTimeout(() => connectWebSocket(), RECONNECT_DELAY);
       });
     });
   };
 
   function cleanupWebSocket(port: number) {
+    removePort(port);
     const socket = sockets[port];
     if (socket) {
       socket.removeEventListener("open", () => {});
@@ -63,7 +94,7 @@ export const initWebSocket = (
   }
 
   function startContinuousRequests() {
-    if (contReqInterval) clearInterval(contReqInterval);
+    if (contReqInterval) return;
 
     contReqInterval = setInterval(() => {
       // Send requests for each socket
@@ -80,6 +111,22 @@ export const initWebSocket = (
       clearInterval(contReqInterval);
       contReqInterval = null;
     }
+  }
+
+  function updateConnectionStatus() {
+    setIsConnected(active.length > 0);
+  }
+
+  function addPort(port: number) {
+    if (!active.includes(port)) {
+      active.push(port);
+    }
+    addActivePort(port);
+  }
+
+  function removePort(port: number) {
+    active = active.filter((p) => p !== port);
+    removeActivePort(port);
   }
 
   connectWebSocket();

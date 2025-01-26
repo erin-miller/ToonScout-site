@@ -140,3 +140,9 @@ export interface ToonData {
     racing: Racing[];
   };
 }
+
+export interface StoredToonData {
+  data: ToonData;
+  timestamp: string;
+  port: number;
+}

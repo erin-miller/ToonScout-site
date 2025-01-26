@@ -1,36 +1,42 @@
-import { useConnectionContext } from "@/app/context/ConnectionContext";
+import { useActivePortsContext } from "@/app/context/ActivePortsContext";
 import { useToonContext } from "@/app/context/ToonContext";
+import { StoredToonData } from "@/app/types";
 import React, { useEffect, useState } from "react";
 interface ConnectionStatusProps {
-  setActiveModal: React.Dispatch<React.SetStateAction<string | null>>;
+  setActiveModal: (modalType: string | null) => void;
 }
 
 const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   setActiveModal,
 }) => {
-  const { isConnected } = useConnectionContext();
+  const { activePorts } = useActivePortsContext();
   const { toons, activeIndex } = useToonContext();
   const [modified, setModified] = useState<string>("");
+  const [active, setActive] = useState<boolean>(false);
 
   const toon = toons[activeIndex];
 
   useEffect(() => {
-    const existingToon = localStorage.getItem("toonData");
+    const existing = localStorage.getItem("toonData");
 
-    if (existingToon) {
+    if (existing) {
       try {
-        const storedData = JSON.parse(existingToon);
-        const { timestamp } = storedData;
+        const data = JSON.parse(existing);
+        const index = data.findIndex(
+          (stored: StoredToonData) =>
+            stored.data.data.toon.id == toon.data.toon.id
+        );
 
-        const diff = Date.now() - timestamp;
+        const diff = Date.now() - data[index].timestamp;
         const timeAgo = getTimeAgo(diff);
 
+        setActive(activePorts.has(data[index].port));
         setModified(timeAgo);
       } catch (error) {
-        console.error("Error parsing existing toon data.");
+        console.error("Error parsing existing toon data:", error);
       }
     }
-  }, [toon]);
+  }, [activeIndex, toons]);
 
   const handleStatusClick = () => {
     setActiveModal("connect");
@@ -48,20 +54,24 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
     }
   };
 
+  const checkStatus = () => {
+    return active;
+  };
+
   return (
     <div className="flex items-center justify-center">
       <button className="scale-up" onClick={handleStatusClick}>
         <div
           className={`flex flex-row text-lg items-center justify-center px-2 rounded-full border-2
             ${
-              isConnected
+              checkStatus()
                 ? "border-green-600 bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
                 : "border-red-500 bg-red-100 dark:bg-red-900 text-red-900 dark:text-red-100"
             }`}
         >
           <div
             className={`w-2.5 h-2.5 rounded-full mr-2 ${
-              isConnected ? "bg-green-600" : "bg-red-500"
+              checkStatus() ? "bg-green-600" : "bg-red-500"
             }`}
           />
           <div>{toon ? `Last updated ${modified}` : "No data found."}</div>

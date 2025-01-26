@@ -10,29 +10,30 @@ import { useDiscordContext } from "./context/DiscordContext";
 import { useToonContext } from "./context/ToonContext";
 import { isMobile, isSafari } from "react-device-detect";
 import Incompatible from "./components/Incompatible";
+import { StoredToonData } from "./types";
+import { useActivePortsContext } from "./context/ActivePortsContext";
 
 const HomePage: React.FC = () => {
   const { setIsConnected } = useConnectionContext();
   const { activeIndex, setActiveIndex, toons, addToon } = useToonContext();
+  const { addPort, removePort } = useActivePortsContext();
   const { userId } = useDiscordContext();
 
   useEffect(() => {
     initScoutWebSocket();
-    initWebSocket(setIsConnected, addToon);
+    initWebSocket(setIsConnected, addPort, removePort, addToon);
 
-    const existingToon = localStorage.getItem("toonData");
-    if (existingToon) {
+    const existing = localStorage.getItem("toonData");
+    if (existing) {
       try {
-        const storedData = JSON.parse(existingToon);
-        const { data } = storedData;
-        addToon(data);
+        const data = JSON.parse(existing);
+        data.forEach((toon: StoredToonData) => addToon(toon.data));
         setActiveIndex(0);
       } catch (error) {
-        console.error("Error parsing existing toon data.");
+        console.error("Error parsing existing toon data:", error);
       }
     }
 
-    console.log(`toons: ${toons}`);
     if (toons.length > 0) {
       setIsConnected(true);
     }

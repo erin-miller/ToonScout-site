@@ -4,10 +4,8 @@ import {
   SuitTab,
   GagsTab,
   TasksTab,
-  CommandTab,
   ActivityTab,
 } from "./TabList";
-import AnimatedTabContent from "@/app/components/animations/AnimatedTab";
 import "/styles/tabs.css";
 import { useState } from "react";
 import { useToonContext } from "@/app/context/ToonContext";
@@ -35,7 +33,6 @@ const TabContainer = () => {
   }
 
   const TabList: TabComponent[] = [
-    { title: "Commands", component: CommandTab },
     {
       title: "Overview",
       component: (props) => (
@@ -94,7 +91,7 @@ const TabContainer = () => {
   };
 
   return (
-    <>
+    <div>
       <div className="tab-container">
         {TabList.map((tab) => (
           <button
@@ -109,40 +106,36 @@ const TabContainer = () => {
         ))}
       </div>
 
-      {selectedTab && selectedTab.title !== "Commands" ? (
-        <AnimatedTabContent>
-          <div className="info-container">
-            <div className="left-info-container">
-              <div>
-                <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl bg-pink-900 text-gray-100 dark:text-blue-100 dark:bg-pink-900 rounded-lg py-1 break-words overflow-hidden">
-                  {toon.data.toon.name}
-                </p>
-                <p className="text-lg md:text-xl lg:text-2xl pt-1">
-                  {toon.data.laff.current} / {toon.data.laff.max} laff
-                </p>
-                <p className="text-md md:text-xl lg:text-2xl">
-                  {toon.data.location.zone}, {toon.data.location.district}
-                </p>
-              </div>
-              <div className="toon-photo">
-                <img
-                  src={getImage()}
-                  alt={`${toon.data.toon.name} in pose ${pose}`}
-                  className="w-512 h-512"
-                  onClick={handleImageClick}
-                />
-              </div>
+      {selectedTab && (
+        <div className="info-container">
+          <div className="left-info-container">
+            <div>
+              <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl bg-pink-900 text-gray-100 dark:text-blue-100 dark:bg-pink-900 rounded-lg py-1 break-words overflow-hidden">
+                {toon.data.toon.name}
+              </p>
+              <p className="text-lg md:text-xl lg:text-2xl pt-1">
+                {toon.data.laff.current} / {toon.data.laff.max} laff
+              </p>
+              <p className="text-md md:text-xl lg:text-2xl">
+                {toon.data.location.zone}, {toon.data.location.district}
+              </p>
             </div>
-
-            <div className="right-info-container">
-              <selectedTab.component toon={toon} />
+            <div className="toon-photo">
+              <img
+                src={getImage()}
+                alt={`${toon.data.toon.name} in pose ${pose}`}
+                className="w-512 h-512"
+                onClick={handleImageClick}
+              />
             </div>
           </div>
-        </AnimatedTabContent>
-      ) : (
-        <selectedTab.component toon={toon} />
+
+          <div className="right-info-container">
+            <selectedTab.component toon={toon} />
+          </div>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

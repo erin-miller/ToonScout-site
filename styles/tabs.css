@@ -5,10 +5,10 @@
 }
 
 .tab-btn {
-  @apply aria-selected:bg-blue-800 aria-selected:text-white 
+  @apply aria-selected:bg-pink-500 aria-selected:text-white
         transition ease-in 
-        disabled:bg-gray-200 disabled:text-gray-400
-        rounded-lg px-2 text-2xl bg-gray-300 text-gray-800;
+        disabled:bg-pink-100 disabled:text-pink-200 disabled:cursor-not-allowed
+        rounded-t-lg px-2 text-2xl bg-pink-200 text-pink-500;
 }
 
 .dark .tab-btn {
@@ -18,26 +18,21 @@
 }
 
 .tab-btn:not([aria-selected="true"]:hover):not([disabled]):hover {
-  @apply hover:duration-200 hover:text-gray-800 hover:bg-gray-400;
+  @apply hover:duration-200 hover:text-pink-700;
 }
 
 .dark .tab-btn:not([aria-selected="true"]:hover):not([disabled]):hover {
-  @apply hover:duration-200 hover:text-gray-500 hover:bg-gray-900;
+  @apply hover:duration-200 hover:text-pink-500 hover:bg-pink-900;
 }
 
 .tab-content {
   @apply transition-all duration-500 ease-in-out transform;
 }
 
-.cmd-container {
-  @apply grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 
-      lg:grid-cols-3 gap-4 md:gap-6;
-}
-
 .info-container {
-  @apply flex w-full h-full overflow-hidden justify-center md:space-x-2
+  @apply flex overflow-hidden justify-center md:space-x-2
    text-pink-900 bg-pink-100 border-pink-500
-   p-2 shadow-md rounded-xl border-4;
+   p-2 shadow-lg rounded-xl border-4;
 }
 
 .dark .info-container {
