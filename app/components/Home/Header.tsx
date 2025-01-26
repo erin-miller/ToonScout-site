@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({
   const openModal = (modalName: string) => setActiveModal(modalName);
 
   return (
-    <div className="grid grid-cols-3 bg-white dark:bg-gray-1300 py-2 px-4 max-w-full items-center justify-center">
+    <div className="grid grid-cols-3 bg-white dark:bg-gray-1200 py-2 px-4 max-w-full items-center justify-center">
       <div className="flex flex-row space-x-4 text-left items-center">
         <ToonSelect />
         <div className="text-4xl font-minnie text-violet-700 dark:text-pink-500 text outline-text shadow-text mt-2 scale-up">
