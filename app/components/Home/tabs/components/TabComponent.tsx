@@ -21,6 +21,7 @@ export type TabComponent = {
   title: string;
   component: React.FC<{ toon: ToonData }>;
   disabled?: boolean;
+  tooltip?: string;
 };
 
 const TabContainer = () => {
@@ -39,11 +40,18 @@ const TabContainer = () => {
         <InfoTab {...props} setSelectedTab={setSelectedTab} />
       ),
     },
-    { title: "Fishing", component: FishTab },
+    {
+      title: "Fishing",
+      component: FishTab,
+      tooltip:
+        "Percentages and buckets are estimates and should not be taken literally. Toontown Rewritten has not disclosed their actual fishing odds.",
+    },
     {
       title: "Suits",
       component: SuitTab,
       disabled: hasNoSuit(toon),
+      tooltip:
+        "Promotion recommendations are weighted by merit return and time. The time is determined by the average group find time at peak hours and length of the facility.",
     },
     { title: "Gags", component: GagsTab },
     {
@@ -109,7 +117,7 @@ const TabContainer = () => {
 
       {/* tab display */}
       {selectedTab && (
-        <div className="info-container">
+        <div className="info-container relative">
           <div className="left-info-container">
             <div>
               <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl bg-pink-900 text-gray-100 dark:text-white dark:bg-pink-900 rounded-lg py-1 break-words overflow-hidden">
@@ -135,6 +143,15 @@ const TabContainer = () => {
           <div className="right-info-container">
             <selectedTab.component toon={toon} />
           </div>
+
+          {selectedTab.tooltip && (
+            <div className="hidden md:block absolute group bottom-0 right-0 px-2 bg-pink-700 rounded-tl-xl border-t-4 border-l-4 border-pink-500">
+              <span className="relative text-2xl text-white">?</span>
+              <div className="absolute hidden group-hover:block bg-white border border-gray-900 text-gray-900 p-2 left-0 bottom-full transform -translate-x-[90%] w-64">
+                {selectedTab.tooltip}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
