@@ -54,7 +54,7 @@ const TabContainer = () => {
     { title: "Activities", component: ActivityTab },
   ];
 
-  const [selectedTab, setSelectedTab] = useState<TabComponent>(TabList[1]); // Default to "Overview"
+  const [selectedTab, setSelectedTab] = useState<TabComponent>(TabList[0]); // Default to "Overview"
   const [pose, setPose] = useState<string>("waving");
 
   if (selectedTab.title == "Suits" && hasNoSuit(toon)) {
