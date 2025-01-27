@@ -48,16 +48,16 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
           </div>
         </div>
         <div className="fish-table">
-          <div className="fish-header px-5">
+          <div className="flex text-xl md:text-2xl xl:text-3xl pb-2 ml-5 mr-9 space-x-2">
             <div className="fish-table-header">Uncaught Fish</div>
             <div className="fish-table-header">Location</div>
             <div className="fish-table-header">
               Probability
               <div className="relative px-2 group">
-                <span className="border-4 border-pink-900 rounded-full w-6 h-6 flex items-center justify-center text-lg">
+                <span className="border-4 border-pink-900 dark:border-pink-100 rounded-full w-6 h-6 flex items-center justify-center text-base">
                   ?
                 </span>
-                <div className="hidden group-hover:block absolute text-base bg-white border border-gray-700 text-gray-900 p-2 transform -translate-x-[90%] ml-2 w-64 shadow-lg">
+                <div className="hidden group-hover:block absolute text-base bg-white border border-gray-700 text-gray-900 p-2 transform -translate-x-[90%] ml-2 w-64 text-center">
                   {probabilityTooltip}
                 </div>
               </div>

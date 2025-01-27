@@ -100,7 +100,7 @@
 }
 
 .fish-table-header {
-  @apply fish-item w-2/3 text-xl md:text-2xl text-pink-900;
+  @apply fish-item text-left w-2/3 text-xl md:text-2xl text-pink-900;
 }
 
 .dark .fish-table-header {
