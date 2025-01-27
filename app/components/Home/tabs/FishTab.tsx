@@ -7,6 +7,8 @@ const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
 
 const FishTab: React.FC<TabProps> = ({ toon }) => {
   const [fish, setFish] = useState<FishRarity[] | null>(null);
+  const probabilityTooltip =
+    "You have a 90% chance to catch the fish in the amount of buckets listed.";
 
   const getBuckets = (fish: FishRarity) => {
     const confidence = 1 - 0.9;
@@ -46,10 +48,20 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
           </div>
         </div>
         <div className="fish-table">
-          <div className="fish-header px-2">
+          <div className="fish-header px-5">
             <div className="fish-table-header">Uncaught Fish</div>
             <div className="fish-table-header">Location</div>
-            <div className="fish-table-header">Probability</div>
+            <div className="fish-table-header">
+              Probability
+              <div className="relative px-2 group">
+                <span className="border-4 border-pink-900 rounded-full w-6 h-6 flex items-center justify-center text-lg">
+                  ?
+                </span>
+                <div className="hidden group-hover:block absolute text-base bg-white border border-gray-700 text-gray-900 p-2 transform -translate-x-[90%] ml-2 w-64 shadow-lg">
+                  {probabilityTooltip}
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="fishtank fish-scrollbar">
