@@ -79,7 +79,7 @@ const ActivityTab: React.FC<TabProps> = ({ toon }) => {
 
   return (
     <AnimatedTabContent>
-      <div className="flex flex-row space-x-2">
+      <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-2">
         <div className="activity-container">
           <div className="activity-header-container">
             <div className="activity-name" id="golf">

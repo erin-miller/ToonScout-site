@@ -226,7 +226,7 @@
 */
 
 .activity-container {
-  @apply w-1/2 bg-blue-200 border-4 border-blue-300 rounded-xl p-2;
+  @apply md:w-1/2 bg-blue-200 border-4 border-blue-300 rounded-xl p-2;
 }
 
 .dark .activity-container {
@@ -242,7 +242,7 @@
 }
 
 .trophy-total {
-  @apply w-1/2 text-right;
+  @apply md:w-1/2 text-right;
 }
 
 .activity-name {
