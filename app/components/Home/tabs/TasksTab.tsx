@@ -77,11 +77,11 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
 
   return (
     <AnimatedTabContent>
-      <div className="grid grid-rows-2 grid-cols-2">
+      <div className="grid md:grid-rows-2 md:grid-cols-2 grid-rows-4">
         {tasks.map((task, index) => (
           <div key={index} className="task-container">
-            <img src="/images/task.png" className="task-size object-cover" />
-            <div className="flex flex-col absolute justify-center items-center text-center task-size px-4 pb-8 xl:pb-10">
+            <img src="/images/task.png" className="task-size" />
+            <div className="flex flex-col absolute justify-center items-center text-center task-size px-6 pb-8 xl:pb-10">
               <span className="absolute inset-0 mt-2 2xl:mt-4 font-semibold font-minnie text-gray-1200 text-sm sm:text-xl 2xl:text-2xl">
                 TOONTASK
               </span>
@@ -107,7 +107,7 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
                 )}
                 {task.progress && renderProgress(task.progress)}
               </div>
-              <div className="mt-auto">
+              <div className="mt-auto px-2">
                 {task.reward && (
                   <p className="task-reward">Reward: {task.reward}</p>
                 )}

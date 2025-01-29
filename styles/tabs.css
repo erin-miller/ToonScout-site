@@ -6,7 +6,7 @@
 
 .tab-btn {
   @apply aria-selected:bg-pink-500 aria-selected:text-white
-        transition ease-in 
+        transition ease-in inline-block
         disabled:bg-pink-100 disabled:text-pink-200 disabled:cursor-not-allowed
         rounded-t-lg px-2 text-base sm:text-2xl bg-pink-200 text-pink-500;
 }
@@ -30,7 +30,7 @@
 }
 
 .info-container {
-  @apply flex overflow-hidden justify-center md:space-x-2
+  @apply flex flex-shrink overflow-hidden justify-center md:space-x-2
    text-pink-900 bg-pink-100 border-pink-500
    p-2 shadow-lg rounded-xl border-4;
 }
@@ -58,7 +58,7 @@
 
 */
 .activity-info-container {
-  @apply flex justify-center md:text-xl lg:text-2xl xl:text-3xl space-x-4 pb-2;
+  @apply flex justify-center text-base md:text-lg lg:text-xl 2xl:text-3xl space-x-4 pb-2 text-nowrap;
 }
 
 .activity-bubble {
@@ -74,7 +74,7 @@
 }
 
 .suit-card {
-  @apply flex-1 w-full min-w-min bg-pink-200 rounded-xl;
+  @apply flex-1 w-full min-w-min bg-pink-200 rounded-xl px-2;
 }
 
 .dark .suit-card {
@@ -267,11 +267,11 @@
 */
 
 .task-container {
-  @apply flex flex-col justify-center items-center relative;
+  @apply flex flex-col justify-center items-center relative shrink;
 }
 
 .task-title {
-  @apply font-semibold text-sm sm:text-xl lg:text-xl 2xl:text-2xl 
+  @apply font-semibold text-sm sm:text-xl lg:text-xl 2xl:text-2xl px-2
   mt-8 sm:mt-12 2xl:mt-24
   text-pink-900;
 }
@@ -283,7 +283,7 @@
 
 .task-progress {
   @apply text-sm sm:text-xl lg:text-xl 2xl:text-2xl items-center p-2
-  bg-opacity-10 border-2 
+  bg-opacity-10 border-2
   border-t-gray-800 border-l-gray-800 border-b-white border-r-white;
 }
 
@@ -296,5 +296,5 @@
 }
 
 .task-size {
-  @apply w-52 h-52 sm:w-72 sm:h-72 2xl:w-96 2xl:h-96;
+  @apply w-52 h-52 sm:w-72 sm:h-72 md:h-80 md:w-80 2xl:w-96 2xl:h-96;
 }
