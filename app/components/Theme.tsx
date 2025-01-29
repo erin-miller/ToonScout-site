@@ -43,7 +43,7 @@ function ThemeToggle() {
     <button onClick={toggleTheme} className="home-btn">
       {theme === "dark" ? (
         <svg
-          className="w-4 h-4 md:w-8 md:h-8"
+          className="w-8 h-8"
           viewBox="0 0 24 24"
           fill="currentColor"
           xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ function ThemeToggle() {
         </svg>
       ) : (
         <svg
-          className="w-4 h-4 md:w-8 md:h-8 text-white"
+          className="w-8 h-8 text-white"
           viewBox="0 0 24 24"
           fill="currentColor"
           xmlns="http://www.w3.org/2000/svg"
