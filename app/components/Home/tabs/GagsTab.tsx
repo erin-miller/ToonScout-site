@@ -24,7 +24,7 @@ const GagsTab: React.FC<TabProps> = ({ toon }) => {
               key={track}
               className={`flex items-center bg-${track.toLowerCase()} rounded-3xl py-2 space-x-1 shadow-lg relative overflow-hidden inline-flex max-w-max pr-4`}
             >
-              <div className="flex flex-col px-2">
+              <div className="hidden sm:flex lg:hidden xl:flex flex-col px-2">
                 <h3
                   className={`w-36 font-bold uppercase text-xl lg:text-lg xl:text-xl 2xl:text-2xl text-${track.toLowerCase()} text-left`}
                 >
@@ -35,13 +35,13 @@ const GagsTab: React.FC<TabProps> = ({ toon }) => {
 
                 <ExpContainer track={track} toonData={toon} />
               </div>
-              <div className="grid grid-cols-7 gap-2">
+              <div className="grid grid-cols-7 gap-2 pl-2 sm:pl-0 lg:pl-2 xl:pl-0">
                 {Array.from({ length: 7 }).map((_, gagIndex) => {
                   const isImageVisible = trackData && gagIndex + 1 <= maxLevel;
                   return (
                     <div
                       key={`${track}-${gagIndex}`}
-                      className={`w-20 h-16 rounded-3xl flex items-center justify-center relative shadow-lg ${
+                      className={`w-14 h-10 md:w-16 md:h-12 2xl:w-20 2xl:h-16 rounded-3xl flex items-center justify-center relative shadow-lg ${
                         isImageVisible ? "bg-gagblue" : ""
                       }`}
                     >
@@ -58,7 +58,7 @@ const GagsTab: React.FC<TabProps> = ({ toon }) => {
                             gagIndex + 1
                           }.png`}
                           aria-label={`${track} gag ${gagIndex + 1}`}
-                          className="w-12 h-12 object-contain"
+                          className="w-8 xl:w-10 2xl:w-12 object-contain"
                         />
                       ) : null}
 
