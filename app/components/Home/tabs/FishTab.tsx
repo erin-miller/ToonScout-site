@@ -46,6 +46,7 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
           <div className="fish-item">
             <p>{sumFish(toon)} / 70 caught</p>
           </div>
+          <div className="fish-item">{toon.data.fish.rod.name} Rod</div>
         </div>
         <div className="fish-table">
           <div className="flex text-xl md:text-2xl xl:text-3xl pb-2 ml-5 mr-9 space-x-2">
