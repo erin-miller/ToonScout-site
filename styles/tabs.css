@@ -1,14 +1,14 @@
 @import "@/app/globals.css";
 
 .tab-container {
-  @apply hidden sm:flex justify-center items-center gap-3;
+  @apply flex justify-center items-center gap-[1px] sm:gap-3;
 }
 
 .tab-btn {
   @apply aria-selected:bg-pink-500 aria-selected:text-white
         transition ease-in inline-block
         disabled:bg-pink-100 disabled:text-pink-200 disabled:cursor-not-allowed
-        rounded-t-lg px-2 text-base sm:text-2xl bg-pink-200 text-pink-500;
+        rounded-t-lg px-2 text-xs sm:text-2xl bg-pink-200 text-pink-500;
 }
 
 .dark .tab-btn {
