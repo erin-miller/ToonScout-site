@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from '@vercel/analytics/next';
 import Providers from "./components/Providers";
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body className="font-impress text-gray-800 dark:text-gray-100">
         <Providers>{children}</Providers>
         <GoogleAnalytics gaId="G-SNDEYLE0QL" />
+	<Analytics />
       </body>
     </html>
   );
