@@ -1,7 +1,7 @@
 @import "@/app/globals.css";
 
 .tab-container {
-  @apply flex flex-wrap justify-center items-center gap-3;
+  @apply hidden sm:flex justify-center items-center gap-3;
 }
 
 .tab-btn {
