@@ -17,29 +17,16 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   const toon = toons[activeIndex] ?? null;
 
   useEffect(() => {
-    const existing = localStorage.getItem("toonData");
-
-    if (existing) {
       try {
-        const data = JSON.parse(existing);
-
-        const index = data.findIndex(
-          (stored: StoredToonData) =>
-            stored.data?.data?.toon?.id == toon?.data?.toon?.id
-        );
-
-        if (index == -1) return;
-
-        const diff = Date.now() - data[index].timestamp;
+        const diff = Date.now() - toon.timestamp;
         const timeAgo = getTimeAgo(diff);
 
-        setActive(activePorts.has(data[index].port));
+        setActive(activePorts.has(toon.port));
         setModified(timeAgo);
       } catch (error) {
         console.error("Error parsing existing toon data:", error);
       }
-    }
-  }, [activeIndex, toons]);
+  }, [activeIndex, toon?.timestamp]);
 
   const handleStatusClick = () => {
     setActiveModal("connect");

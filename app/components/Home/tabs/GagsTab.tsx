@@ -5,18 +5,18 @@ import "/styles/tabs.css";
 import ExpContainer from "./components/ExpContainer";
 
 const GagsTab: React.FC<TabProps> = ({ toon }) => {
-  const tracks = Object.keys(toon.data.gags);
+  const tracks = Object.keys(toon.data.data.gags);
 
   return (
     <AnimatedTabContent>
       <div className="container mx-auto">
         {tracks.map((track) => {
-          const trackData = toon.data.gags[track];
+          const trackData = toon.data.data.gags[track];
 
           let maxLevel = 0;
 
           if (trackData) {
-            maxLevel = toon.data.gags[track]?.gag.level || 0;
+            maxLevel = toon.data.data.gags[track]?.gag.level || 0;
           }
 
           return (

@@ -42,7 +42,7 @@ const ToonSelect = () => {
     let toonData = existingData ? JSON.parse(existingData) : [];
 
     const toonIndex = toonData.findIndex(
-      (stored: StoredToonData) => stored.data.data.toon.id === toon.data.toon.id
+      (stored: StoredToonData) => stored.data.data.toon.id === toon.data.data.toon.id
     );
 
     if (toonIndex !== -1) {
@@ -62,7 +62,7 @@ const ToonSelect = () => {
     let toonData = existingData ? JSON.parse(existingData) : [];
 
     const toonIndex = toonData.findIndex(
-      (stored: StoredToonData) => stored.data.data.toon.id === toon.data.toon.id
+      (stored: StoredToonData) => stored.data.data.toon.id === toon.data.data.toon.id
     );
 
     if (toonIndex !== -1) {
@@ -76,7 +76,7 @@ const ToonSelect = () => {
         className="border-2 h-12 w-12 border-pink-700 bg-pink-100 dark:bg-pink-900 rounded-full shadow-lg hover:shadow-lg scale-up overflow-hidden"
         onClick={handleDropdown}
       >
-        <img src={getImage(curr?.data.toon.style)} />
+        <img src={getImage(curr?.data.data.toon.style)} />
       </button>
       {isOpen && (
         <AnimatedTabContent>
@@ -88,12 +88,12 @@ const ToonSelect = () => {
                 onClick={handleToonSelect(index)}
               >
                 <img
-                  src={getImage(toon.data.toon.style)}
+                  src={getImage(toon.data.data.toon.style)}
                   alt="Toon Portrait"
                   className="hidden lg:block w-10 h-10 rounded-full border-2 border-pink-300 bg-pink-100 dark:bg-pink-900"
                 />
                 <span className="text-sm md:text-md text-left">
-                  {toon.data.toon.name}
+                  {toon.data.data.toon.name}
                 </span>
                 <div
                   onClick={(e) => {

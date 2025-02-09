@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
     if (existing) {
       try {
         const data = JSON.parse(existing);
-        data.forEach((toon: StoredToonData) => addToon(toon.data));
+        data.forEach((toon: StoredToonData) => addToon(toon));
         setActiveIndex(0);
       } catch (error) {
         console.error("Error parsing existing toon data:", error);
@@ -43,11 +43,11 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const sendData = () => {
       if (userId && activeIndex) {
-        sendScoutData(userId, toons[activeIndex]);
+        sendScoutData(userId, toons[activeIndex].data);
       }
     };
     sendData();
-  }, [userId, activeIndex]);
+  }, [userId, toons[activeIndex]?.timestamp]);
 
   return (
     <div className="page-container">

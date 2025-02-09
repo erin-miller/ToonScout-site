@@ -9,17 +9,17 @@ import {
 import "/styles/tabs.css";
 import { useState } from "react";
 import { useToonContext } from "@/app/context/ToonContext";
-import { ToonData } from "@/app/types";
+import { StoredToonData } from "@/app/types";
 import { hasNoSuit } from "./utils";
 
 export interface TabProps {
-  toon: ToonData;
+  toon: StoredToonData;
   setSelectedTab?: React.Dispatch<React.SetStateAction<TabComponent>>;
 }
 
 export type TabComponent = {
   title: string;
-  component: React.FC<{ toon: ToonData }>;
+  component: React.FC<{ toon: StoredToonData }>;
   disabled?: boolean;
   tooltip?: string;
 };
@@ -57,7 +57,7 @@ const TabContainer = () => {
     {
       title: "Tasks",
       component: TasksTab,
-      disabled: toons[activeIndex].data.tasks.length <= 0,
+      disabled: toons[activeIndex].data.data.tasks.length <= 0,
     },
     { title: "Activities", component: ActivityTab },
   ];
@@ -84,7 +84,7 @@ const TabContainer = () => {
   ];
 
   const getImage = () => {
-    const dna = toon.data.toon.style;
+    const dna = toon.data.data.toon.style;
     return `https://rendition.toontownrewritten.com/render/${dna}/${pose}/1024x1024.png`;
   };
 
@@ -121,19 +121,19 @@ const TabContainer = () => {
           <div className="left-info-container">
             <div>
               <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl bg-pink-900 text-gray-100 dark:text-white dark:bg-pink-900 rounded-lg py-1 break-words overflow-hidden">
-                {toon.data.toon.name}
+                {toon.data.data.toon.name}
               </p>
               <p className="text-lg md:text-xl lg:text-2xl pt-1">
-                {toon.data.laff.current} / {toon.data.laff.max} laff
+                {toon.data.data.laff.current} / {toon.data.data.laff.max} laff
               </p>
               <p className="text-md md:text-xl lg:text-2xl">
-                {toon.data.location.zone}, {toon.data.location.district}
+                {toon.data.data.location.zone}, {toon.data.data.location.district}
               </p>
             </div>
             <div className="toon-photo">
               <img
                 src={getImage()}
-                alt={`${toon.data.toon.name} in pose ${pose}`}
+                alt={`${toon.data.data.toon.name} in pose ${pose}`}
                 className="w-512 h-512"
                 onClick={handleImageClick}
               />

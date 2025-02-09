@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { ToonData } from "@/app/types";
+import { StoredToonData } from "@/app/types";
 
 export type ExpContainerProps = {
   track: string;
-  toonData: ToonData;
+  toonData: StoredToonData;
 };
 
 const ExpContainer: React.FC<ExpContainerProps> = ({ track, toonData }) => {
-  const trackData = toonData.data.gags[track];
+  const trackData = toonData.data.data.gags[track];
   const [progress, setProgress] = useState(0);
 
   const formatExp = (track: string) => {
-    const curr = toonData.data.gags[track]?.experience.current;
-    const next = toonData.data.gags[track]?.experience.next;
-    const lvl = toonData.data.gags[track]?.gag.level;
+    const curr = toonData.data.data.gags[track]?.experience.current;
+    const next = toonData.data.data.gags[track]?.experience.next;
+    const lvl = toonData.data.data.gags[track]?.gag.level;
 
     if (!curr || !next) {
       return;
@@ -31,8 +31,8 @@ const ExpContainer: React.FC<ExpContainerProps> = ({ track, toonData }) => {
   };
 
   const calculateProgress = () => {
-    const curr = toonData.data.gags[track]?.experience.current || 0;
-    const next = toonData.data.gags[track]?.experience.next || 1;
+    const curr = toonData.data.data.gags[track]?.experience.current || 0;
+    const next = toonData.data.data.gags[track]?.experience.next || 1;
     return Math.min((curr / next) * 100, 100);
   };
 

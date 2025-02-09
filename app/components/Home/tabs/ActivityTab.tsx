@@ -97,8 +97,8 @@ const ActivityTab: React.FC<TabProps> = ({ toon }) => {
               {trophyIcon(getGolfTrophies(toon))}
             </div>
           </div>
-          {toon.data.golf ? (
-            renderStats(toon.data.golf, golf_trophies)
+          {toon.data.data.golf ? (
+            renderStats(toon.data.data.golf, golf_trophies)
           ) : (
             <div>No golf data found.</div>
           )}
@@ -121,8 +121,8 @@ const ActivityTab: React.FC<TabProps> = ({ toon }) => {
               {trophyIcon(getRaceTrophies(toon))}
             </div>
           </div>
-          {toon.data.racing ? (
-            renderStats(toon.data.racing, race_trophies)
+          {toon.data.data.racing ? (
+            renderStats(toon.data.data.racing, race_trophies)
           ) : (
             <p>No racing data found.</p>
           )}
