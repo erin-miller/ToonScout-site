@@ -14,7 +14,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   const [modified, setModified] = useState<string>("");
   const [active, setActive] = useState<boolean>(false);
 
-  const toon = toons[activeIndex];
+  const toon = toons[activeIndex] ?? null;
 
   useEffect(() => {
     const existing = localStorage.getItem("toonData");
@@ -22,10 +22,14 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
     if (existing) {
       try {
         const data = JSON.parse(existing);
+        console.log(toon);
+        console.log(activeIndex)
         const index = data.findIndex(
           (stored: StoredToonData) =>
-            stored.data.data.toon.id == toon.data.toon.id
+            stored.data?.data?.toon?.id == toon?.data?.toon?.id
         );
+
+        if (index == -1) return;
 
         const diff = Date.now() - data[index].timestamp;
         const timeAgo = getTimeAgo(diff);
