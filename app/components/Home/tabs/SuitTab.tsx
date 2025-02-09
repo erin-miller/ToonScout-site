@@ -49,7 +49,7 @@ const SuitTab: React.FC<TabProps> = ({ toon }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ toonData: toon, dept }),
+        body: JSON.stringify({ toonData: toon.data, dept }),
       });
 
       if (!response.ok) {

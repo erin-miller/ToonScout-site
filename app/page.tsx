@@ -14,7 +14,7 @@ import { useActivePortsContext } from "./context/ActivePortsContext";
 
 const HomePage: React.FC = () => {
   const { setIsConnected } = useConnectionContext();
-  const { activeIndex, setActiveIndex, toons, addToon } = useToonContext();
+  const { activeIndex, toons, addToon } = useToonContext();
   const { addPort, removePort } = useActivePortsContext();
   const { userId } = useDiscordContext();
 
@@ -41,12 +41,18 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     const sendData = () => {
-      if (userId && activeIndex) {
-        sendScoutData(userId, toons[activeIndex].data);
+      if (userId && activeIndex !== undefined) {
+        sendScoutData(userId, toons[activeIndex]?.data);
       }
     };
-    sendData();
-  }, [userId, toons[activeIndex]?.timestamp]);
+  
+    const intervalId = setInterval(sendData, 5000);
+  
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [activeIndex]);
+  
 
   return (
     <div className="page-container">

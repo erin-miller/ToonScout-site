@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useToonContext } from "@/app/context/ToonContext";
 import AnimatedTabContent from "../animations/AnimatedTab";
 import { FaLock, FaUnlock } from "react-icons/fa";
-import { StoredToonData } from "@/app/types";
 
 const ToonSelect = () => {
   const { toons, activeIndex, setActiveIndex, addToon } = useToonContext();
@@ -31,7 +30,7 @@ const ToonSelect = () => {
     if (toons.length < MAX_TOONS) {
       return `Add up to ${MAX_TOONS - toons.length} more toons!`;
     } else {
-      return `The oldest toon will be replaced by the next new toon.`;
+      return `The oldest unlocked toon will be replaced by the next new toon.`;
     }
   };
 
