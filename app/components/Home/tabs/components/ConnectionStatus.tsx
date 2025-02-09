@@ -74,7 +74,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
               checkStatus() ? "bg-green-600" : "bg-red-500"
             }`}
           />
-          <div>{toon ? `Last updated ${modified}` : "No data found."}</div>
+          <div>{toon ? `Last updated ${modified}` : "No toon connected!"}</div>
         </div>
       </button>
     </div>

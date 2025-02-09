@@ -54,10 +54,8 @@ const HomePage: React.FC = () => {
     <div className="page-container">
       {isMobile || isSafari ? (
         <Incompatible />
-      ) : toons && toons.length > 0 ? (
+      ) :  (
         <Home />
-      ) : (
-        <GameSteps />
       )}
     </div>
   );

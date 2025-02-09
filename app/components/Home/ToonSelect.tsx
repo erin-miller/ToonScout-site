@@ -9,7 +9,8 @@ const ToonSelect = () => {
   const MAX_TOONS = 8;
 
   const getImage = (dna: string) => {
-    return `https://rendition.toontownrewritten.com/render/${dna}/portrait/512x512.png`;
+    const flippy = "https://rendition.toontownrewritten.com/render/740101000103110311000011000011010400000000000000000000000000000000/portrait/512x512.png";
+    return dna ? `https://rendition.toontownrewritten.com/render/${dna}/portrait/512x512.png` : flippy;
   };
 
   const handleDropdown = () => {
@@ -35,7 +36,7 @@ const ToonSelect = () => {
         className="border-2 h-12 w-12 border-pink-700 bg-pink-100 dark:bg-pink-900 rounded-full shadow-lg hover:shadow-lg scale-up overflow-hidden"
         onClick={handleDropdown}
       >
-        <img src={getImage(curr.data.toon.style)} />
+        <img src={getImage(curr?.data.toon.style)} />
       </button>
       {isOpen && (
         <AnimatedTabContent>

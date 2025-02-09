@@ -4,16 +4,12 @@ import "/styles/gamesteps.css";
 import ThemeToggle from "@/app/components/Theme";
 
 const GameSteps: React.FC = () => (
-  <div className="flex max-w-7xl mx-auto">
-    <div className="connect-container">
+    <div className="p-6">
       <div className="relative flex flex-row justify-center items-center w-full">
         <LoadingDots
           className="minnie-title text-4xl pb-4 w-full text-center"
           text="Connecting to Toontown Rewritten"
         />
-        <div className="absolute right-0 pb-5">
-          <ThemeToggle />
-        </div>
       </div>
       <div className="step-container">
         <Step
@@ -26,7 +22,6 @@ const GameSteps: React.FC = () => (
         />
       </div>
     </div>
-  </div>
 );
 
 const Step: React.FC<{ title: string; image: string }> = ({ title, image }) => (

@@ -5,10 +5,13 @@ import "/styles/home.css";
 import { useDiscordContext } from "@/app/context/DiscordContext";
 import { handleOAuthToken } from "@/app/api/DiscordOAuth";
 import Header from "./Header";
+import { useToonContext } from "@/app/context/ToonContext";
+import GameSteps from "../GameSteps/GameSteps";
 
 const Home = () => {
   const { userId, setUserId } = useDiscordContext();
   const [activeModal, setActiveModal] = useState<string | null>(null);
+  const { toons } = useToonContext();
 
   useEffect(() => {
     const checkAccessToken = async () => {
@@ -58,13 +61,19 @@ const Home = () => {
           setActiveModal={setActiveModal}
         />
 
-        <div className="px-6 pt-6">
-          <TabContainer />
-        </div>
+        {toons && toons.length > 0 ? (
+          <>
+            <div className="px-6 pt-6">
+              <TabContainer />
+            </div>
 
-        <div className="px-6">
-          <Disclaimer />
-        </div>
+            <div className="px-6">
+              <Disclaimer />
+            </div>
+          </>
+        ) : (
+          <GameSteps />
+        )}
       </div>
     </div>
   );
