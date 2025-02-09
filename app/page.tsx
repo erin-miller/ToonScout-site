@@ -27,15 +27,6 @@ const HomePage: React.FC = () => {
       try {
         const data = JSON.parse(existingToons);
         data.forEach((toon: StoredToonData) => addToon(toon));
-
-        setActiveIndex(0);
-
-        const existingIndex = Number(localStorage.getItem("activeIndex"));
-        if (existingIndex && existingIndex > 0) {
-          setActiveIndex(existingIndex);
-        } else {
-          setActiveIndex(0);
-        }
       } catch (error) {
         console.error("Error parsing existing toon data:", error);
         console.log("Resetting corrupt toon data...");

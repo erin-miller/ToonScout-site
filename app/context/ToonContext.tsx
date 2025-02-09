@@ -28,15 +28,23 @@ export const ToonProvider: React.FC<{ children: React.ReactNode }> = ({
   const [toons, setToons] = useState<StoredToonData[]>([]);
   const [activeIndex, setIndex] = useState<number>(0);
 
+  // run once on the client-side after the initial render
+  useEffect(() => {
+    const storedIndex = localStorage.getItem(ACTIVE_KEY);
+    if (storedIndex) {
+      setIndex(parseInt(storedIndex, 10));
+    }
+  }, []);
+
   // sync `toons` to localStorage when it changes
   useEffect(() => {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(toons));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(toons));
   }, [toons]);
 
   const setActiveIndex = (index: number) => {
     setIndex(index);
     localStorage.setItem(ACTIVE_KEY, index.toString());
-  }
+  };
 
   const addToon = (newToon: StoredToonData) => {
     const sanitized: StoredToonData = JSON.parse(
