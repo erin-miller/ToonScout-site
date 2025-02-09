@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useMemo, useState } from "react";
-import { ToonData } from "../types";
+import { StoredToonData, ToonData } from "../types";
 
 type ToonContextType = {
   toons: ToonData[];
@@ -20,31 +20,56 @@ export const ToonProvider: React.FC<{ children: React.ReactNode }> = ({
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const addToon = (newToon: ToonData) => {
-    const sanitized: ToonData = JSON.parse(sanitize(JSON.stringify(newToon)));
-
+    const sanitized: ToonData = JSON.parse(JSON.stringify(newToon)); // Just deep clone the object if needed
+  
     setToons((prevToons) => {
       const existingIndex = prevToons.findIndex(
-        (toon) => toon?.data.toon.id === sanitized.data.toon.id
+        (toon) => toon?.data?.toon.id === sanitized?.data?.toon?.id
       );
-
+  
       if (existingIndex !== -1) {
         // toon exists
         const newToons = [...prevToons];
         newToons[existingIndex] = sanitized;
+        localStorage.getItem("toonData")
+        localStorage.setItem("toonData", JSON.stringify(newToons));
         return newToons;
       }
-
+  
       // toon does not exist
       const newToons = [...prevToons];
       if (newToons.length < MAX_TOONS) {
         newToons.push(sanitized);
       } else {
-        newToons.shift(); // Remove the oldest toon
-        newToons.push(sanitized);
+        const parse = localStorage.getItem("toonData");
+        const storage = parse ? JSON.parse(parse) : [];
+  
+        // Filter for unlocked toons
+        const unlocked = storage.filter((toon: StoredToonData) => !toon.locked);
+  
+        if (unlocked.length === 0) {
+          console.log("All toons are locked. Cannot add a new toon.");
+          return prevToons;
+        }
+  
+        // Replace the oldest unlocked toon
+        const oldest = storage.findIndex((toon: StoredToonData) => !toon.locked);
+        if (oldest !== -1) {
+          const replaceIndex = newToons.findIndex(
+            (toon) => toon.data.toon.id === storage[oldest].data.data.toon.id
+          );
+          if (replaceIndex !== -1) {
+            newToons[replaceIndex] = sanitized;
+            storage[oldest].data = sanitized;
+            localStorage.setItem("toonData", JSON.stringify(storage)); // Sync with localStorage
+          }
+        }
       }
+  
       return newToons;
     });
   };
+  
 
   const value = useMemo(
     () => ({
@@ -68,8 +93,8 @@ export const useToonContext = () => {
 };
 
 const sanitize = (data: string) => {
-    let obj = JSON.parse(data);
-    let cleaned = JSON.stringify(obj);
-    cleaned = cleaned.replace(/\\u[0-9a-fA-F]{4}/g, '');
-    return cleaned;
-}
+  let obj = JSON.parse(data);
+  let cleaned = JSON.stringify(obj);
+  cleaned = cleaned.replace(/\\u[0-9a-fA-F]{4}/g, "");
+  return cleaned;
+};

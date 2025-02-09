@@ -145,4 +145,5 @@ export interface StoredToonData {
   data: ToonData;
   timestamp: number;
   port: number;
+  locked: boolean;
 }
