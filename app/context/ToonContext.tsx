@@ -20,25 +20,27 @@ export const ToonProvider: React.FC<{ children: React.ReactNode }> = ({
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const addToon = (newToon: ToonData) => {
+    const sanitized: ToonData = JSON.parse(sanitize(JSON.stringify(newToon)));
+
     setToons((prevToons) => {
       const existingIndex = prevToons.findIndex(
-        (toon) => toon?.data.toon.id === newToon.data.toon.id
+        (toon) => toon?.data.toon.id === sanitized.data.toon.id
       );
 
       if (existingIndex !== -1) {
         // toon exists
         const newToons = [...prevToons];
-        newToons[existingIndex] = newToon;
+        newToons[existingIndex] = sanitized;
         return newToons;
       }
 
       // toon does not exist
       const newToons = [...prevToons];
       if (newToons.length < MAX_TOONS) {
-        newToons.push(newToon);
+        newToons.push(sanitized);
       } else {
         newToons.shift(); // Remove the oldest toon
-        newToons.push(newToon);
+        newToons.push(sanitized);
       }
       return newToons;
     });
@@ -64,3 +66,10 @@ export const useToonContext = () => {
   }
   return context;
 };
+
+const sanitize = (data: string) => {
+    let obj = JSON.parse(data);
+    let cleaned = JSON.stringify(obj);
+    cleaned = cleaned.replace(/\\u[0-9a-fA-F]{4}/g, '');
+    return cleaned;
+}
