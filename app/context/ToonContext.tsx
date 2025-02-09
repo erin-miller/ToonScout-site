@@ -66,6 +66,7 @@ export const ToonProvider: React.FC<{ children: React.ReactNode }> = ({
         newToons.push(sanitized);
       } else {
         // toon doesnt exist but we're at max capacity; replace the oldest unlocked toon
+        newToons = newToons.sort((a, b) => a.timestamp - b.timestamp);
         const oldest = newToons.findIndex((toon) => !toon.locked);
         if (oldest !== -1) {
           newToons[oldest] = sanitized;

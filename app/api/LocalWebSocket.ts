@@ -44,7 +44,6 @@ export const initWebSocket = (
           let curr = data ? JSON.parse(data) : [];
           if (!curr || curr.length <= 0) {
             curr = [localToon];
-            console.log(curr)
           } else {
             // check if this toon exists in the storage
             const toonIndex = curr.findIndex(
@@ -54,7 +53,8 @@ export const initWebSocket = (
 
             if (toonIndex !== -1) {
               // exists
-              curr[toonIndex] = { ...localToon, locked: curr[toonIndex].locked };
+              localToon.locked = curr[toonIndex].locked;
+              curr[toonIndex] = { ...localToon };
             } else {
               // add new
               curr.push(localToon);

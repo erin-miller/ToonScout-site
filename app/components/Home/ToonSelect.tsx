@@ -37,37 +37,12 @@ const ToonSelect = () => {
 
   const toggleLock = (index: number) => {
     const toon = toons[index];
-
-    const existingData = localStorage.getItem("toonData");
-    let toonData = existingData ? JSON.parse(existingData) : [];
-
-    const toonIndex = toonData.findIndex(
-      (stored: StoredToonData) => stored.data.data.toon.id === toon.data.data.toon.id
-    );
-
-    if (toonIndex !== -1) {
-      toonData[toonIndex].locked = !toonData[toonIndex].locked;
-    } else {
-        return; // Toon not found in storage
-    }
-
-    localStorage.setItem("toonData", JSON.stringify(toonData));
-    addToon(toons[index]);
+    toon.locked = !toon.locked;
+    addToon(toon);
   };
 
   const getLockedStatus = (index: number) => {
-    const toon = toons[index];
-
-    const existingData = localStorage.getItem("toonData");
-    let toonData = existingData ? JSON.parse(existingData) : [];
-
-    const toonIndex = toonData.findIndex(
-      (stored: StoredToonData) => stored.data.data.toon.id === toon.data.data.toon.id
-    );
-
-    if (toonIndex !== -1) {
-      return toonData[toonIndex].locked;
-    }
+    return toons[index].locked;
   };
 
   return (
