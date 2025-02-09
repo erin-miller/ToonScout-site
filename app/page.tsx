@@ -48,7 +48,7 @@ const HomePage: React.FC = () => {
       }
     };
     sendData();
-  }, [userId, activeIndex]);
+  }, [toons, activeIndex]);
 
   return (
     <div className="page-container">
