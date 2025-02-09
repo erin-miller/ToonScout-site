@@ -1,4 +1,4 @@
-import { StoredToonData, ToonData } from "../types";
+import { StoredToonData } from "../types";
 
 const DEFAULT_PORTS = [1547, 1548, 1549, 1550, 1551, 1552, 1553, 1554];
 const RECONNECT_DELAY = 10000;
@@ -39,12 +39,12 @@ export const initWebSocket = (
         const toon = JSON.parse(event.data);
         if (toon.event === "all") {
           const timestamp = Date.now();
-          const localToon = { data: toon, timestamp, port };
+          const localToon = { data: toon, timestamp, port, locked: false };
           const data = localStorage.getItem("toonData");
           let curr = data ? JSON.parse(data) : [];
           if (!curr || curr.length <= 0) {
             curr = [localToon];
-            curr[0].locked = false;
+            console.log(curr)
           } else {
             // check if this toon exists in the storage
             const toonIndex = curr.findIndex(
@@ -54,12 +54,10 @@ export const initWebSocket = (
 
             if (toonIndex !== -1) {
               // exists
-              curr[toonIndex].locked = curr[toonIndex].locked ? curr[toonIndex].locked : false;
               curr[toonIndex] = { ...localToon, locked: curr[toonIndex].locked };
             } else {
               // add new
               curr.push(localToon);
-              curr[curr.length - 1].locked = false;
             }
 
             curr.sort(
@@ -83,8 +81,7 @@ export const initWebSocket = (
               delete curr[portIndex].port;
             }
           }
-          localStorage.setItem("toonData", JSON.stringify(curr));
-          addToon(toon);
+          addToon(localToon);
         }
       });
 

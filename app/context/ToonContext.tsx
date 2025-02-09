@@ -1,5 +1,11 @@
 "use client";
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { StoredToonData } from "../types";
 
 type ToonContextType = {
@@ -10,65 +16,67 @@ type ToonContextType = {
 };
 
 const MAX_TOONS = 8;
+const LOCAL_STORAGE_KEY = "toonData";
+const ACTIVE_KEY = "activeIndex";
 
 const ToonContext = createContext<ToonContextType | undefined>(undefined);
 
 export const ToonProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  // load from localStorage initially
   const [toons, setToons] = useState<StoredToonData[]>([]);
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [activeIndex, setIndex] = useState<number>(0);
+
+  // sync `toons` to localStorage when it changes
+  useEffect(() => {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(toons));
+  }, [toons]);
+
+  const setActiveIndex = (index: number) => {
+    setIndex(index);
+    localStorage.setItem(ACTIVE_KEY, index.toString());
+  }
 
   const addToon = (newToon: StoredToonData) => {
-    const sanitized: StoredToonData = JSON.parse(JSON.stringify(newToon)); // Just deep clone the object if needed
-  
+    const sanitized: StoredToonData = JSON.parse(
+      sanitize(JSON.stringify(newToon))
+    );
+
     setToons((prevToons) => {
-      const existingIndex = prevToons.findIndex(
+      let newToons = [...prevToons];
+
+      const existingIndex = newToons.findIndex(
         (toon) => toon?.data?.data.toon.id === sanitized?.data?.data.toon?.id
       );
-  
+
       if (existingIndex !== -1) {
         // toon exists
-        const newToons = [...prevToons];
         newToons[existingIndex] = sanitized;
-        localStorage.setItem("toonData", JSON.stringify(newToons));
-        return newToons;
-      }
-  
-      // toon does not exist
-      const newToons = [...prevToons];
-      if (newToons.length < MAX_TOONS) {
+      } else if (newToons.length < MAX_TOONS) {
+        // toon doesnt exist; add to end
         newToons.push(sanitized);
       } else {
-        const parse = localStorage.getItem("toonData");
-        const storage = parse ? JSON.parse(parse) : [];
-  
-        // Filter for unlocked toons
-        const unlocked = storage.filter((toon: StoredToonData) => !toon.locked);
-  
-        if (unlocked.length === 0) {
-          console.log("All toons are locked. Cannot add a new toon.");
+        // toon doesnt exist but we're at max capacity; replace the oldest unlocked toon
+        const oldest = newToons.findIndex((toon) => !toon.locked);
+        if (oldest !== -1) {
+          newToons[oldest] = sanitized;
+        } else {
+          console.warn("All toons are locked. Cannot add a new toon.");
           return prevToons;
         }
-  
-        // Replace the oldest unlocked toon
-        const oldest = storage.findIndex((toon: StoredToonData) => !toon.locked);
-        if (oldest !== -1) {
-          const replaceIndex = newToons.findIndex(
-            (toon) => toon.data.data.toon.id === storage[oldest].data.data.toon.id
-          );
-          if (replaceIndex !== -1) {
-            newToons[replaceIndex] = sanitized;
-            storage[oldest].data = sanitized;
-            localStorage.setItem("toonData", JSON.stringify(storage)); // Sync with localStorage
-          }
-        }
       }
-  
+
       return newToons;
     });
   };
-  
+
+  // keep activeIndex within bounds when toons change
+  useEffect(() => {
+    if (activeIndex >= toons.length && toons.length > 0) {
+      setActiveIndex(toons.length - 1);
+    }
+  }, [toons, activeIndex]);
 
   const value = useMemo(
     () => ({
@@ -91,9 +99,9 @@ export const useToonContext = () => {
   return context;
 };
 
+// sanitize JSON to remove invalid Unicode characters
 const sanitize = (data: string) => {
   let obj = JSON.parse(data);
   let cleaned = JSON.stringify(obj);
-  cleaned = cleaned.replace(/\\u[0-9a-fA-F]{4}/g, "");
-  return cleaned;
+  return cleaned.replace(/\\u[0-9a-fA-F]{4}/g, "");
 };

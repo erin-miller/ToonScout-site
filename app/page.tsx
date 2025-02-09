@@ -22,12 +22,20 @@ const HomePage: React.FC = () => {
     initScoutWebSocket();
     initWebSocket(setIsConnected, addPort, removePort, addToon);
 
-    const existing = localStorage.getItem("toonData");
-    if (existing) {
+    const existingToons = localStorage.getItem("toonData");
+    if (existingToons) {
       try {
-        const data = JSON.parse(existing);
+        const data = JSON.parse(existingToons);
         data.forEach((toon: StoredToonData) => addToon(toon));
+
         setActiveIndex(0);
+
+        const existingIndex = Number(localStorage.getItem("activeIndex"));
+        if (existingIndex && existingIndex > 0) {
+          setActiveIndex(existingIndex);
+        } else {
+          setActiveIndex(0);
+        }
       } catch (error) {
         console.error("Error parsing existing toon data:", error);
         console.log("Resetting corrupt toon data...");
@@ -51,11 +59,7 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="page-container">
-      {isMobile || isSafari ? (
-        <Incompatible />
-      ) :  (
-        <Home />
-      )}
+      {isMobile || isSafari ? <Incompatible /> : <Home />}
     </div>
   );
 };

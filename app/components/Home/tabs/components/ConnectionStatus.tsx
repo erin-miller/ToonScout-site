@@ -18,6 +18,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
 
   useEffect(() => {
       try {
+        if (!toon) return;
         const diff = Date.now() - toon.timestamp;
         const timeAgo = getTimeAgo(diff);
 
