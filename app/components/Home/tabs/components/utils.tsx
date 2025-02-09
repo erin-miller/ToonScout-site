@@ -19,7 +19,7 @@ export const displaySuit = (toon: ToonData, type: string) => {
 
   let dept = toon.data.cogsuits[type];
   return (
-    <div className="flex justify-center py-7 text-xl lg:text-xl xl:text-2xl w-full">
+    <div className="flex justify-center py-7 text-lg lg:text-xl xl:text-2xl w-full">
       <div className="w-full">
         <h1>{getSuitName(toon, type)}</h1>
       </div>

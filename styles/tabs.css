@@ -58,7 +58,7 @@
 
 */
 .activity-info-container {
-  @apply flex justify-center text-base md:text-lg lg:text-xl 2xl:text-3xl space-x-4 pb-2 text-nowrap;
+  @apply flex justify-center text-sm sm:text-lg 2xl:text-2xl space-x-1 sm:space-x-4 pb-2 text-nowrap;
 }
 
 .activity-bubble {
@@ -70,11 +70,11 @@
 }
 
 .suits-info-container {
-  @apply flex flex-col space-y-2;
+  @apply flex flex-col space-y-2 text-3xl;
 }
 
 .suit-card {
-  @apply flex-1 w-full min-w-min bg-pink-200 rounded-xl px-2;
+  @apply md:flex-1 w-full min-w-min bg-pink-200 rounded-xl px-2;
 }
 
 .dark .suit-card {

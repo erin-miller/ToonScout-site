@@ -22,8 +22,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
     if (existing) {
       try {
         const data = JSON.parse(existing);
-        console.log(toon);
-        console.log(activeIndex)
+
         const index = data.findIndex(
           (stored: StoredToonData) =>
             stored.data?.data?.toon?.id == toon?.data?.toon?.id
