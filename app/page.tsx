@@ -18,6 +18,8 @@ const HomePage: React.FC = () => {
   const { addPort, removePort } = useActivePortsContext();
   const { userId } = useDiscordContext();
 
+  const toon = toons[activeIndex] ?? null;
+
   useEffect(() => {
     initScoutWebSocket();
     initWebSocket(setIsConnected, addPort, removePort, addToon);
@@ -40,19 +42,10 @@ const HomePage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const sendData = () => {
-      if (userId && activeIndex !== undefined) {
-        sendScoutData(userId, toons[activeIndex]?.data);
-      }
-    };
-  
-    const intervalId = setInterval(sendData, 5000);
-  
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [activeIndex]);
-  
+    if (userId && activeIndex !== undefined) {
+      sendScoutData(userId, toons[activeIndex]?.data);
+    }
+  }, [toon?.data, activeIndex]);
 
   return (
     <div className="page-container">
