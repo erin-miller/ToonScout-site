@@ -34,7 +34,7 @@ const OAuth = () => {
   return (
     <div>
       <h2 className="minnie-title text-3xl mb-6 w-full">Connect to Discord</h2>
-      <p>ToonScout needs a Discord connection to function.</p>
+      <p>When connected, you can view your toon's information on Discord.</p>
       <p className="py-2">Click the button below to begin!</p>
       <ArrowButton onClick={initOAuth} />
     </div>
