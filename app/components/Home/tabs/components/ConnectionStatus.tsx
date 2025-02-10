@@ -25,15 +25,16 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
         const timeAgo = getTimeAgo(diff);
 
         setModified(timeAgo);
-    } catch (error) {
+      } catch (error) {
         console.error("Error parsing existing toon data:", error);
-    }};
-    
+      }
+    };
+
     updateStatus();
     setActive(activePorts.has(toon.port));
 
-      const interval = setInterval(updateStatus, 60000);
-      return () => clearInterval(interval);
+    const interval = setInterval(updateStatus, 60000);
+    return () => clearInterval(interval);
   }, [activeIndex, toon?.data]);
 
   const handleStatusClick = () => {
