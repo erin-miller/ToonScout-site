@@ -54,19 +54,6 @@ export const initWebSocket = (
             if (toonIndex !== -1) {
               // exists
               localToon.locked = curr[toonIndex].locked;
-              curr[toonIndex] = { ...localToon };
-            } else {
-              // add new
-              curr.push(localToon);
-            }
-
-            curr.sort(
-              (a: StoredToonData, b: StoredToonData) =>
-                a.timestamp - b.timestamp
-            );
-
-            if (curr.length > MAX_TOONS) {
-              curr.shift();
             }
 
             // remove same ports from other toons in the data
@@ -78,7 +65,8 @@ export const initWebSocket = (
 
             if (portIndex !== -1) {
               // there is another toon with the port
-              delete curr[portIndex].port;
+              curr[portIndex].port = null;
+              addToon(curr[portIndex]);
             }
           }
           addToon(localToon);
