@@ -143,6 +143,7 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
       : "You have a 90% chance to catch the fish in the amount of buckets listed.";
 
   const getBuckets = (fish: FishRarity) => {
+    console.log(fish.buckets)
     if (bucketType === 2) {
       return fish.buckets.avgBuckets;
     }
