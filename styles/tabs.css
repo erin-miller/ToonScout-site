@@ -135,6 +135,10 @@
   @apply text-blue-500 border-blue-400
 }
 
+.dark .uncaught-fish {
+    @apply text-pink-900;
+}
+
 .fish-table {
   @apply bg-blue-200 border-blue-300 border-4 rounded-lg p-2;
 }
