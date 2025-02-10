@@ -64,6 +64,7 @@ export interface FishRarity {
   name: string;
   probability: number;
   location: string;
+  buckets: { confBuckets: number, confTime: number, avgBuckets: number, avgTime: number };
 }
 
 interface Fish {

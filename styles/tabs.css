@@ -109,7 +109,7 @@
 
 .fishtank {
   @apply flex-1 w-full space-y-2 overflow-y-auto;
-  max-height: 415px;
+  max-height: 500px;
 }
 
 .fish-scrollbar {
@@ -129,6 +129,10 @@
 
 .dark .fish {
   @apply bg-pink-400 text-gray-1200 border-pink-900;
+}
+
+.uncaught-fish {
+  @apply text-blue-500 border-blue-400
 }
 
 .fish-table {

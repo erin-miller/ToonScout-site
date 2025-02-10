@@ -1,6 +1,5 @@
 import { useActivePortsContext } from "@/app/context/ActivePortsContext";
 import { useToonContext } from "@/app/context/ToonContext";
-import { StoredToonData } from "@/app/types";
 import React, { useEffect, useState } from "react";
 interface ConnectionStatusProps {
   setActiveModal: (modalType: string | null) => void;
@@ -27,7 +26,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
       } catch (error) {
         console.error("Error parsing existing toon data:", error);
       }
-  }, [activeIndex, toon?.timestamp]);
+  }, [activeIndex, toon?.data]);
 
   const handleStatusClick = () => {
     setActiveModal("connect");
