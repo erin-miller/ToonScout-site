@@ -1,4 +1,4 @@
-@import "@/app/globals.css";
+@import "@/styles/globals.css";
 
 .tab-container {
   @apply flex justify-center items-center gap-[1px] sm:gap-3;
@@ -132,11 +132,11 @@
 }
 
 .uncaught-fish {
-  @apply text-blue-500 border-blue-400
+  @apply text-blue-500 border-blue-400;
 }
 
 .dark .uncaught-fish {
-    @apply text-pink-900;
+  @apply text-pink-900;
 }
 
 .fish-table {
