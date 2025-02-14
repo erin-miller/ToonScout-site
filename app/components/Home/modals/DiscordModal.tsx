@@ -24,7 +24,7 @@ const DiscordModal: React.FC<DiscordModalProps> = ({ isOpen, onClose }) => {
     window.open(
       "https://discord.com/oauth2/authorize?client_id=1286517155315322950",
       "_blank",
-      "noopener noreferrer"
+      "noopener noreferrer",
     );
   };
 

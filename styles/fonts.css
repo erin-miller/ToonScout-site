@@ -1,20 +1,20 @@
 @font-face {
-    font-family: 'minnie'; /* Name your font */
-    src: url('../fonts/Minnie.TTF') format('truetype'); /* Path to your font file */
-    font-weight: normal; /* Adjust weight as needed */
-    font-style: normal; /* Adjust style as needed */
+  font-family: "minnie";
+  src: url("../fonts/Minnie.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'mickey'; /* Name your second font */
-    src: url('../fonts/MICKEY.TTF') format('truetype'); /* Path to your font file */
-    font-weight: normal; /* Adjust weight as needed */
-    font-style: normal; /* Adjust style as needed */
+  font-family: "mickey";
+  src: url("../fonts/MICKEY.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'impress'; /* Name your second font */
-    src: url('../fonts/ImpressBT.ttf') format('truetype'); /* Path to your font file */
-    font-weight: normal; /* Adjust weight as needed */
-    font-style: normal; /* Adjust style as needed */
+  font-family: "impress";
+  src: url("../fonts/ImpressBT.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }

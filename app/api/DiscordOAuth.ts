@@ -33,7 +33,7 @@ export async function handleOAuthToken(fragment: URLSearchParams) {
 async function storeToken(
   userId: string,
   accessToken: string,
-  expiresAt: string
+  expiresAt: string,
 ) {
   try {
     const response = await fetch("https://api.scouttoon.info/store-token", {

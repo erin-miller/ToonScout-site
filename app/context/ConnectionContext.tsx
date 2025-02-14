@@ -7,7 +7,7 @@ type ConnectionContextType = {
 };
 
 const ConnectionContext = createContext<ConnectionContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export const ConnectionProvider: React.FC<{ children: ReactNode }> = ({
@@ -26,7 +26,7 @@ export const useConnectionContext = () => {
   const context = useContext(ConnectionContext);
   if (!context) {
     throw new Error(
-      "useConnectionContext must be used within a ConnectionProvider"
+      "useConnectionContext must be used within a ConnectionProvider",
     );
   }
   return context;

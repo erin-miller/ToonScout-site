@@ -8,7 +8,7 @@ type ActivePortsContext = {
 };
 
 const ActivePortsContext = createContext<ActivePortsContext | undefined>(
-  undefined
+  undefined,
 );
 
 export const ActivePortsProvider: React.FC<{ children: ReactNode }> = ({
@@ -39,7 +39,7 @@ export const useActivePortsContext = () => {
   const context = useContext(ActivePortsContext);
   if (!context) {
     throw new Error(
-      "useActivePortsContext must be used within an ActivePortsProvider"
+      "useActivePortsContext must be used within an ActivePortsProvider",
     );
   }
   return context;

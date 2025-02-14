@@ -11,7 +11,7 @@ function ThemeToggle() {
         setTheme(savedTheme);
       } else {
         const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
+          "(prefers-color-scheme: dark)",
         ).matches;
         setTheme(prefersDark ? "dark" : "light");
       }

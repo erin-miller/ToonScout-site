@@ -104,7 +104,7 @@ const FISH_RARITY: { [key: string]: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 } = {
 const FishTab: React.FC<TabProps> = ({ toon }) => {
   const [rarity, setRarity] = useState<FishRarity[] | null>(null);
   const [caught, setCaught] = useState<string[]>([]);
-  
+
   const [showCaught, setShowCaught] = useState<boolean>(() => {
     return JSON.parse(localStorage.getItem("showCaught") || "false");
   });
@@ -143,7 +143,7 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
       : "You have a 90% chance to catch the fish in the amount of buckets listed.";
 
   const getBuckets = (fish: FishRarity) => {
-    console.log(fish.buckets)
+    console.log(fish.buckets);
     if (bucketType === 2) {
       return fish.buckets.avgBuckets;
     }
@@ -238,7 +238,9 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
           {showModal && (
             <div className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900 rounded-md bg-opacity-60 flex justify-center items-center z-50 dark:text-gray-1000">
               <div className="absolute bg-gray-100 dark:bg-gray-200 border-4 border-gagblue p-6 rounded-lg shadow-lg">
-                <div className={`${rarity && rarity.length > 0 ? "block" : "hidden"}`}>
+                <div
+                  className={`${rarity && rarity.length > 0 ? "block" : "hidden"}`}
+                >
                   <div className="text-2xl font-semibold">Bucket Type</div>
                   <div className="flex items-center space-x-2">
                     <input
@@ -356,7 +358,7 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
 
                       {showTime && (
                         <span className="text-base ml-2">{`(${getTime(
-                          item
+                          item,
                         )})`}</span>
                       )}
                     </div>

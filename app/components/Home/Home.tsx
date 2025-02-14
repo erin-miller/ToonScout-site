@@ -20,7 +20,7 @@ const Home = () => {
         {
           method: "GET",
           credentials: "include",
-        }
+        },
       );
 
       if (response.ok) {

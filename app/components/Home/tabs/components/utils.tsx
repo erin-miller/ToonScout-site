@@ -80,7 +80,8 @@ export const sumGolf = (toon: StoredToonData) => {
   let count = 0;
   for (const trophy of golf_trophies) {
     const earned =
-      toon.data.data.golf.find((item) => item.name == trophy.description)?.num || 0;
+      toon.data.data.golf.find((item) => item.name == trophy.description)
+        ?.num || 0;
     for (const val of trophy.values) {
       if (earned >= val) {
         count += 1;
@@ -94,8 +95,8 @@ export const sumRace = (toon: StoredToonData) => {
   let count = 0;
   for (const trophy of race_trophies) {
     const earned =
-      toon.data.data.racing.find((item) => item.name == trophy.description)?.num ||
-      0;
+      toon.data.data.racing.find((item) => item.name == trophy.description)
+        ?.num || 0;
     for (const val of trophy.values) {
       if (earned >= val) {
         count += 1;

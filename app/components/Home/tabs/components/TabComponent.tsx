@@ -127,7 +127,8 @@ const TabContainer = () => {
                 {toon.data.data.laff.current} / {toon.data.data.laff.max} laff
               </p>
               <p className="text-md md:text-xl lg:text-2xl">
-                {toon.data.data.location.zone}, {toon.data.data.location.district}
+                {toon.data.data.location.zone},{" "}
+                {toon.data.data.location.district}
               </p>
             </div>
             <div className="toon-photo">
