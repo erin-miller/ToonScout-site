@@ -1,4 +1,4 @@
-@import "@/app/globals.css";
+@import "@/styles/globals.css";
 
 .home-card {
   @apply bg-gray-200 rounded-xl shadow-md text-center border-2
