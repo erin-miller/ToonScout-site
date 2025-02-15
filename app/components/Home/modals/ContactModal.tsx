@@ -16,7 +16,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
         <p>
           Need help or have a question? Please join ToonScout's{" "}
           <a
-            href="https://discord.gg/Qb929SrdRP"
+            href={process.env.NEXT_PUBLIC_DISCORD_INVITE}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-400 hover:underline"

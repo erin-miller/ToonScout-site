@@ -1,7 +1,6 @@
 import React from "react";
 import LoadingDots from "@/app/components/animations/LoadingDots";
 import "/styles/gamesteps.css";
-import ThemeToggle from "@/app/components/Theme";
 
 const GameSteps: React.FC = () => (
   <div className="p-6">

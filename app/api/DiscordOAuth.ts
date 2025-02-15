@@ -26,6 +26,7 @@ export async function handleOAuthToken(fragment: URLSearchParams) {
     return;
   }
 
+  // clear fragment
   window.history.replaceState({}, document.title, window.location.pathname);
   return userId;
 }
@@ -33,17 +34,20 @@ export async function handleOAuthToken(fragment: URLSearchParams) {
 async function storeToken(
   userId: string,
   accessToken: string,
-  expiresAt: string,
+  expiresAt: string
 ) {
   try {
-    const response = await fetch("https://api.scouttoon.info/store-token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId, accessToken, expiresAt }),
-      credentials: "include", // Include cookies in the request
-    });
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_HTTP + "/store-token",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId, accessToken, expiresAt }),
+        credentials: "include", // Include cookies in the request
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Failed to store token in the database.");

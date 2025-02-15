@@ -1,5 +1,4 @@
 import React from "react";
-import AnimatedTabContent from "@/app/components/animations/AnimatedTab";
 import Modal from "../../Modal";
 
 interface PrivacyModalProps {
@@ -59,7 +58,7 @@ const PrivacyModal: React.FC<PrivacyModalProps> = ({ isOpen, onClose }) => {
             If you no longer wish to use ToonScout, you may request that we
             delete your stored data by contacting us at the{" "}
             <a
-              href="https://discord.gg/Qb929SrdRP"
+              href={process.env.NEXT_PUBLIC_DISCORD_INVITE}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-400 hover:underline"

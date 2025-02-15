@@ -3,7 +3,6 @@ import { StoredToonData } from "../types";
 const DEFAULT_PORTS = [1547, 1548, 1549, 1550, 1551, 1552, 1553, 1554];
 const RECONNECT_DELAY = 10000;
 const RECONNECT_INTERVAL = 5000;
-const MAX_TOONS = 8;
 
 let sockets: { [port: number]: WebSocket } = {};
 let contReqInterval: NodeJS.Timeout | null = null;
@@ -13,7 +12,7 @@ export const initWebSocket = (
   setIsConnected: (isConnected: boolean) => void,
   addActivePort: (port: number) => void,
   removeActivePort: (port: number) => void,
-  addToon: (data: any) => void,
+  addToon: (data: any) => void
 ) => {
   const connectWebSocket = () => {
     DEFAULT_PORTS.forEach((port) => {
@@ -26,7 +25,7 @@ export const initWebSocket = (
 
       socket.addEventListener("open", () => {
         socket.send(
-          JSON.stringify({ authorization: initAuthToken(), name: "ToonScout" }),
+          JSON.stringify({ authorization: initAuthToken(), name: "ToonScout" })
         );
         socket.send(JSON.stringify({ request: "all" }));
         startContinuousRequests();
@@ -48,7 +47,7 @@ export const initWebSocket = (
             // check if this toon exists in the storage
             const toonIndex = curr.findIndex(
               (stored: StoredToonData) =>
-                stored.data.data.toon.id == toon.data.toon.id,
+                stored.data.data.toon.id == toon.data.toon.id
             );
 
             if (toonIndex !== -1) {
@@ -60,7 +59,7 @@ export const initWebSocket = (
             const portIndex = curr.findIndex(
               (stored: StoredToonData) =>
                 stored.port === port &&
-                stored.data.data.toon.id != toon.data.toon.id,
+                stored.data.data.toon.id != toon.data.toon.id
             );
 
             if (portIndex !== -1) {

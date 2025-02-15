@@ -6,7 +6,7 @@ import { useDiscordContext } from "@/app/context/DiscordContext";
 import { handleOAuthToken } from "@/app/api/DiscordOAuth";
 import Header from "./Header";
 import { useToonContext } from "@/app/context/ToonContext";
-import GameSteps from "../GameSteps/GameSteps";
+import GameSteps from "../GameSteps";
 
 const Home = () => {
   const { userId, setUserId } = useDiscordContext();
@@ -20,7 +20,7 @@ const Home = () => {
         {
           method: "GET",
           credentials: "include",
-        },
+        }
       );
 
       if (response.ok) {
