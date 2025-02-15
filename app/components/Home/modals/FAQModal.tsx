@@ -31,6 +31,27 @@ const FAQModal: React.FC<FAQModalProps> = ({ isOpen, onClose }) => {
         </div>
 
         <div className="faq-container">
+          <div className="faq-question">Is ToonScout open source?</div>
+          <div className="faq-answer">
+            Yes! The Discord bot's source code can be found{" "}
+            <a
+              href="https://github.com/erin-miller/ToonScout-bot"
+              className="text-blue-400 hover:underline"
+            >
+              here
+            </a>
+            . The website's source code can be found{" "}
+            <a
+              href="https://github.com/erin-miller/ToonScout-site"
+              className="text-blue-400 hover:underline"
+            >
+              here
+            </a>
+            .
+          </div>
+        </div>
+
+        <div className="faq-container">
           <div className="faq-question">
             What logic is used to calculate my suit promotion, fish percentages,
             and so on?
