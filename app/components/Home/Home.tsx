@@ -16,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     const checkAccessToken = async () => {
       const response = await fetch(
-        process.env.NEXT_PUBLIC_API_HTTP + "/get-token",
+        process.env.NEXT_PUBLIC_API_HTTP + "/token/get-token",
         {
           method: "GET",
           credentials: "include",

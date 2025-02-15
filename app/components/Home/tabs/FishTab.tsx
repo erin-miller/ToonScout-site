@@ -168,7 +168,7 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
 
   useEffect(() => {
     const getFish = async () => {
-      const response = await fetch(API_LINK + "/get-fish", {
+      const response = await fetch(API_LINK + "/utility/get-fish", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -239,7 +239,9 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
             <div className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900 rounded-md bg-opacity-60 flex justify-center items-center z-50 dark:text-gray-1000">
               <div className="absolute bg-gray-100 dark:bg-gray-200 border-4 border-gagblue p-6 rounded-lg shadow-lg">
                 <div
-                  className={`${rarity && rarity.length > 0 ? "block" : "hidden"}`}
+                  className={`${
+                    rarity && rarity.length > 0 ? "block" : "hidden"
+                  }`}
                 >
                   <div className="text-2xl font-semibold">Bucket Type</div>
                   <div className="flex items-center space-x-2">
@@ -358,7 +360,7 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
 
                       {showTime && (
                         <span className="text-base ml-2">{`(${getTime(
-                          item,
+                          item
                         )})`}</span>
                       )}
                     </div>

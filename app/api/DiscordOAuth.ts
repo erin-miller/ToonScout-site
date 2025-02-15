@@ -38,7 +38,7 @@ async function storeToken(
 ) {
   try {
     const response = await fetch(
-      process.env.NEXT_PUBLIC_API_HTTP + "/store-token",
+      process.env.NEXT_PUBLIC_API_HTTP + "/token/store-token",
       {
         method: "POST",
         headers: {
