@@ -143,7 +143,6 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
       : "You have a 90% chance to catch the fish in the amount of buckets listed.";
 
   const getBuckets = (fish: FishRarity) => {
-    console.log(fish.buckets);
     if (bucketType === 2) {
       return fish.buckets.avgBuckets;
     }
@@ -213,9 +212,9 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
         </div>
         <div className="fish-table relative">
           <div className="flex text-xl md:text-2xl xl:text-3xl pb-2 ml-5 mr-9 space-x-2">
-            <div className="fish-table-header">Fish</div>
-            <div className="fish-table-header">Location</div>
-            <div className="fish-table-header">
+            <div className="fish-table-header w-2/3">Fish</div>
+            <div className="fish-table-header w-2/3">Location</div>
+            <div className="fish-table-header w-2/3">
               Probability
               <div className="relative px-2 group">
                 <span className="border-4 border-pink-900 dark:border-pink-100 rounded-full w-6 h-6 flex items-center justify-center text-base">
@@ -225,6 +224,13 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
                   {probabilityTooltip}
                 </div>
               </div>
+            </div>
+            <div
+              className={`fish-table-header w-1/3 ${
+                showTime ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              Time
             </div>
             <button
               className="scale-up absolute right-2 h-8 w-8 bg-violet-800 rounded-full flex items-center justify-center"
@@ -344,7 +350,6 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
                       >
                         {itemRarity}
                       </div>
-
                       {item.name}
                     </div>
 
@@ -357,12 +362,13 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
                         {(item.probability * 100).toFixed(2)}% or{" "}
                         {getBuckets(item)} buckets
                       </span>
-
-                      {showTime && (
-                        <span className="text-base ml-2">{`(${getTime(
-                          item
-                        )})`}</span>
-                      )}
+                    </div>
+                    <div
+                      className={`fish-info w-1/3 text-left ${
+                        showTime ? "opacity-100" : "opacity-0"
+                      }`}
+                    >
+                      <span>{getTime(item)}</span>
                     </div>
                   </div>
                 );
