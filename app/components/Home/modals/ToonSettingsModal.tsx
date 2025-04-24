@@ -52,6 +52,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ toon, index, isOpen, onCl
           <button
             className="flex items-center gap-2 text-xl bg-red-200 p-2 rounded hover:bg-red-300"
             onClick={() => {
+              onClose();
               deleteToon(toon);
             }}>
             <FaTrash className="text-red-800" />
