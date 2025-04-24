@@ -11,6 +11,7 @@ import { StoredToonData } from "../types";
 type ToonContextType = {
   toons: StoredToonData[];
   addToon: (newToon: StoredToonData) => void;
+  deleteToon: (toon: StoredToonData) => void;
   activeIndex: number;
   setActiveIndex: (index: number) => void;
 };
@@ -80,6 +81,15 @@ export const ToonProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const deleteToon = (toon: StoredToonData) => {
+    setToons((prevToons) => {
+      const newToons = prevToons.filter(
+        (t) => t?.data?.data.toon.id !== toon?.data?.data.toon.id,
+      );
+      return newToons;
+    });
+  }
+
   // keep activeIndex within bounds when toons change
   useEffect(() => {
     if (activeIndex >= toons.length && toons.length > 0) {
@@ -91,6 +101,7 @@ export const ToonProvider: React.FC<{ children: React.ReactNode }> = ({
     () => ({
       toons,
       addToon,
+      deleteToon,
       activeIndex,
       setActiveIndex,
     }),
