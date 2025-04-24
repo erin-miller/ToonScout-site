@@ -40,7 +40,6 @@ const ToonSelect = () => {
   };
 
   const openModal = (toon: StoredToonData, index: number) => {
-    if (!toon) return;
     setModalOpen(true);
     setSelectedToon(toon);
     setSelectedIndex(index);
@@ -79,7 +78,7 @@ const ToonSelect = () => {
                   className="ml-auto text-gray-500 dark:text-gray-300"
                   title="Lock toons to prevent them from being replaced."
                 >
-                  <FaCog className="text-blue-700 hover:text-blue-700" />
+                  <FaCog className="text-blue-700 hover:text-blue-700 text-xl" />
                 </div>
               </button>
             ))}
