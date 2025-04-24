@@ -1,8 +1,14 @@
+import { initWebSocket } from "@/app/api/LocalWebSocket";
 import ThemeToggle from "../Theme";
 import DiscordModal from "./modals/DiscordModal";
 import GameStepsModal from "./modals/GameStepsModal";
 import ConnectionStatus from "./tabs/components/ConnectionStatus";
 import ToonSelect from "./ToonSelect";
+import { useConnectionContext } from "@/app/context/ConnectionContext";
+import { useActivePortsContext } from "@/app/context/ActivePortsContext";
+import { useToonContext } from "@/app/context/ToonContext";
+import { FaArrowsRotate } from "react-icons/fa6";
+import { useState } from "react";
 
 interface HeaderProps {
   userId?: string | null;
@@ -17,6 +23,12 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const closeModal = () => setActiveModal(null);
   const openModal = (modalName: string) => setActiveModal(modalName);
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  // for force resync
+  const { setIsConnected } = useConnectionContext();
+  const { addToon } = useToonContext();
+  const { addPort, removePort } = useActivePortsContext();
 
   return (
     <div className="grid grid-cols-3 bg-white dark:bg-gray-1200 py-2 px-4 max-w-full items-center justify-center">
@@ -27,7 +39,24 @@ const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      <div>
+      <div className="flex flex-row space-x-4 items-center justify-center">
+        <button
+          className={`scale-up rounded-full p-1.5 border-2 ${
+            isDisabled
+              ? "border-gray-400 bg-gray-200 text-gray-400 cursor-not-allowed"
+              : "border-blue-600 bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
+          }`}
+          onClick={() => {
+            if (!isDisabled) {
+              initWebSocket(setIsConnected, addPort, removePort, addToon);
+              setIsDisabled(true);
+              setTimeout(() => setIsDisabled(false), 10000);
+            }
+          }}
+          disabled={isDisabled}
+        >
+          <FaArrowsRotate className="w-4.5 h-4.5 " />
+        </button>
         <ConnectionStatus setActiveModal={setActiveModal} />
       </div>
 
