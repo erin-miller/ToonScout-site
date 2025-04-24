@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { useToonContext } from "@/app/context/ToonContext";
 import AnimatedTabContent from "../animations/AnimatedTab";
-import { FaLock, FaUnlock } from "react-icons/fa";
+import { FaCog } from "react-icons/fa";
+import ToonSettingsModal from "./modals/ToonSettingsModal";
+import { StoredToonData } from "@/app/types";
+import { MAX_TOONS } from "@/app/context/ToonContext";
 
 const ToonSelect = () => {
-  const { toons, activeIndex, setActiveIndex, addToon } = useToonContext();
+  const { toons, activeIndex, setActiveIndex } = useToonContext();
   const [isOpen, setOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedToon, setSelectedToon] = useState<StoredToonData | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const curr = toons[activeIndex];
-  const MAX_TOONS = 8;
 
   const getImage = (dna: string) => {
     const flippy =
@@ -34,15 +39,11 @@ const ToonSelect = () => {
     }
   };
 
-  const toggleLock = (index: number) => {
-    const toon = toons[index];
-    toon.locked = !toon.locked;
-    addToon(toon);
-  };
-
-  const getLockedStatus = (index: number) => {
-    return toons[index].locked;
-  };
+  const openModal = (toon: StoredToonData, index: number) => {
+    setModalOpen(true);
+    setSelectedToon(toon);
+    setSelectedIndex(index);
+  }
 
   return (
     <div className="relative flex items-center text-gray-900 dark:text-gray-100 z-50">
@@ -72,16 +73,12 @@ const ToonSelect = () => {
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-                    toggleLock(index);
+                    openModal(toon, index);
                   }}
                   className="ml-auto text-gray-500 dark:text-gray-300"
-                  title="Locked toons won't be replaced."
+                  title="Lock toons to prevent them from being replaced."
                 >
-                  {getLockedStatus(index) ? (
-                    <FaLock className="text-red-500" />
-                  ) : (
-                    <FaUnlock className="text-green-500" />
-                  )}
+                  <FaCog className="text-blue-700 hover:text-blue-700 text-xl" />
                 </div>
               </button>
             ))}
@@ -91,6 +88,12 @@ const ToonSelect = () => {
           </div>
         </AnimatedTabContent>
       )}
+    <ToonSettingsModal
+                  toon={selectedToon}
+                  index={selectedIndex}
+                  isOpen={isModalOpen}
+                  onClose={() => setModalOpen(false)}
+                />
     </div>
   );
 };
