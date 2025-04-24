@@ -10,6 +10,7 @@ const ToonSelect = () => {
   const [isOpen, setOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedToon, setSelectedToon] = useState<StoredToonData | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const curr = toons[activeIndex];
   const MAX_TOONS = 8;
 
@@ -38,10 +39,11 @@ const ToonSelect = () => {
     }
   };
 
-  const openModal = (toon: StoredToonData) => {
+  const openModal = (toon: StoredToonData, index: number) => {
     if (!toon) return;
     setModalOpen(true);
     setSelectedToon(toon);
+    setSelectedIndex(index);
   }
 
   return (
@@ -72,7 +74,7 @@ const ToonSelect = () => {
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-                    openModal(toon);
+                    openModal(toon, index);
                   }}
                   className="ml-auto text-gray-500 dark:text-gray-300"
                   title="Lock toons to prevent them from being replaced."
@@ -89,6 +91,7 @@ const ToonSelect = () => {
       )}
     <ToonSettingsModal
                   toon={selectedToon}
+                  index={selectedIndex}
                   isOpen={isModalOpen}
                   onClose={() => setModalOpen(false)}
                 />
