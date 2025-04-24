@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { useToonContext } from "@/app/context/ToonContext";
 import AnimatedTabContent from "../animations/AnimatedTab";
-import { FaLock, FaUnlock } from "react-icons/fa";
+import { FaLock, FaUnlock, FaCog } from "react-icons/fa";
+import Modal from "../Modal";
+import ToonSettingsModal from "./modals/ToonSettingsModal";
+import { StoredToonData } from "@/app/types";
 
 const ToonSelect = () => {
-  const { toons, activeIndex, setActiveIndex, addToon } = useToonContext();
+  const { toons, activeIndex, setActiveIndex } = useToonContext();
   const [isOpen, setOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedToon, setSelectedToon] = useState<StoredToonData | null>(null);
   const curr = toons[activeIndex];
   const MAX_TOONS = 8;
 
@@ -34,15 +39,11 @@ const ToonSelect = () => {
     }
   };
 
-  const toggleLock = (index: number) => {
-    const toon = toons[index];
-    toon.locked = !toon.locked;
-    addToon(toon);
-  };
-
-  const getLockedStatus = (index: number) => {
-    return toons[index].locked;
-  };
+  const openModal = (toon: StoredToonData) => {
+    if (!toon) return;
+    setModalOpen(true);
+    setSelectedToon(toon);
+  }
 
   return (
     <div className="relative flex items-center text-gray-900 dark:text-gray-100 z-50">
@@ -72,16 +73,12 @@ const ToonSelect = () => {
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
-                    toggleLock(index);
+                    openModal(toon);
                   }}
                   className="ml-auto text-gray-500 dark:text-gray-300"
                   title="Locked toons won't be replaced."
                 >
-                  {getLockedStatus(index) ? (
-                    <FaLock className="text-red-500" />
-                  ) : (
-                    <FaUnlock className="text-green-500" />
-                  )}
+                  <FaCog className="text-blue-700 hover:text-blue-700" />
                 </div>
               </button>
             ))}
@@ -91,6 +88,11 @@ const ToonSelect = () => {
           </div>
         </AnimatedTabContent>
       )}
+    <ToonSettingsModal
+                  toon={selectedToon}
+                  isOpen={isModalOpen}
+                  onClose={() => setModalOpen(false)}
+                />
     </div>
   );
 };
