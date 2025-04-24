@@ -16,7 +16,7 @@ type ToonContextType = {
   setActiveIndex: (index: number) => void;
 };
 
-export const MAX_TOONS = 8;
+export const MAX_TOONS = 12;
 const LOCAL_STORAGE_KEY = "toonData";
 const ACTIVE_KEY = "activeIndex";
 
