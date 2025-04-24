@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({
         <button
           className={`scale-up rounded-full p-1.5 border-2 ${
             isDisabled
-              ? "border-gray-400 bg-gray-200 text-gray-400 cursor-not-allowed"
+              ? "border-gray-400 bg-gray-200 text-gray-400 dark:border-gray-1000 dark:bg-gray-900 dark:text-gray-1000 cursor-not-allowed"
               : "border-blue-600 bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
           }`}
           onClick={() => {
@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = ({
           }}
           disabled={isDisabled}
         >
-          <FaArrowsRotate className="w-4.5 h-4.5 " />
+          <FaArrowsRotate className="w-4.5 h-4.5" />
         </button>
         <ConnectionStatus setActiveModal={setActiveModal} />
       </div>
