@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useToonContext } from "@/app/context/ToonContext";
 import AnimatedTabContent from "../animations/AnimatedTab";
-import { FaLock, FaUnlock, FaCog } from "react-icons/fa";
-import Modal from "../Modal";
+import { FaCog } from "react-icons/fa";
 import ToonSettingsModal from "./modals/ToonSettingsModal";
 import { StoredToonData } from "@/app/types";
 
