@@ -4,6 +4,7 @@ import AnimatedTabContent from "../animations/AnimatedTab";
 import { FaCog } from "react-icons/fa";
 import ToonSettingsModal from "./modals/ToonSettingsModal";
 import { StoredToonData } from "@/app/types";
+import { MAX_TOONS } from "@/app/context/ToonContext";
 
 const ToonSelect = () => {
   const { toons, activeIndex, setActiveIndex } = useToonContext();
@@ -12,7 +13,6 @@ const ToonSelect = () => {
   const [selectedToon, setSelectedToon] = useState<StoredToonData | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const curr = toons[activeIndex];
-  const MAX_TOONS = 8;
 
   const getImage = (dna: string) => {
     const flippy =
