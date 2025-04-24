@@ -14,7 +14,7 @@ type SettingsModalProps = {
 
 const SettingsModal: React.FC<SettingsModalProps> = ({ toon, index, isOpen, onClose }) => {
   if (!isOpen || !toon || index == null) return null;
-  const { toons, addToon } = useToonContext();
+  const { toons, addToon, deleteToon } = useToonContext();
 
   const toggleLock = (index: number) => {
     const toon = toons[index];
@@ -52,7 +52,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({ toon, index, isOpen, onCl
           <button
             className="flex items-center gap-2 text-xl bg-red-200 p-2 rounded hover:bg-red-300"
             onClick={() => {
-              deleteToon(index);
+              deleteToon(toon);
             }}>
             <FaTrash className="text-red-800" />
             <span>Delete Toon</span>
