@@ -75,7 +75,7 @@ const ToonSelect = () => {
                     openModal(toon);
                   }}
                   className="ml-auto text-gray-500 dark:text-gray-300"
-                  title="Locked toons won't be replaced."
+                  title="Lock toons to prevent them from being replaced."
                 >
                   <FaCog className="text-blue-700 hover:text-blue-700" />
                 </div>
