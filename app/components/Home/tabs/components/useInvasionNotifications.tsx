@@ -56,6 +56,14 @@ export function useInvasionNotifications() {
     soundEnabled,
   ]);
 
+  // Expose a manual trigger for testing
+  function triggerTestToast(cogName = "Back Stabber") {
+    setToastMsg(`Relevant invasion: ${cogName}`);
+    setShowToast(true);
+    const audio = new Audio("/sounds/notify.mp3");
+    audio.play();
+  }
+
   const toast = (
     <Toast
       message={toastMsg}
@@ -63,5 +71,5 @@ export function useInvasionNotifications() {
       onClose={() => setShowToast(false)}
     />
   );
-  return toast;
+  return { toast, triggerTestToast };
 }

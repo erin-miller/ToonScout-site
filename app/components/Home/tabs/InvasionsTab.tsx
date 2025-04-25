@@ -5,10 +5,12 @@ import { useInvasionContext } from "@/app/context/InvasionContext";
 import { FaGlobe, FaClock, FaHourglassStart } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import { getCogImage } from "./components/utils";
+import { useToast } from "@/app/context/ToastContext";
 
 const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
   const { invasions, loading } = useInvasionContext();
   const [now, setNow] = useState(Date.now());
+  const { triggerToast } = useToast();
 
   // Update every second for live elapsed time
   useEffect(() => {
@@ -35,6 +37,14 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
 
   return (
     <AnimatedTabContent>
+      <button
+        style={{ display: "none" }}
+        className="mb-2 self-end px-4 py-2 rounded bg-pink-600 text-white font-bold shadow hover:bg-pink-700 transition"
+        onClick={() => triggerToast("Relevant invasion: Back Stabber")}
+        type="button"
+      >
+        Test Invasion Toast
+      </button>
       <div className="flex flex-col gap-4 max-h-[60vh] overflow-y-auto pr-2">
         {loading ? (
           <div className="text-center">Loading...</div>

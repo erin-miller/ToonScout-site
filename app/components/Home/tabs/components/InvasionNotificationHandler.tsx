@@ -2,7 +2,7 @@
 import { useInvasionNotifications } from "./useInvasionNotifications";
 
 const InvasionNotificationHandler = () => {
-  const toast = useInvasionNotifications();
+  const { toast } = useInvasionNotifications();
   return toast;
 };
 

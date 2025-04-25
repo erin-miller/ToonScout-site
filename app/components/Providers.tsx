@@ -6,6 +6,7 @@ import { ConnectionProvider } from "@/app/context/ConnectionContext";
 import { DiscordProvider } from "@/app/context/DiscordContext";
 import { ActivePortsProvider } from "../context/ActivePortsContext";
 import { InvasionProvider } from "@/app/context/InvasionContext";
+import { ToastProvider } from "@/app/context/ToastContext";
 import InvasionNotificationHandler from "./Home/tabs/components/InvasionNotificationHandler";
 
 interface ProvidersProps {
@@ -14,18 +15,20 @@ interface ProvidersProps {
 
 const Providers = ({ children }: ProvidersProps) => {
   return (
-    <ToonProvider>
-      <DiscordProvider>
-        <ConnectionProvider>
-          <ActivePortsProvider>
-            <InvasionProvider>
-              {children}
-              <InvasionNotificationHandler />
-            </InvasionProvider>
-          </ActivePortsProvider>
-        </ConnectionProvider>
-      </DiscordProvider>
-    </ToonProvider>
+    <ToastProvider>
+      <ToonProvider>
+        <DiscordProvider>
+          <ConnectionProvider>
+            <ActivePortsProvider>
+              <InvasionProvider>
+                {children}
+                <InvasionNotificationHandler />
+              </InvasionProvider>
+            </ActivePortsProvider>
+          </ConnectionProvider>
+        </DiscordProvider>
+      </ToonProvider>
+    </ToastProvider>
   );
 };
 
