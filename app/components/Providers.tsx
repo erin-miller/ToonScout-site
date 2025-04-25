@@ -1,8 +1,12 @@
+"use client";
+
 import { ReactNode } from "react";
 import { ToonProvider } from "@/app/context/ToonContext";
 import { ConnectionProvider } from "@/app/context/ConnectionContext";
 import { DiscordProvider } from "@/app/context/DiscordContext";
 import { ActivePortsProvider } from "../context/ActivePortsContext";
+import { InvasionProvider } from "@/app/context/InvasionContext";
+import InvasionNotificationHandler from "./Home/tabs/components/InvasionNotificationHandler";
 
 interface ProvidersProps {
   children: ReactNode;
@@ -13,7 +17,12 @@ const Providers = ({ children }: ProvidersProps) => {
     <ToonProvider>
       <DiscordProvider>
         <ConnectionProvider>
-          <ActivePortsProvider>{children}</ActivePortsProvider>
+          <ActivePortsProvider>
+            <InvasionProvider>
+              {children}
+              <InvasionNotificationHandler />
+            </InvasionProvider>
+          </ActivePortsProvider>
         </ConnectionProvider>
       </DiscordProvider>
     </ToonProvider>

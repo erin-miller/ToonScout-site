@@ -1,9 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { TabProps } from "./components/TabComponent";
 import AnimatedTabContent from "../../animations/AnimatedTab";
 import { Task, StoredToonData } from "@/app/types";
+import { FaBell, FaBellSlash } from "react-icons/fa";
 
 const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
+  // Notification bell state
+  const [notificationsEnabled, setNotificationsEnabled] = useState<boolean>(
+    () => {
+      if (typeof window !== "undefined") {
+        return JSON.parse(
+          localStorage.getItem("tasksTabNotifications") || "false"
+        );
+      }
+      return false;
+    }
+  );
+
+  // Notification settings
+  const [toastEnabled, setToastEnabled] = useState(() => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("tasksTabToastEnabled") || "true");
+    }
+    return true;
+  });
+  const [soundEnabled, setSoundEnabled] = useState(() => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("tasksTabSoundEnabled") || "true");
+    }
+    return true;
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "tasksTabNotifications",
+        JSON.stringify(notificationsEnabled)
+      );
+      localStorage.setItem(
+        "tasksTabToastEnabled",
+        JSON.stringify(toastEnabled)
+      );
+      localStorage.setItem(
+        "tasksTabSoundEnabled",
+        JSON.stringify(soundEnabled)
+      );
+    }
+  }, [notificationsEnabled, toastEnabled, soundEnabled]);
+
   // pulled from ToonScout bot
   function getTasks(toons: StoredToonData) {
     const toontasks = toons.data.data.tasks;
@@ -77,6 +121,43 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
 
   return (
     <AnimatedTabContent>
+      <div className="flex justify-end items-center mb-2 gap-4">
+        <button
+          className="text-2xl p-2 focus:outline-none"
+          title={
+            notificationsEnabled
+              ? "Disable Notifications"
+              : "Enable Notifications"
+          }
+          onClick={() => setNotificationsEnabled((prev) => !prev)}
+        >
+          {notificationsEnabled ? (
+            <FaBell className="text-yellow-400" />
+          ) : (
+            <FaBellSlash className="text-gray-400" />
+          )}
+        </button>
+        <div className="flex items-center gap-2 text-base">
+          <label>
+            <input
+              type="checkbox"
+              checked={toastEnabled}
+              onChange={(e) => setToastEnabled(e.target.checked)}
+              className="mr-1"
+            />
+            Toast
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={soundEnabled}
+              onChange={(e) => setSoundEnabled(e.target.checked)}
+              className="mr-1"
+            />
+            Sound
+          </label>
+        </div>
+      </div>
       <div className="grid md:grid-rows-2 md:grid-cols-2 grid-rows-4">
         {tasks.map((task, index) => (
           <div key={index} className="task-container">

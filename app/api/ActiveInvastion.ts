@@ -29,7 +29,11 @@ const useActiveInvasions = () => {
   useEffect(() => {
     const fetchInvasions = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/api/invasions`);
+        // Add cache-busting query param and no-store cache option
+        const response = await fetch(
+          `${BASE_URL}/api/invasions?cb=${Date.now()}`,
+          { cache: "no-store" }
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

@@ -126,3 +126,19 @@ export const sumFlowers = (toon: StoredToonData) => {
   }
   return count;
 };
+
+// Utility: Find relevant invasions for user's tasks
+export function getRelevantInvasionsForTasks(
+  tasks: import("@/app/types").Task[],
+  invasions: { cog: string; [key: string]: any }[]
+) {
+  // Normalize cog names for matching
+  const normalize = (str: string) =>
+    str.toLowerCase().replace(/[^a-z0-9 ]/g, "");
+  return invasions.filter((invasion) =>
+    tasks.some((task) => {
+      const objText = task.objective.text || "";
+      return normalize(objText).includes(normalize(invasion.cog));
+    })
+  );
+}
