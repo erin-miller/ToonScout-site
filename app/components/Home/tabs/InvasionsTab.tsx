@@ -18,7 +18,8 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
               <p>District: {invasion.district}</p>
               <p>Progress: {invasion.progress}</p>
               <p>
-                Start Time: {new Date(invasion.startTimestamp).toLocaleString()}
+                Start Time:{" "}
+                {new Date(invasion.startTimestamp * 1000).toLocaleString()}
               </p>
             </div>
           ))
