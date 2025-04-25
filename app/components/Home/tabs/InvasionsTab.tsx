@@ -4,6 +4,7 @@ import AnimatedTabContent from "../../animations/AnimatedTab";
 import { useInvasionContext } from "@/app/context/InvasionContext";
 import { FaGlobe, FaClock, FaHourglassStart } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
+import { getCogImage } from "./components/utils";
 
 const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
   const { invasions, loading } = useInvasionContext();
@@ -54,7 +55,18 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
                   className="p-4 border rounded-xl bg-white dark:bg-gray-1100 shadow-md space-y-2"
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                    <h3 className="font-bold text-xl md:text-2xl text-pink-700 dark:text-pink-300">
+                    <h3 className="font-bold text-xl md:text-2xl text-pink-700 dark:text-pink-300 flex items-center gap-3">
+                      {(() => {
+                        const img = getCogImage(invasion.cog);
+                        return img ? (
+                          <img
+                            src={img}
+                            alt={invasion.cog}
+                            className="inline-block w-12 h-12 rounded-full border-2 border-pink-200 bg-white shadow-md"
+                            style={{ objectFit: "cover" }}
+                          />
+                        ) : null;
+                      })()}
                       {invasion.cog}
                     </h3>
                     <div className="flex items-center gap-2 text-blue-900 dark:text-blue-300">
