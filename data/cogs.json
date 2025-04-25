@@ -1,0 +1,328 @@
+[
+  {
+    "name": "Flunky",
+    "type": "Bossbot",
+    "tier": 1,
+    "level_range": {
+      "min": 1,
+      "max": 5
+    },
+    "image": "cog_images/flunky.png"
+  },
+  {
+    "name": "Pencil Pusher",
+    "type": "Bossbot",
+    "tier": 2,
+    "level_range": {
+      "min": 2,
+      "max": 6
+    },
+    "image": "cog_images/pencil_pusher.png"
+  },
+  {
+    "name": "Yesman",
+    "fullname": "Yes man",
+    "type": "Bossbot",
+    "tier": 3,
+    "level_range": {
+      "min": 3,
+      "max": 7
+    },
+    "image": "cog_images/yes_man.png"
+  },
+  {
+    "name": "Micromanager",
+    "type": "Bossbot",
+    "tier": 4,
+    "level_range": {
+      "min": 4,
+      "max": 8
+    },
+    "image": "cog_images/micromanager.png"
+  },
+  {
+    "name": "Downsizer",
+    "type": "Bossbot",
+    "tier": 5,
+    "level_range": {
+      "min": 5,
+      "max": 9
+    },
+    "image": "cog_images/downsizer.png"
+  },
+  {
+    "name": "Head Hunter",
+    "type": "Bossbot",
+    "tier": 6,
+    "level_range": {
+      "min": 6,
+      "max": 10
+    },
+    "image": "cog_images/head_hunter.png"
+  },
+  {
+    "name": "Corporate Raider",
+    "type": "Bossbot",
+    "tier": 7,
+    "level_range": {
+      "min": 7,
+      "max": 11
+    },
+    "image": "cog_images/corporate_raider.png"
+  },
+  {
+    "name": "Big Cheese",
+    "fullname": "The Big Cheese",
+    "type": "Bossbot",
+    "tier": 8,
+    "level_range": {
+      "min": 8,
+      "max": 12
+    },
+    "image": "cog_images/the_big_cheese.png"
+  },
+  {
+    "name": "Bottom Feeder",
+    "type": "Lawbot",
+    "tier": 1,
+    "level_range": {
+      "min": 1,
+      "max": 5
+    },
+    "image": "cog_images/bottom_feeder.png"
+  },
+  {
+    "name": "Bloodsucker",
+    "type": "Lawbot",
+    "tier": 2,
+    "level_range": {
+      "min": 2,
+      "max": 6
+    },
+    "image": "cog_images/bloodsucker.png"
+  },
+  {
+    "name": "Double Talker",
+    "type": "Lawbot",
+    "tier": 3,
+    "level_range": {
+      "min": 3,
+      "max": 7
+    },
+    "image": "cog_images/double_talker.png"
+  },
+  {
+    "name": "Ambulance Chaser",
+    "type": "Lawbot",
+    "tier": 4,
+    "level_range": {
+      "min": 4,
+      "max": 8
+    },
+    "image": "cog_images/ambulance_chaser.png"
+  },
+  {
+    "name": "Back Stabber",
+    "fullname": "BackStabber",
+    "type": "Lawbot",
+    "tier": 5,
+    "level_range": {
+      "min": 5,
+      "max": 9
+    },
+    "image": "cog_images/backstabber.png"
+  },
+  {
+    "name": "Spin Doctor",
+    "type": "Lawbot",
+    "tier": 6,
+    "level_range": {
+      "min": 6,
+      "max": 10
+    },
+    "image": "cog_images/spin_doctor.png"
+  },
+  {
+    "name": "Legal Eagle",
+    "type": "Lawbot",
+    "tier": 7,
+    "level_range": {
+      "min": 7,
+      "max": 11
+    },
+    "image": "cog_images/legal_eagle.png"
+  },
+  {
+    "name": "Big Wig",
+    "type": "Lawbot",
+    "tier": 8,
+    "level_range": {
+      "min": 8,
+      "max": 12
+    },
+    "image": "cog_images/big_wig.png"
+  },
+  {
+    "name": "Short Change",
+    "type": "Cashbot",
+    "tier": 1,
+    "level_range": {
+      "min": 1,
+      "max": 5
+    },
+    "image": "cog_images/short_change.png"
+  },
+  {
+    "name": "Penny Pincher",
+    "type": "Cashbot",
+    "tier": 2,
+    "level_range": {
+      "min": 2,
+      "max": 6
+    },
+    "image": "cog_images/penny_pincher.png"
+  },
+  {
+    "name": "Tightwad",
+    "type": "Cashbot",
+    "tier": 3,
+    "level_range": {
+      "min": 3,
+      "max": 7
+    },
+    "image": "cog_images/tightwad.png"
+  },
+  {
+    "name": "Bean Counter",
+    "type": "Cashbot",
+    "tier": 4,
+    "level_range": {
+      "min": 4,
+      "max": 8
+    },
+    "image": "cog_images/bean_counter.png"
+  },
+  {
+    "name": "Number Cruncher",
+    "type": "Cashbot",
+    "tier": 5,
+    "level_range": {
+      "min": 5,
+      "max": 9
+    },
+    "image": "cog_images/number_cruncher.png"
+  },
+  {
+    "name": "Money Bags",
+    "type": "Cashbot",
+    "tier": 6,
+    "level_range": {
+      "min": 6,
+      "max": 10
+    },
+    "image": "cog_images/money_bags.png"
+  },
+  {
+    "name": "Loan Shark",
+    "type": "Cashbot",
+    "tier": 7,
+    "level_range": {
+      "min": 7,
+      "max": 11
+    },
+    "image": "cog_images/loan_shark.png"
+  },
+  {
+    "name": "Robber Baron",
+    "type": "Cashbot",
+    "tier": 8,
+    "level_range": {
+      "min": 8,
+      "max": 12
+    },
+    "image": "cog_images/robber_baron.png"
+  },
+  {
+    "name": "Cold Caller",
+    "type": "Sellbot",
+    "tier": 1,
+    "level_range": {
+      "min": 1,
+      "max": 5
+    },
+    "image": "cog_images/cold_caller.png"
+  },
+  {
+    "name": "Telemarketer",
+    "type": "Sellbot",
+    "tier": 2,
+    "level_range": {
+      "min": 2,
+      "max": 6
+    },
+    "image": "cog_images/telemarketer.png"
+  },
+  {
+    "name": "Name Dropper",
+    "type": "Sellbot",
+    "tier": 3,
+    "level_range": {
+      "min": 3,
+      "max": 7
+    },
+    "image": "cog_images/name_dropper.png"
+  },
+  {
+    "name": "Glad Hander",
+    "type": "Sellbot",
+    "tier": 4,
+    "level_range": {
+      "min": 4,
+      "max": 8
+    },
+    "image": "cog_images/glad_hander.png"
+  },
+  {
+    "name": "Mover & Shaker",
+    "fullname": "Mover And Shaker",
+    "type": "Sellbot",
+    "tier": 5,
+    "level_range": {
+      "min": 5,
+      "max": 9
+    },
+    "image": "cog_images/mover_and_shaker.png"
+  },
+  {
+    "name": "Two Face",
+    "fullname": "Two-Face",
+    "type": "Sellbot",
+    "tier": 6,
+    "level_range": {
+      "min": 6,
+      "max": 10
+    },
+    "image": "cog_images/two_face.png"
+  },
+  {
+    "name": "Mingler",
+    "fullname": "The Mingler",
+    "type": "Sellbot",
+    "tier": 7,
+    "level_range": {
+      "min": 7,
+      "max": 11
+    },
+    "image": "cog_images/the_mingler.png"
+  },
+  {
+    "name": "Mr. Hollywood",
+    "type": "Sellbot",
+    "tier": 8,
+    "level_range": {
+      "min": 8,
+      "max": 12
+    },
+    "image": "cog_images/mr_hollywood.png"
+  }
+]
