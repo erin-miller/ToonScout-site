@@ -168,11 +168,26 @@ export function getRelevantInvasionsForTasks(
   tasks: import("@/app/types").Task[],
   invasions: { cog: string; [key: string]: any }[]
 ) {
+  // Filter out completed tasks
+  const incompleteTasks = tasks.filter((task) => {
+    // Check if the task has progress tracking
+    if (
+      task.objective?.progress &&
+      typeof task.objective.progress.current === "number" &&
+      typeof task.objective.progress.target === "number"
+    ) {
+      // Only include tasks that aren't complete
+      return task.objective.progress.current < task.objective.progress.target;
+    }
+    // If there's no progress tracking, include the task by default
+    return true;
+  });
+
   return invasions.filter((invasion) => {
     const invasionNorm = normalize(invasion.cog);
     // Try to resolve invasion cog to canonical name
     const invasionKey = cogNameMap[invasionNorm] || invasionNorm;
-    return tasks.some((task) => {
+    return incompleteTasks.some((task) => {
       const objText = task.objective.text || "";
       // Check if any cog variant is in the task text
       return Object.keys(cogNameMap).some((variant) => {
