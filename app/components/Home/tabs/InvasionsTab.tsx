@@ -34,7 +34,7 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
 
   return (
     <AnimatedTabContent>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 max-h-[60vh] overflow-y-auto pr-2">
         {loading ? (
           <div className="text-center">Loading...</div>
         ) : invasions.length > 0 ? (

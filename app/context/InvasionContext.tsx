@@ -1,11 +1,19 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { InvasionData } from "@/app/api/ActiveInvastion";
+const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
 
 interface InvasionContextType {
   invasions: InvasionData[];
   loading: boolean;
+}
+
+interface InvasionData {
+  asOf: number;
+  cog: string;
+  progress: string;
+  startTimestamp: number;
+  district: string;
 }
 
 const InvasionContext = createContext<InvasionContextType>({
@@ -25,16 +33,9 @@ export const InvasionProvider: React.FC<{ children: React.ReactNode }> = ({
     const fetchInvasions = async () => {
       try {
         if (isFirstFetch) setLoading(true);
-        // Add cache-busting query param and no-store cache option
-        const response = await fetch(
-          `https://www.toontownrewritten.com/api/invasions?cb=${Date.now()}`,
-          {
-            cache: "no-store",
-            headers: {
-              "User-Agent": "gh-warmpoptart",
-            },
-          }
-        );
+        const response = await fetch(`${API_LINK}/utility/get-invasions`, {
+          cache: "no-store",
+        });
         if (!response.ok) throw new Error("Network response was not ok");
         const data = await response.json();
         if (data.error) return;
@@ -56,13 +57,13 @@ export const InvasionProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     };
 
-    fetchInvasions(); // Initial fetch sets loading
-    interval = setInterval(fetchInvasions, 60000); // Poll every 60 seconds
+    fetchInvasions();
+    interval = setInterval(fetchInvasions, 60000);
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, []); // Remove dependency on notification state
+  }, []);
 
   return (
     <InvasionContext.Provider value={{ invasions, loading }}>
