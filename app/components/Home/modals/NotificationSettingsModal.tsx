@@ -45,7 +45,7 @@ const NotificationSettingsModal: React.FC<NotificationSettingsModalProps> = ({
             onChange={(e) => setToastEnabled(e.target.checked)}
             className="mr-1"
           />
-          Toast
+          Popup
         </label>
         <label>
           <input
@@ -63,7 +63,7 @@ const NotificationSettingsModal: React.FC<NotificationSettingsModalProps> = ({
             onChange={(e) => setToastPersistent(e.target.checked)}
             className="mr-1"
           />
-          Toast requires manual dismiss (X)
+          Popup requires manual dismiss (X)
         </label>
         <label>
           Sound:
