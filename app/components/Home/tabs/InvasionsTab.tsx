@@ -57,6 +57,11 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
       .padStart(2, "0")}`;
   }
 
+  // Helper to sanitize cog names
+  function sanitizeCogName(name: string) {
+    return name.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+  }
+
   return (
     <AnimatedTabContent>
       <div className="flex flex-col gap-4 max-h-[60vh] overflow-y-auto pr-2">
@@ -101,7 +106,7 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
                           />
                         ) : null;
                       })()}
-                      {invasion.cog}
+                      {sanitizeCogName(invasion.cog)}
                       {isRelevant && (
                         <span className="ml-2 px-2 py-0.5 rounded bg-yellow-200 text-yellow-900 text-xs font-semibold">
                           Relevant

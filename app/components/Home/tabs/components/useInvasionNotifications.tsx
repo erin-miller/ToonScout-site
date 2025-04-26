@@ -75,7 +75,11 @@ export function useInvasionNotifications({
       } = event.detail;
       // Deduplicate by cog+district key for all notifications
       if (Array.isArray(eventInvasions) && eventInvasions.length > 0) {
-        const keys = eventInvasions.map((i) => `${i.cog}|${i.district}`);
+        const sanitizeCogName = (name: string) =>
+          name.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+        const keys = eventInvasions.map(
+          (i) => `${sanitizeCogName(i.cog)}|${i.district}`
+        );
         const newKeys = keys.filter(
           (key) => !prevRelevantKeys.current.includes(key)
         );
@@ -83,7 +87,7 @@ export function useInvasionNotifications({
         prevRelevantKeys.current = [...prevRelevantKeys.current, ...newKeys];
         // Compose message with cog and district(s)
         const cogDistricts = eventInvasions.map(
-          (i) => `${i.cog} in ${i.district}`
+          (i) => `${sanitizeCogName(i.cog)} in ${i.district}`
         );
         const fullMsg = `Relevant invasion: ${cogDistricts.join(", ")}`;
         if (shouldShowToast) {
@@ -172,8 +176,12 @@ export function useInvasionNotifications({
     const tasks = toons[activeIndex].data.data.tasks;
     const relevant = getRelevantInvasionsForTasks(tasks, invasions);
     // Use cog+district as unique key
-    const relevantKeys = relevant.map((i) => `${i.cog}|${i.district}`);
-    setActiveCogs(relevant.map((i) => i.cog));
+    const sanitizeCogName = (name: string) =>
+      name.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+    const relevantKeys = relevant.map(
+      (i) => `${sanitizeCogName(i.cog)}|${i.district}`
+    );
+    setActiveCogs(relevant.map((i) => sanitizeCogName(i.cog)));
 
     // Find new relevant invasions (not previously active or dismissed)
     const newKeys = relevantKeys.filter(
@@ -270,7 +278,11 @@ export function useInvasionNotifications({
     cogName = "Back Stabber",
     districtName = "Toontown Central"
   ) {
-    setToastMsg(`Relevant invasion: ${cogName} in ${districtName}`);
+    const sanitizeCogName = (name: string) =>
+      name.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+    setToastMsg(
+      `Relevant invasion: ${sanitizeCogName(cogName)} in ${districtName}`
+    );
     setShowToast(true);
     let played = 0;
     const playAudio = () => {
@@ -289,7 +301,9 @@ export function useInvasionNotifications({
     ) {
       if (Notification.permission === "granted") {
         new Notification("ToonScout Invasion Alert", {
-          body: `Relevant invasion: ${cogName} in ${districtName}`,
+          body: `Relevant invasion: ${sanitizeCogName(
+            cogName
+          )} in ${districtName}`,
         });
       }
     }

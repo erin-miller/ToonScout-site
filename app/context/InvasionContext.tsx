@@ -83,8 +83,12 @@ export const InvasionProvider: React.FC<{ children: React.ReactNode }> = ({
         ? JSON.parse(localStorage.getItem("tasksTabSoundEnabled") || "true")
         : true;
 
-    // Get cog names
-    const cogNames = relevantInvasions.map((inv) => inv.cog).join(", ");
+    // Get cog names (sanitize to remove control/unicode chars)
+    const sanitizeCogName = (name: string) =>
+      name.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+    const cogNames = relevantInvasions
+      .map((inv) => sanitizeCogName(inv.cog))
+      .join(", ");
 
     // Create and dispatch custom event with the relevant data
     const event = new CustomEvent("invasionNotification", {
