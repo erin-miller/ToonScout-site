@@ -3,7 +3,7 @@ import { StoredToonData } from "../types";
 const DEFAULT_PORTS = [1547, 1548, 1549, 1550, 1551, 1552, 1553, 1554];
 const RECONNECT_DELAY = 10000;
 const RECONNECT_INTERVAL = 5000;
-const MAX_RETRIES = 5;
+const MAX_RETRIES = 0;
 
 let sockets: { [port: number]: WebSocket } = {};
 let contReqInterval: NodeJS.Timeout | null = null;
@@ -28,6 +28,19 @@ export const initWebSocket = (
 
   connectWebSocket();
 };
+
+export const resetWebSocket = () => {
+  Object.keys(sockets).forEach((port) => {
+    const socket = sockets[Number(port)];
+    if (socket && socket.readyState !== WebSocket.CLOSED) {
+      terminateWebSocket(Number(port))
+    }
+  });
+  sockets = {};
+  active = [];
+  retries = {};
+  contReqInterval = null;
+}
 
 const connectWebSocket = () => {
   DEFAULT_PORTS.forEach((port) => {
@@ -97,11 +110,7 @@ const connectWebSocket = () => {
     });
 
     socket.addEventListener("close", () => {
-      updateConnectionStatus();
-      cleanupWebSocket(port);
-      if (active.length === 0) {
-        stopContinuousRequests();
-      }
+      terminateWebSocket(port);
 
       retries[port] = (retries[port] || 0) + 1;
       if (retries[port] < MAX_RETRIES) {
@@ -110,6 +119,14 @@ const connectWebSocket = () => {
     });
   });
 };
+
+function terminateWebSocket(port: number) {
+  updateConnectionStatus();
+  cleanupWebSocket(port);
+  if (active.length === 0) {
+    stopContinuousRequests();
+  }
+}
 
 function cleanupWebSocket(port: number) {
   removePort(port);
