@@ -5,10 +5,16 @@ const AMT = 20;
 
 const Chuckle: React.FC = () => {
   const trigger = () => {
+    meow();
     for (let i = 0; i < AMT; i++) {
       createChuckle();
     }
   };
+
+  const meow = () => {
+    const audio = new Audio("/sounds/cat_question.ogg");
+    audio.play();
+  }
 
   const createChuckle = () => {
     const elem = document.createElement("img");
