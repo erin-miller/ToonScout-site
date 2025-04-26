@@ -15,7 +15,7 @@ const ExpContainer: React.FC<ExpContainerProps> = ({ track, toonData }) => {
     const next = toonData.data.data.gags[track]?.experience.next;
     const lvl = toonData.data.data.gags[track]?.gag.level;
 
-    if (!curr || !next) {
+    if (curr == null || next == null) {
       return;
     }
 
