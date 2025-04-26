@@ -7,6 +7,7 @@ import { handleOAuthToken } from "@/app/api/DiscordOAuth";
 import Header from "./Header";
 import { useToonContext } from "@/app/context/ToonContext";
 import GameSteps from "../GameSteps";
+import Chuckle from "../eggs/Chuckle";
 
 const Home = () => {
   const { userId, setUserId } = useDiscordContext();
@@ -75,6 +76,7 @@ const Home = () => {
           <GameSteps />
         )}
       </div>
+      <Chuckle />
     </div>
   );
 };
