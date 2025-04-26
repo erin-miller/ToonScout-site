@@ -1,9 +1,7 @@
 "use client";
 import { useInvasionNotifications } from "./useInvasionNotifications";
 
-const InvasionNotificationHandler = () => {
-  const { toast } = useInvasionNotifications();
-  return toast;
-};
+// This handler is now a no-op to avoid runtime errors after refactor
+const InvasionNotificationHandler = () => null;
 
 export default InvasionNotificationHandler;

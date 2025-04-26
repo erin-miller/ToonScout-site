@@ -2,13 +2,22 @@ import React, { useEffect, useState } from "react";
 import { TabProps } from "./components/TabComponent";
 import AnimatedTabContent from "../../animations/AnimatedTab";
 import { useInvasionContext } from "@/app/context/InvasionContext";
-import { FaGlobe, FaClock, FaHourglassStart } from "react-icons/fa";
+import { FaGlobe, FaClock, FaHourglassStart, FaFlask } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import { getCogImage } from "./components/utils";
 import { useToast } from "@/app/context/ToastContext";
 
+const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
+
 const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
-  const { invasions, loading } = useInvasionContext();
+  const {
+    invasions,
+    loading,
+    isTestMode,
+    enableTestMode,
+    disableTestMode,
+    triggerTestInvasionNotification,
+  } = useInvasionContext();
   const [now, setNow] = useState(Date.now());
   const { triggerToast } = useToast();
 
@@ -35,16 +44,56 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
       .padStart(2, "0")}`;
   }
 
+  // Function to activate test mode
+  const activateTestMode = () => {
+    enableTestMode();
+    triggerToast(
+      "Showing test invasion data with Legal Eagle (refreshing every 10 seconds)"
+    );
+  };
+
+  // Toggle back to live data
+  const showLiveData = () => {
+    disableTestMode();
+    triggerToast("Showing live invasion data");
+  };
+
+  // Function to manually trigger a test notification
+  const testNotification = () => {
+    triggerTestInvasionNotification();
+  };
+
   return (
     <AnimatedTabContent>
-      <button
-        style={{ display: "none" }}
-        className="mb-2 self-end px-4 py-2 rounded bg-pink-600 text-white font-bold shadow hover:bg-pink-700 transition"
-        onClick={() => triggerToast("Relevant invasion: Back Stabber")}
-        type="button"
-      >
-        Test Invasion Toast
-      </button>
+      <div className="flex flex-row gap-2 mb-2 self-end">
+        <button
+          className="px-4 py-2 rounded bg-pink-600 text-white font-bold shadow hover:bg-pink-700 transition"
+          onClick={testNotification}
+          type="button"
+        >
+          Test Toast
+        </button>
+
+        {!isTestMode ? (
+          <button
+            className="px-4 py-2 rounded bg-blue-600 text-white font-bold shadow hover:bg-blue-700 transition flex items-center gap-1"
+            onClick={activateTestMode}
+            type="button"
+            title="Show test invasions including Legal Eagle (updates every 10 seconds with notifications)"
+          >
+            <FaFlask className="inline-block" /> Test Invasions
+          </button>
+        ) : (
+          <button
+            className="px-4 py-2 rounded bg-green-600 text-white font-bold shadow hover:bg-green-700 transition"
+            onClick={showLiveData}
+            type="button"
+          >
+            Live Data
+          </button>
+        )}
+      </div>
+
       <div className="flex flex-col gap-4 max-h-[60vh] overflow-y-auto pr-2">
         {loading ? (
           <div className="text-center">Loading...</div>
@@ -52,7 +101,7 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
           <AnimatePresence initial={false}>
             {invasions.map((invasion) => {
               const { current, total } = parseProgress(invasion.progress);
-              const percent = Math.floor((current / total) * 100); // Use Math.floor for percent
+              const percent = Math.floor((current / total) * 100);
               const elapsedMs = now - invasion.startTimestamp * 1000;
               return (
                 <motion.div
@@ -61,7 +110,7 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -40, opacity: 0 }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  layout // enables smooth reordering and stacking
+                  layout
                   className="p-4 border rounded-xl bg-white dark:bg-gray-1100 shadow-md space-y-2"
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">

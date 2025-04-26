@@ -31,6 +31,39 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
     return true;
   });
 
+  // New notification settings
+  const [toastPersistent, setToastPersistent] = useState(() => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(
+        localStorage.getItem("tasksTabToastPersistent") || "false"
+      );
+    }
+    return false;
+  });
+  const [soundRepeat, setSoundRepeat] = useState(() => {
+    if (typeof window !== "undefined") {
+      return parseInt(localStorage.getItem("tasksTabSoundRepeat") || "1", 10);
+    }
+    return 1;
+  });
+  const [soundRepeatInterval, setSoundRepeatInterval] = useState(() => {
+    if (typeof window !== "undefined") {
+      return parseInt(
+        localStorage.getItem("tasksTabSoundRepeatInterval") || "10",
+        10
+      );
+    }
+    return 10;
+  });
+  const [nativeNotifEnabled, setNativeNotifEnabled] = useState(() => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(
+        localStorage.getItem("tasksTabNativeNotifEnabled") || "false"
+      );
+    }
+    return false;
+  });
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem(
@@ -45,8 +78,42 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
         "tasksTabSoundEnabled",
         JSON.stringify(soundEnabled)
       );
+      localStorage.setItem(
+        "tasksTabToastPersistent",
+        JSON.stringify(toastPersistent)
+      );
+      localStorage.setItem("tasksTabSoundRepeat", soundRepeat.toString());
+      localStorage.setItem(
+        "tasksTabSoundRepeatInterval",
+        soundRepeatInterval.toString()
+      );
+      localStorage.setItem(
+        "tasksTabNativeNotifEnabled",
+        JSON.stringify(nativeNotifEnabled)
+      );
     }
-  }, [notificationsEnabled, toastEnabled, soundEnabled]);
+  }, [
+    notificationsEnabled,
+    toastEnabled,
+    soundEnabled,
+    toastPersistent,
+    soundRepeat,
+    soundRepeatInterval,
+    nativeNotifEnabled,
+  ]);
+
+  // Request browser notification permission if enabled
+  useEffect(() => {
+    if (
+      nativeNotifEnabled &&
+      typeof window !== "undefined" &&
+      "Notification" in window
+    ) {
+      if (Notification.permission === "default") {
+        Notification.requestPermission();
+      }
+    }
+  }, [nativeNotifEnabled]);
 
   // pulled from ToonScout bot
   function getTasks(toons: StoredToonData) {
@@ -129,7 +196,9 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
               ? "Disable Notifications"
               : "Enable Notifications"
           }
-          onClick={() => setNotificationsEnabled((prev) => !prev)}
+          onClick={() => {
+            setNotificationsEnabled((prev) => !prev);
+          }}
         >
           {notificationsEnabled ? (
             <FaBell className="text-yellow-400" />
@@ -157,6 +226,55 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
             Sound
           </label>
         </div>
+      </div>
+      <div className="flex flex-col gap-2 mt-2 text-base">
+        <label>
+          <input
+            type="checkbox"
+            checked={toastPersistent}
+            onChange={(e) => setToastPersistent(e.target.checked)}
+            className="mr-1"
+          />
+          Toast requires manual dismiss (X)
+        </label>
+        <label>
+          Sound:
+          <select
+            value={soundRepeat}
+            onChange={(e) => setSoundRepeat(Number(e.target.value))}
+            className="ml-2 px-1 rounded"
+          >
+            <option value={1}>Once</option>
+            <option value={3}>Repeat 3 times</option>
+            <option value={5}>Repeat 5 times</option>
+            <option value={-1}>
+              Repeat every X seconds while invasion is present
+            </option>
+          </select>
+          {soundRepeat === -1 && (
+            <>
+              , every
+              <input
+                type="number"
+                min={2}
+                max={60}
+                value={soundRepeatInterval}
+                onChange={(e) => setSoundRepeatInterval(Number(e.target.value))}
+                className="ml-2 w-12 px-1 rounded"
+              />
+              seconds while invasion is present
+            </>
+          )}
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={nativeNotifEnabled}
+            onChange={(e) => setNativeNotifEnabled(e.target.checked)}
+            className="mr-1"
+          />
+          Enable browser notifications
+        </label>
       </div>
       <div className="grid md:grid-rows-2 md:grid-cols-2 grid-rows-4">
         {tasks.map((task, index) => (
