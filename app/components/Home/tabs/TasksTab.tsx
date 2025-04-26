@@ -263,10 +263,8 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
                 )}
                 {task.progress && renderProgress(task.progress)}
               </div>
-              <div className="mt-auto px-2">
-                {task.reward && (
-                  <p className="task-reward">Reward: {task.reward}</p>
-                )}
+              <div className="mt-auto pb-4">
+                {task.reward && <p className="task-reward">{task.reward}</p>}
               </div>
             </div>
           </div>
