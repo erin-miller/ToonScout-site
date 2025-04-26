@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { TabProps } from "./components/TabComponent";
 import AnimatedTabContent from "../../animations/AnimatedTab";
 import { Task, StoredToonData } from "@/app/types";
-import { FaBell, FaBellSlash } from "react-icons/fa";
+import { FaBell, FaBellSlash, FaCog } from "react-icons/fa";
+import NotificationSettingsModal from "../modals/NotificationSettingsModal";
 
 const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
   // Notification bell state
@@ -63,6 +64,8 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
     }
     return false;
   });
+
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -206,76 +209,30 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
             <FaBellSlash className="text-gray-400" />
           )}
         </button>
-        <div className="flex items-center gap-2 text-base">
-          <label>
-            <input
-              type="checkbox"
-              checked={toastEnabled}
-              onChange={(e) => setToastEnabled(e.target.checked)}
-              className="mr-1"
-            />
-            Toast
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={soundEnabled}
-              onChange={(e) => setSoundEnabled(e.target.checked)}
-              className="mr-1"
-            />
-            Sound
-          </label>
-        </div>
+        <button
+          className="text-2xl p-2 focus:outline-none"
+          title="Notification Settings"
+          onClick={() => setShowSettings(true)}
+        >
+          <FaCog />
+        </button>
       </div>
-      <div className="flex flex-col gap-2 mt-2 text-base">
-        <label>
-          <input
-            type="checkbox"
-            checked={toastPersistent}
-            onChange={(e) => setToastPersistent(e.target.checked)}
-            className="mr-1"
-          />
-          Toast requires manual dismiss (X)
-        </label>
-        <label>
-          Sound:
-          <select
-            value={soundRepeat}
-            onChange={(e) => setSoundRepeat(Number(e.target.value))}
-            className="ml-2 px-1 rounded"
-          >
-            <option value={1}>Once</option>
-            <option value={3}>Repeat 3 times</option>
-            <option value={5}>Repeat 5 times</option>
-            <option value={-1}>
-              Repeat every X seconds while invasion is present
-            </option>
-          </select>
-          {soundRepeat === -1 && (
-            <>
-              , every
-              <input
-                type="number"
-                min={2}
-                max={60}
-                value={soundRepeatInterval}
-                onChange={(e) => setSoundRepeatInterval(Number(e.target.value))}
-                className="ml-2 w-12 px-1 rounded"
-              />
-              seconds while invasion is present
-            </>
-          )}
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={nativeNotifEnabled}
-            onChange={(e) => setNativeNotifEnabled(e.target.checked)}
-            className="mr-1"
-          />
-          Enable browser notifications
-        </label>
-      </div>
+      <NotificationSettingsModal
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+        toastEnabled={toastEnabled}
+        setToastEnabled={setToastEnabled}
+        soundEnabled={soundEnabled}
+        setSoundEnabled={setSoundEnabled}
+        toastPersistent={toastPersistent}
+        setToastPersistent={setToastPersistent}
+        soundRepeat={soundRepeat}
+        setSoundRepeat={setSoundRepeat}
+        soundRepeatInterval={soundRepeatInterval}
+        setSoundRepeatInterval={setSoundRepeatInterval}
+        nativeNotifEnabled={nativeNotifEnabled}
+        setNativeNotifEnabled={setNativeNotifEnabled}
+      />
       <div className="grid md:grid-rows-2 md:grid-cols-2 grid-rows-4">
         {tasks.map((task, index) => (
           <div key={index} className="task-container">

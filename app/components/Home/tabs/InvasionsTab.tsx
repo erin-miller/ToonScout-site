@@ -1,31 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { TabProps } from "./components/TabComponent";
 import AnimatedTabContent from "../../animations/AnimatedTab";
 import { useInvasionContext } from "@/app/context/InvasionContext";
-import { FaGlobe, FaClock, FaHourglassStart, FaFlask } from "react-icons/fa";
+import { FaGlobe, FaClock, FaHourglassStart } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
-import { getCogImage } from "./components/utils";
-import { useToast } from "@/app/context/ToastContext";
-
-const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
+import { getCogImage, getRelevantInvasionsForTasks } from "./components/utils";
 
 const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
-  const {
-    invasions,
-    loading,
-    isTestMode,
-    enableTestMode,
-    disableTestMode,
-    triggerTestInvasionNotification,
-  } = useInvasionContext();
+  const { invasions, loading } = useInvasionContext();
   const [now, setNow] = useState(Date.now());
-  const { triggerToast } = useToast();
+  const [displayedInvasions, setDisplayedInvasions] = useState(invasions);
 
   // Update every second for live elapsed time
   useEffect(() => {
     const interval = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(interval);
   }, []);
+
+  // Only update displayedInvasions if the list actually changes
+  useEffect(() => {
+    const same =
+      invasions.length === displayedInvasions.length &&
+      invasions.every(
+        (inv, i) =>
+          inv.cog === displayedInvasions[i]?.cog &&
+          inv.district === displayedInvasions[i]?.district &&
+          inv.progress === displayedInvasions[i]?.progress &&
+          inv.startTimestamp === displayedInvasions[i]?.startTimestamp
+      );
+    if (!same) {
+      setDisplayedInvasions(invasions);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [invasions]);
+
+  // Get relevant invasions for the current toon's tasks
+  const relevantInvasions = useMemo(() => {
+    if (!toon?.data?.data?.tasks) return [];
+    return getRelevantInvasionsForTasks(
+      toon.data.data.tasks,
+      displayedInvasions
+    );
+  }, [toon, displayedInvasions]);
 
   // Helper to parse progress string like "123/500"
   function parseProgress(progress: string) {
@@ -44,65 +60,23 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
       .padStart(2, "0")}`;
   }
 
-  // Function to activate test mode
-  const activateTestMode = () => {
-    enableTestMode();
-    triggerToast(
-      "Showing test invasion data with Legal Eagle (refreshing every 10 seconds)"
-    );
-  };
-
-  // Toggle back to live data
-  const showLiveData = () => {
-    disableTestMode();
-    triggerToast("Showing live invasion data");
-  };
-
-  // Function to manually trigger a test notification
-  const testNotification = () => {
-    triggerTestInvasionNotification();
-  };
-
   return (
     <AnimatedTabContent>
-      <div className="flex flex-row gap-2 mb-2 self-end">
-        <button
-          className="px-4 py-2 rounded bg-pink-600 text-white font-bold shadow hover:bg-pink-700 transition"
-          onClick={testNotification}
-          type="button"
-        >
-          Test Toast
-        </button>
-
-        {!isTestMode ? (
-          <button
-            className="px-4 py-2 rounded bg-blue-600 text-white font-bold shadow hover:bg-blue-700 transition flex items-center gap-1"
-            onClick={activateTestMode}
-            type="button"
-            title="Show test invasions including Legal Eagle (updates every 10 seconds with notifications)"
-          >
-            <FaFlask className="inline-block" /> Test Invasions
-          </button>
-        ) : (
-          <button
-            className="px-4 py-2 rounded bg-green-600 text-white font-bold shadow hover:bg-green-700 transition"
-            onClick={showLiveData}
-            type="button"
-          >
-            Live Data
-          </button>
-        )}
-      </div>
-
       <div className="flex flex-col gap-4 max-h-[60vh] overflow-y-auto pr-2">
         {loading ? (
           <div className="text-center">Loading...</div>
-        ) : invasions.length > 0 ? (
+        ) : displayedInvasions.length > 0 ? (
           <AnimatePresence initial={false}>
-            {invasions.map((invasion) => {
+            {displayedInvasions.map((invasion) => {
               const { current, total } = parseProgress(invasion.progress);
               const percent = Math.floor((current / total) * 100);
               const elapsedMs = now - invasion.startTimestamp * 1000;
+              const isRelevant = relevantInvasions.some(
+                (rel) =>
+                  rel.cog === invasion.cog &&
+                  rel.district === invasion.district &&
+                  rel.startTimestamp === invasion.startTimestamp
+              );
               return (
                 <motion.div
                   key={`${invasion.asOf}-${invasion.district}-${invasion.cog}`}
@@ -111,7 +85,11 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
                   exit={{ y: -40, opacity: 0 }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   layout
-                  className="p-4 border rounded-xl bg-white dark:bg-gray-1100 shadow-md space-y-2"
+                  className={`p-4 border rounded-xl bg-white dark:bg-gray-1100 shadow-md space-y-2 ${
+                    isRelevant
+                      ? "border-yellow-400 ring-2 ring-yellow-300 dark:ring-yellow-500"
+                      : ""
+                  }`}
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                     <h3 className="font-bold text-xl md:text-2xl text-pink-700 dark:text-pink-300 flex items-center gap-3">
@@ -127,6 +105,11 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
                         ) : null;
                       })()}
                       {invasion.cog}
+                      {isRelevant && (
+                        <span className="ml-2 px-2 py-0.5 rounded bg-yellow-200 text-yellow-900 text-xs font-semibold">
+                          Relevant
+                        </span>
+                      )}
                     </h3>
                     <div className="flex items-center gap-2 text-blue-900 dark:text-blue-300">
                       <FaGlobe className="inline-block mr-1" />

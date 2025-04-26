@@ -29,10 +29,6 @@ const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
 interface InvasionContextType {
   invasions: InvasionData[];
   loading: boolean;
-  isTestMode: boolean;
-  enableTestMode: () => void;
-  disableTestMode: () => void;
-  triggerTestInvasionNotification: () => void;
 }
 
 interface InvasionData {
@@ -59,15 +55,10 @@ interface TTRInvasionResponse {
 
 // Intervals in milliseconds
 const LIVE_DATA_INTERVAL = 60000; // 60 seconds for live data
-const TEST_DATA_INTERVAL = 10000; // 10 seconds for test data
 
 const InvasionContext = createContext<InvasionContextType>({
   invasions: [],
   loading: true,
-  isTestMode: false,
-  enableTestMode: () => {},
-  disableTestMode: () => {},
-  triggerTestInvasionNotification: () => {},
 });
 
 export const InvasionProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -75,7 +66,6 @@ export const InvasionProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [invasions, setInvasions] = useState<InvasionData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isTestMode, setIsTestMode] = useState(false);
   const prevInvasions = useRef<InvasionData[]>([]);
 
   // Function to trigger a custom invasion notification event for the whole app
@@ -109,42 +99,6 @@ export const InvasionProvider: React.FC<{ children: React.ReactNode }> = ({
     window.dispatchEvent(event);
   };
 
-  // Test notification function that enforces the same correlation logic
-  const triggerTestInvasionNotification = () => {
-    if (!invasions.length) return;
-    // Check if notifications are enabled (matches TasksTab bell)
-    const notificationsEnabled =
-      typeof window !== "undefined"
-        ? JSON.parse(localStorage.getItem("tasksTabNotifications") || "false")
-        : false;
-    if (!notificationsEnabled) return;
-
-    // Create and dispatch custom event with Legal Eagle or other test invasion
-    const testInvasion =
-      invasions.find((inv) => inv.cog === "Legal Eagle") || invasions[0];
-
-    const event = new CustomEvent("invasionNotification", {
-      detail: {
-        message: `Test Notification: ${testInvasion.cog} invasion in ${testInvasion.district}!`,
-        invasions: [testInvasion],
-        showToast: true,
-        playSound: true,
-      },
-    });
-
-    window.dispatchEvent(event);
-  };
-
-  // Function to enable test mode
-  const enableTestMode = () => {
-    setIsTestMode(true);
-  };
-
-  // Function to disable test mode
-  const disableTestMode = () => {
-    setIsTestMode(false);
-  };
-
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
     let isFirstFetch = true;
@@ -153,10 +107,8 @@ export const InvasionProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         if (isFirstFetch) setLoading(true);
 
-        // Use the appropriate endpoint based on test mode
-        const endpoint = isTestMode
-          ? `${API_LINK}/utility/test-invasions`
-          : `${API_LINK}/utility/get-invasions`;
+        // Always use live endpoint now
+        const endpoint = `${API_LINK}/utility/get-invasions`;
 
         const response = await fetch(endpoint, {
           cache: "no-store",
@@ -180,19 +132,6 @@ export const InvasionProvider: React.FC<{ children: React.ReactNode }> = ({
         // Set the invasions state
         setInvasions(transformed);
 
-        // If in test mode, always trigger a notification when data updates
-        if (isTestMode) {
-          // For test mode, choose a Legal Eagle invasion if available
-          const legalEagle = transformed.find(
-            (inv) => inv.cog === "Legal Eagle"
-          );
-          if (legalEagle) {
-            triggerInvasionNotification([legalEagle]);
-          } else if (transformed.length > 0) {
-            triggerInvasionNotification([transformed[0]]);
-          }
-        }
-
         prevInvasions.current = transformed;
       } catch (e) {
         // Optionally handle error
@@ -206,24 +145,19 @@ export const InvasionProvider: React.FC<{ children: React.ReactNode }> = ({
     // Initial fetch
     fetchInvasions();
 
-    // Set interval based on test mode
-    const intervalTime = isTestMode ? TEST_DATA_INTERVAL : LIVE_DATA_INTERVAL;
-    interval = setInterval(fetchInvasions, intervalTime);
+    // Set interval for live data
+    interval = setInterval(fetchInvasions, LIVE_DATA_INTERVAL);
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isTestMode]); // Re-run when test mode changes
+  }, []);
 
   return (
     <InvasionContext.Provider
       value={{
         invasions,
         loading,
-        isTestMode,
-        enableTestMode,
-        disableTestMode,
-        triggerTestInvasionNotification,
       }}
     >
       {children}
