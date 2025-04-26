@@ -191,7 +191,7 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
 
   return (
     <AnimatedTabContent>
-      <div className="flex justify-end items-center mb-2 gap-4">
+      <div className="flex justify-end items-center mb-2 gap-4 relative z-20">
         <button
           className="text-2xl p-2 focus:outline-none"
           title={
