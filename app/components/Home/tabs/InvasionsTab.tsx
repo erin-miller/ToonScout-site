@@ -29,7 +29,6 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
     if (prevKeys !== newKeys) {
       setDisplayedInvasions(invasions);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [invasions]);
 
   // Get relevant invasions for the current toon's tasks
