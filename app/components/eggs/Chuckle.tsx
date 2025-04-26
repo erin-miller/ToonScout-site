@@ -59,7 +59,6 @@ const Chuckle: React.FC = () => {
       }
 
       if (seq.join("") === target) {
-        console.log("laughing");
         trigger();
         seq = [];
       }
