@@ -17,18 +17,16 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Only update displayedInvasions if the list actually changes
+  // Only update displayedInvasions if the set of (cog+district) keys changes
   useEffect(() => {
-    const same =
-      invasions.length === displayedInvasions.length &&
-      invasions.every(
-        (inv, i) =>
-          inv.cog === displayedInvasions[i]?.cog &&
-          inv.district === displayedInvasions[i]?.district &&
-          inv.progress === displayedInvasions[i]?.progress &&
-          inv.startTimestamp === displayedInvasions[i]?.startTimestamp
-      );
-    if (!same) {
+    const getKeys = (arr: typeof invasions) =>
+      arr
+        .map((inv) => `${inv.cog}|${inv.district}`)
+        .sort()
+        .join(",");
+    const prevKeys = getKeys(displayedInvasions);
+    const newKeys = getKeys(invasions);
+    if (prevKeys !== newKeys) {
       setDisplayedInvasions(invasions);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
