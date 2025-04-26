@@ -4,7 +4,11 @@ import AnimatedTabContent from "../../animations/AnimatedTab";
 import { useInvasionContext } from "@/app/context/InvasionContext";
 import { FaGlobe, FaClock, FaHourglassStart } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
-import { getCogImage, getRelevantInvasionsForTasks } from "./components/utils";
+import {
+  getCogImage,
+  getRelevantInvasionsForTasks,
+  sanitizeCogName,
+} from "@/app/utils/invasionUtils";
 
 const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
   const { invasions, loading } = useInvasionContext();
@@ -55,11 +59,6 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
     return `${hr > 0 ? hr + ":" : ""}${min.toString().padStart(2, "0")}:${sec
       .toString()
       .padStart(2, "0")}`;
-  }
-
-  // Helper to sanitize cog names
-  function sanitizeCogName(name: string) {
-    return name.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
   }
 
   return (

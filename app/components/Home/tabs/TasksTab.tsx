@@ -2,99 +2,47 @@ import React, { useState, useEffect } from "react";
 import { TabProps } from "./components/TabComponent";
 import AnimatedTabContent from "../../animations/AnimatedTab";
 import { Task, StoredToonData } from "@/app/types";
-import { FaBell, FaBellSlash, FaCog } from "react-icons/fa";
-import NotificationSettingsModal from "../modals/NotificationSettingsModal";
+import TaskTabNotifications from "./components/TaskTabNotifications";
+import {
+  getNotificationSettings,
+  setNotificationSettings,
+} from "@/app/utils/invasionUtils";
 
 const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
   // Notification bell state
+  const initialSettings = getNotificationSettings();
   const [notificationsEnabled, setNotificationsEnabled] = useState<boolean>(
-    () => {
-      if (typeof window !== "undefined") {
-        return JSON.parse(
-          localStorage.getItem("tasksTabNotifications") || "false"
-        );
-      }
-      return false;
-    }
+    initialSettings.notificationsEnabled
   );
-
-  // Notification settings
-  const [toastEnabled, setToastEnabled] = useState(() => {
-    if (typeof window !== "undefined") {
-      return JSON.parse(localStorage.getItem("tasksTabToastEnabled") || "true");
-    }
-    return true;
-  });
-  const [soundEnabled, setSoundEnabled] = useState(() => {
-    if (typeof window !== "undefined") {
-      return JSON.parse(localStorage.getItem("tasksTabSoundEnabled") || "true");
-    }
-    return true;
-  });
-
-  // New notification settings
-  const [toastPersistent, setToastPersistent] = useState(() => {
-    if (typeof window !== "undefined") {
-      return JSON.parse(
-        localStorage.getItem("tasksTabToastPersistent") || "false"
-      );
-    }
-    return false;
-  });
-  const [soundRepeat, setSoundRepeat] = useState(() => {
-    if (typeof window !== "undefined") {
-      return parseInt(localStorage.getItem("tasksTabSoundRepeat") || "1", 10);
-    }
-    return 1;
-  });
-  const [soundRepeatInterval, setSoundRepeatInterval] = useState(() => {
-    if (typeof window !== "undefined") {
-      return parseInt(
-        localStorage.getItem("tasksTabSoundRepeatInterval") || "10",
-        10
-      );
-    }
-    return 10;
-  });
-  const [nativeNotifEnabled, setNativeNotifEnabled] = useState(() => {
-    if (typeof window !== "undefined") {
-      return JSON.parse(
-        localStorage.getItem("tasksTabNativeNotifEnabled") || "false"
-      );
-    }
-    return false;
-  });
+  const [toastEnabled, setToastEnabled] = useState(
+    initialSettings.toastEnabled
+  );
+  const [soundEnabled, setSoundEnabled] = useState(
+    initialSettings.soundEnabled
+  );
+  const [toastPersistent, setToastPersistent] = useState(
+    initialSettings.toastPersistent
+  );
+  const [soundRepeat, setSoundRepeat] = useState(initialSettings.soundRepeat);
+  const [soundRepeatInterval, setSoundRepeatInterval] = useState(
+    initialSettings.soundRepeatInterval
+  );
+  const [nativeNotifEnabled, setNativeNotifEnabled] = useState(
+    initialSettings.nativeNotifEnabled
+  );
 
   const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(
-        "tasksTabNotifications",
-        JSON.stringify(notificationsEnabled)
-      );
-      localStorage.setItem(
-        "tasksTabToastEnabled",
-        JSON.stringify(toastEnabled)
-      );
-      localStorage.setItem(
-        "tasksTabSoundEnabled",
-        JSON.stringify(soundEnabled)
-      );
-      localStorage.setItem(
-        "tasksTabToastPersistent",
-        JSON.stringify(toastPersistent)
-      );
-      localStorage.setItem("tasksTabSoundRepeat", soundRepeat.toString());
-      localStorage.setItem(
-        "tasksTabSoundRepeatInterval",
-        soundRepeatInterval.toString()
-      );
-      localStorage.setItem(
-        "tasksTabNativeNotifEnabled",
-        JSON.stringify(nativeNotifEnabled)
-      );
-    }
+    setNotificationSettings({
+      notificationsEnabled,
+      toastEnabled,
+      soundEnabled,
+      toastPersistent,
+      soundRepeat,
+      soundRepeatInterval,
+      nativeNotifEnabled,
+    });
   }, [
     notificationsEnabled,
     toastEnabled,
@@ -191,48 +139,7 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
 
   return (
     <AnimatedTabContent>
-      <div className="flex justify-end items-center mb-2 gap-4 relative z-20">
-        <button
-          className="text-2xl p-2 focus:outline-none"
-          title={
-            notificationsEnabled
-              ? "Disable Notifications"
-              : "Enable Notifications"
-          }
-          onClick={() => {
-            setNotificationsEnabled((prev) => !prev);
-          }}
-        >
-          {notificationsEnabled ? (
-            <FaBell className="text-yellow-400" />
-          ) : (
-            <FaBellSlash className="text-gray-400" />
-          )}
-        </button>
-        <button
-          className="text-2xl p-2 focus:outline-none"
-          title="Notification Settings"
-          onClick={() => setShowSettings(true)}
-        >
-          <FaCog />
-        </button>
-      </div>
-      <NotificationSettingsModal
-        isOpen={showSettings}
-        onClose={() => setShowSettings(false)}
-        toastEnabled={toastEnabled}
-        setToastEnabled={setToastEnabled}
-        soundEnabled={soundEnabled}
-        setSoundEnabled={setSoundEnabled}
-        toastPersistent={toastPersistent}
-        setToastPersistent={setToastPersistent}
-        soundRepeat={soundRepeat}
-        setSoundRepeat={setSoundRepeat}
-        soundRepeatInterval={soundRepeatInterval}
-        setSoundRepeatInterval={setSoundRepeatInterval}
-        nativeNotifEnabled={nativeNotifEnabled}
-        setNativeNotifEnabled={setNativeNotifEnabled}
-      />
+      <TaskTabNotifications />
       <div className="grid md:grid-rows-2 md:grid-cols-2 grid-rows-4">
         {tasks.map((task, index) => (
           <div key={index} className="task-container">

@@ -1,19 +1,41 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useInvasionContext } from "@/app/context/InvasionContext";
 import { useToonContext } from "@/app/context/ToonContext";
-import { getRelevantInvasionsForTasks } from "./utils";
-import Toast from "@/app/components/Toast";
+import {
+  getRelevantInvasionsForTasks,
+  sanitizeCogName,
+} from "@/app/utils/invasionUtils";
+import InvasionToast from "@/app/components/InvasionToast";
 
-// Type for custom invasion notification events
-interface InvasionNotificationEvent extends CustomEvent {
-  detail: {
-    message: string;
-    invasions: any[];
-    showToast: boolean;
-    playSound: boolean;
+function getCogIcon(cogName: string) {
+  if (!cogName) return undefined;
+  const sanitized = sanitizeCogName(cogName).replace(/ /g, "_").toLowerCase();
+  return `/cog_images/${sanitized}.png`;
+}
+
+function playNotificationSound(repeat: number, interval: number) {
+  let played = 0;
+  const playAudio = () => {
+    const audio = new Audio("/sounds/notify.mp3");
+    audio.play().catch(() => {});
+    played++;
+    if (played < repeat) {
+      setTimeout(playAudio, interval * 1000);
+    }
   };
+  playAudio();
+}
+
+function showNativeNotification(title: string, body: string) {
+  if (
+    typeof window !== "undefined" &&
+    "Notification" in window &&
+    Notification.permission === "granted"
+  ) {
+    new Notification(title, { body });
+  }
 }
 
 export function useInvasionNotifications({
@@ -37,135 +59,86 @@ export function useInvasionNotifications({
   const { toons, activeIndex } = useToonContext();
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
+  const [cogIcon, setCogIcon] = useState<string | undefined>(undefined);
   const prevRelevantKeys = useRef<string[]>([]);
   const [dismissedCogs, setDismissedCogs] = useState<string[]>([]);
   const [activeCogs, setActiveCogs] = useState<string[]>([]);
   const soundIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Helper: clear sound interval
-  function clearSoundInterval() {
+  const clearSoundInterval = useCallback(() => {
     if (soundIntervalRef.current) {
       clearInterval(soundIntervalRef.current);
       soundIntervalRef.current = null;
     }
-  }
+  }, []);
 
-  // Effect: update notification settings reactively
-  useEffect(() => {
-    // No-op, but ensures this hook re-runs when settings change
-  }, [
-    notificationsEnabled,
-    toastEnabled,
-    soundEnabled,
-    toastPersistent,
-    soundRepeat,
-    soundRepeatInterval,
-    nativeNotifEnabled,
-  ]);
+  // Centralized notification logic
+  const handleNotification = useCallback(
+    (
+      msg: string,
+      cogs: string[],
+      options: {
+        playSound?: boolean;
+        repeat?: number;
+        interval?: number;
+        showToast?: boolean;
+        nativeNotif?: boolean;
+      }
+    ) => {
+      if (options.showToast) {
+        setToastMsg(msg);
+        setCogIcon(cogs.length === 1 ? getCogIcon(cogs[0]) : undefined);
+        setShowToast(true);
+      }
+      if (options.playSound && options.repeat && options.repeat > 0) {
+        playNotificationSound(options.repeat, options.interval || 1);
+      }
+      if (options.nativeNotif) {
+        showNativeNotification("ToonScout Invasion Alert", msg);
+      }
+    },
+    []
+  );
 
   // Listen for custom invasion notification events (works across all tabs)
   useEffect(() => {
-    const handleInvasionNotification = (event: InvasionNotificationEvent) => {
+    const handleInvasionNotification = (event: CustomEvent) => {
       if (!notificationsEnabled) return;
       const {
         message,
-        showToast: shouldShowToast,
-        playSound,
         invasions: eventInvasions,
+        showToast,
+        playSound,
       } = event.detail;
-      // Deduplicate by cog+district key for all notifications
+      let cogs: string[] = [];
       if (Array.isArray(eventInvasions) && eventInvasions.length > 0) {
-        const sanitizeCogName = (name: string) =>
-          name.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
-        const keys = eventInvasions.map(
-          (i) => `${sanitizeCogName(i.cog)}|${i.district}`
-        );
-        const newKeys = keys.filter(
-          (key) => !prevRelevantKeys.current.includes(key)
-        );
-        if (newKeys.length === 0) return; // Already notified
-        prevRelevantKeys.current = [...prevRelevantKeys.current, ...newKeys];
-        // Compose message with cog and district(s)
-        const cogDistricts = eventInvasions.map(
-          (i) => `${sanitizeCogName(i.cog)} in ${i.district}`
-        );
-        const fullMsg = `Relevant invasion: ${cogDistricts.join(", ")}`;
-        if (shouldShowToast) {
-          setToastMsg(fullMsg);
-          setShowToast(true);
-        }
-        if (playSound) {
-          let played = 0;
-          const playAudio = () => {
-            const audio = new Audio("/sounds/notify.mp3");
-            audio
-              .play()
-              .catch((err) =>
-                console.error("Error playing notification sound:", err)
-              );
-            played++;
-            if (played < soundRepeat) {
-              setTimeout(playAudio, soundRepeatInterval * 1000);
-            }
-          };
-          playAudio();
-        }
-        if (
-          nativeNotifEnabled &&
-          typeof window !== "undefined" &&
-          "Notification" in window
-        ) {
-          if (Notification.permission === "granted") {
-            new Notification("ToonScout Invasion Alert", { body: fullMsg });
-          }
-        }
-        return;
+        cogs = eventInvasions.map((i: any) => sanitizeCogName(i.cog));
       }
-      if (shouldShowToast) {
-        setToastMsg(message);
-        setShowToast(true);
-      }
-      if (playSound) {
-        let played = 0;
-        const playAudio = () => {
-          const audio = new Audio("/sounds/notify.mp3");
-          audio
-            .play()
-            .catch((err) =>
-              console.error("Error playing notification sound:", err)
-            );
-          played++;
-          if (played < soundRepeat) {
-            setTimeout(playAudio, soundRepeatInterval * 1000);
-          }
-        };
-        playAudio();
-      }
-      if (
-        nativeNotifEnabled &&
-        typeof window !== "undefined" &&
-        "Notification" in window
-      ) {
-        if (Notification.permission === "granted") {
-          new Notification("ToonScout Invasion Alert", { body: message });
-        }
-      }
+      handleNotification(message, cogs, {
+        showToast,
+        playSound,
+        repeat: soundRepeat,
+        interval: soundRepeatInterval,
+        nativeNotif: nativeNotifEnabled,
+      });
     };
-
-    // Add event listener for custom invasion notifications
     window.addEventListener(
       "invasionNotification",
       handleInvasionNotification as EventListener
     );
-
-    // Remove event listener on cleanup
-    return () => {
+    return () =>
       window.removeEventListener(
         "invasionNotification",
         handleInvasionNotification as EventListener
       );
-    };
-  }, []);
+  }, [
+    notificationsEnabled,
+    handleNotification,
+    soundRepeat,
+    soundRepeatInterval,
+    nativeNotifEnabled,
+  ]);
 
   // Effect: handle relevant invasions and notifications
   useEffect(() => {
@@ -175,14 +148,10 @@ export function useInvasionNotifications({
     }
     const tasks = toons[activeIndex].data.data.tasks;
     const relevant = getRelevantInvasionsForTasks(tasks, invasions);
-    // Use cog+district as unique key
-    const sanitizeCogName = (name: string) =>
-      name.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
     const relevantKeys = relevant.map(
       (i) => `${sanitizeCogName(i.cog)}|${i.district}`
     );
     setActiveCogs(relevant.map((i) => sanitizeCogName(i.cog)));
-
     // Find new relevant invasions (not previously active or dismissed)
     const newKeys = relevantKeys.filter(
       (key) =>
@@ -193,52 +162,30 @@ export function useInvasionNotifications({
       const [cog, district] = key.split("|");
       return `${cog} in ${district}`;
     });
-
     // Sound repeat every X seconds while invasion is present
     if (soundEnabled && soundRepeat === -1 && relevantKeys.length > 0) {
       if (!soundIntervalRef.current) {
         soundIntervalRef.current = setInterval(() => {
-          const audio = new Audio("/sounds/notify.mp3");
-          audio.play().catch(() => {});
+          playNotificationSound(1, 1);
         }, soundRepeatInterval * 1000);
-        // Play immediately on first detection
-        const audio = new Audio("/sounds/notify.mp3");
-        audio.play().catch(() => {});
+        playNotificationSound(1, 1);
       }
     } else {
       clearSoundInterval();
     }
-
     if (newKeys.length > 0) {
-      if (toastEnabled) {
-        setToastMsg(`Relevant invasion: ${newCogDistricts.join(", ")}`);
-        setShowToast(true);
-      }
-      if (soundEnabled && soundRepeat !== -1) {
-        let played = 0;
-        const playAudio = () => {
-          const audio = new Audio("/sounds/notify.mp3");
-          audio.play().catch(() => {});
-          played++;
-          if (played < soundRepeat) {
-            setTimeout(playAudio, soundRepeatInterval * 1000);
-          }
-        };
-        playAudio();
-      }
-      if (
-        nativeNotifEnabled &&
-        typeof window !== "undefined" &&
-        "Notification" in window
-      ) {
-        if (Notification.permission === "granted") {
-          new Notification("ToonScout Invasion Alert", {
-            body: `Relevant invasion: ${newCogDistricts.join(", ")}`,
-          });
+      handleNotification(
+        `Relevant invasion: ${newCogDistricts.join(", ")}`,
+        newKeys.map((key) => key.split("|")[0]),
+        {
+          showToast: toastEnabled,
+          playSound: soundEnabled && soundRepeat !== -1,
+          repeat: soundRepeat,
+          interval: soundRepeatInterval,
+          nativeNotif: nativeNotifEnabled,
         }
-      }
+      );
     }
-
     // If a relevant invasion is no longer present, clear toast and sound
     const goneKeys = prevRelevantKeys.current.filter(
       (key) => !relevantKeys.includes(key)
@@ -250,7 +197,6 @@ export function useInvasionNotifications({
         prev.filter((cog) => !goneKeys.some((key) => key.startsWith(cog + "|")))
       );
     }
-
     prevRelevantKeys.current = relevantKeys;
   }, [
     invasions,
@@ -263,59 +209,24 @@ export function useInvasionNotifications({
     soundRepeatInterval,
     nativeNotifEnabled,
     toastPersistent,
+    // intentionally omitting dismissedCogs, clearSoundInterval, handleNotification
   ]);
 
   // Manual dismiss handler for toast
-  function handleToastDismiss() {
+  const handleToastDismiss = useCallback(() => {
     setShowToast(false);
-    // Mark all currently active cogs as dismissed
     setDismissedCogs((prev) => Array.from(new Set([...prev, ...activeCogs])));
     clearSoundInterval();
-  }
-
-  // Expose a manual trigger for testing
-  function triggerTestToast(
-    cogName = "Back Stabber",
-    districtName = "Toontown Central"
-  ) {
-    const sanitizeCogName = (name: string) =>
-      name.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
-    setToastMsg(
-      `Relevant invasion: ${sanitizeCogName(cogName)} in ${districtName}`
-    );
-    setShowToast(true);
-    let played = 0;
-    const playAudio = () => {
-      const audio = new Audio("/sounds/notify.mp3");
-      audio.play().catch(() => {});
-      played++;
-      if (played < soundRepeat) {
-        setTimeout(playAudio, soundRepeatInterval * 1000);
-      }
-    };
-    playAudio();
-    if (
-      nativeNotifEnabled &&
-      typeof window !== "undefined" &&
-      "Notification" in window
-    ) {
-      if (Notification.permission === "granted") {
-        new Notification("ToonScout Invasion Alert", {
-          body: `Relevant invasion: ${sanitizeCogName(
-            cogName
-          )} in ${districtName}`,
-        });
-      }
-    }
-  }
+  }, [activeCogs, clearSoundInterval]);
 
   const toast = (
-    <Toast
+    <InvasionToast
       message={toastMsg}
       show={showToast}
       onClose={handleToastDismiss}
-      persistent={toastPersistent || true} // Always persistent for relevant invasions
+      persistent={toastPersistent || true}
+      cogIcon={cogIcon}
     />
   );
-  return { toast, triggerTestToast };
+  return { toast };
 }

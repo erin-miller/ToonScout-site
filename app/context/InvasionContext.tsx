@@ -6,9 +6,9 @@ import React, {
   useEffect,
   useState,
   useRef,
+  ReactNode,
 } from "react";
-import { useToonContext } from "./ToonContext";
-import { getRelevantInvasionsForTasks } from "../components/Home/tabs/components/utils";
+import { useInvasionNotifications } from "../components/Home/tabs/components/useInvasionNotifications";
 const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
 
 /**
@@ -67,41 +67,6 @@ export const InvasionProvider: React.FC<{ children: React.ReactNode }> = ({
   const [invasions, setInvasions] = useState<InvasionData[]>([]);
   const [loading, setLoading] = useState(true);
   const prevInvasions = useRef<InvasionData[]>([]);
-
-  // Function to trigger a custom invasion notification event for the whole app
-  const triggerInvasionNotification = (relevantInvasions: InvasionData[]) => {
-    if (!relevantInvasions.length) return;
-
-    // Get notification settings from localStorage
-    const toastEnabled =
-      typeof window !== "undefined"
-        ? JSON.parse(localStorage.getItem("tasksTabToastEnabled") || "true")
-        : true;
-
-    const soundEnabled =
-      typeof window !== "undefined"
-        ? JSON.parse(localStorage.getItem("tasksTabSoundEnabled") || "true")
-        : true;
-
-    // Get cog names (sanitize to remove control/unicode chars)
-    const sanitizeCogName = (name: string) =>
-      name.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
-    const cogNames = relevantInvasions
-      .map((inv) => sanitizeCogName(inv.cog))
-      .join(", ");
-
-    // Create and dispatch custom event with the relevant data
-    const event = new CustomEvent("invasionNotification", {
-      detail: {
-        message: `Relevant invasion: ${cogNames}`,
-        invasions: relevantInvasions,
-        showToast: toastEnabled,
-        playSound: soundEnabled,
-      },
-    });
-
-    window.dispatchEvent(event);
-  };
 
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -170,3 +135,18 @@ export const InvasionProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 export const useInvasionContext = () => useContext(InvasionContext);
+export function NotificationToastWrapper({
+  notifSettings,
+  children,
+}: {
+  notifSettings: any;
+  children: ReactNode;
+}) {
+  const { toast } = useInvasionNotifications(notifSettings);
+  return (
+    <>
+      {children}
+      {toast}
+    </>
+  );
+}
