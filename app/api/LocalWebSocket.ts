@@ -3,9 +3,9 @@ import { StoredToonData } from "../types";
 const DEFAULT_PORTS = [1547, 1548, 1549, 1550, 1551, 1552, 1553, 1554];
 const RECONNECT_DELAY = 10000;
 const RECONNECT_INTERVAL = 5000;
-const MAX_RETRIES = 0;
+const MAX_RETRIES = 5;
 
-let sockets: { [port: number]: WebSocket } = {};
+let sockets: { [port: number]: WebSocket | null } = {};
 let contReqInterval: NodeJS.Timeout | null = null;
 let active: number[] = [];
 let retries: { [port: number]: number } = {};
@@ -30,21 +30,26 @@ export const initWebSocket = (
 };
 
 export const resetWebSocket = () => {
-  Object.keys(sockets).forEach((port) => {
-    const socket = sockets[Number(port)];
-    if (socket && socket.readyState !== WebSocket.CLOSED) {
-      terminateWebSocket(Number(port))
+  stopContinuousRequests();
+  DEFAULT_PORTS.forEach(async (port) => {
+    const socket = sockets[port];
+    if (socket) {
+      socket.close();
     }
   });
-  sockets = {};
-  active = [];
-  retries = {};
-  contReqInterval = null;
-}
+  console.log("Resetting...");
+  setTimeout(() => {
+    console.log("Reset pushed!");
+    active = [];
+    sockets = {};
+    connectWebSocket();
+  }, 5000); // just wait a hot second...
+};
 
 const connectWebSocket = () => {
   DEFAULT_PORTS.forEach((port) => {
-    if (sockets[port] && sockets[port].readyState !== WebSocket.CLOSED) {
+    const curr = sockets[port];
+    if (curr && curr.readyState !== WebSocket.CLOSED && curr.readyState !== WebSocket.CLOSING) {
       return;
     }
 
@@ -110,7 +115,11 @@ const connectWebSocket = () => {
     });
 
     socket.addEventListener("close", () => {
-      terminateWebSocket(port);
+      updateConnectionStatus();
+      cleanupWebSocket(port);
+      if (active.length === 0) {
+        stopContinuousRequests();
+      }
 
       retries[port] = (retries[port] || 0) + 1;
       if (retries[port] < MAX_RETRIES) {
@@ -120,23 +129,16 @@ const connectWebSocket = () => {
   });
 };
 
-function terminateWebSocket(port: number) {
-  updateConnectionStatus();
-  cleanupWebSocket(port);
-  if (active.length === 0) {
-    stopContinuousRequests();
-  }
-}
-
 function cleanupWebSocket(port: number) {
   removePort(port);
+  retries[port] = 0;
   const socket = sockets[port];
   if (socket) {
     socket.removeEventListener("open", () => {});
     socket.removeEventListener("message", () => {});
     socket.removeEventListener("error", () => {});
     socket.removeEventListener("close", () => {});
-    delete sockets[port];
+    sockets[port] = null;
   }
 }
 
@@ -146,7 +148,7 @@ function startContinuousRequests() {
   contReqInterval = setInterval(() => {
     // Send requests for each socket
     Object.values(sockets).forEach((socket) => {
-      if (socket.readyState === WebSocket.OPEN) {
+      if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify({ request: "all" }));
       }
     });

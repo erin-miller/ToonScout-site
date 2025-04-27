@@ -1,4 +1,4 @@
-import { initWebSocket } from "@/app/api/LocalWebSocket";
+import { resetWebSocket } from "@/app/api/LocalWebSocket";
 import ThemeToggle from "../Theme";
 import DiscordModal from "./modals/DiscordModal";
 import GameStepsModal from "./modals/GameStepsModal";
@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
           }`}
           onClick={() => {
             if (!isDisabled) {
-              initWebSocket(setIsConnected, addPort, removePort, addToon);
+              resetWebSocket();
               setIsDisabled(true);
               setTimeout(() => setIsDisabled(false), 10000);
             }
