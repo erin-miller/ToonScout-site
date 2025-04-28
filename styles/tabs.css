@@ -1,12 +1,11 @@
 @import "@/styles/globals.css";
 
 .tab-container {
-  @apply flex justify-center items-center gap-[1px] sm:gap-3;
+  @apply justify-center items-center gap-2;
 }
 
 .tab-btn {
   @apply aria-selected:bg-pink-500 aria-selected:text-white
-        transition ease-in inline-block
         disabled:bg-pink-100 disabled:text-pink-200 disabled:cursor-not-allowed
         rounded-t-lg px-2 text-xs sm:text-2xl bg-pink-200 text-pink-500;
 }
