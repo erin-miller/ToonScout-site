@@ -36,7 +36,7 @@ const TaskTabNotifications: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-end items-center mb-2 gap-4 relative z-20">
+      <div className="flex justify-end items-center mb-2 gap-2 relative z-20">
         <button
           className="text-2xl p-2 focus:outline-none"
           title={
@@ -49,9 +49,9 @@ const TaskTabNotifications: React.FC = () => {
           }}
         >
           {notificationsEnabled ? (
-            <FaBell className="text-yellow-400" />
+            <FaBell className="text-orange-500 dark:text-yellow-400" />
           ) : (
-            <FaBellSlash className="text-gray-400" />
+            <FaBellSlash className="text-gray-900 dark:text-gray-400" />
           )}
         </button>
         <button
