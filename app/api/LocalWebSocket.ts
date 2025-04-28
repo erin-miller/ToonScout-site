@@ -1,6 +1,9 @@
 import { StoredToonData } from "../types";
 
 const DEFAULT_PORTS = [1547, 1548, 1549, 1550, 1551, 1552, 1553, 1554];
+const REQ_INTERVAL = 5000;
+
+let contReqInterval: NodeJS.Timeout | null = null;
 
 let sockets: { [port: number]: WebSocket | null } = {};
 let active: number[] = [];
@@ -27,7 +30,11 @@ export const initWebSocket = (
 const connectWebSocket = () => {
   DEFAULT_PORTS.forEach((port) => {
     const curr = sockets[port];
-    if (curr && curr.readyState !== WebSocket.CLOSED && curr.readyState !== WebSocket.CLOSING) {
+    if (
+      curr &&
+      curr.readyState !== WebSocket.CLOSED &&
+      curr.readyState !== WebSocket.CLOSING
+    ) {
       return;
     }
 
@@ -39,6 +46,7 @@ const connectWebSocket = () => {
         JSON.stringify({ authorization: initAuthToken(), name: "ToonScout" })
       );
       socket.send(JSON.stringify({ request: "all" }));
+      startContinuousRequests();
     });
 
     socket.addEventListener("message", (event) => {
@@ -89,6 +97,9 @@ const connectWebSocket = () => {
     socket.addEventListener("close", () => {
       cleanupWebSocket(port);
       updateConnectionStatus();
+      if (active.length === 0) {
+        stopContinuousRequests();
+      }
     });
   });
 };
@@ -102,6 +113,26 @@ function cleanupWebSocket(port: number) {
     socket.removeEventListener("error", () => {});
     socket.removeEventListener("close", () => {});
     sockets[port] = null;
+  }
+}
+
+function startContinuousRequests() {
+  if (contReqInterval) return;
+
+  contReqInterval = setInterval(() => {
+    // Send requests for each socket
+    Object.values(sockets).forEach((socket) => {
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ request: "all" }));
+      }
+    });
+  }, REQ_INTERVAL);
+}
+
+function stopContinuousRequests() {
+  if (contReqInterval) {
+    clearInterval(contReqInterval);
+    contReqInterval = null;
   }
 }
 
