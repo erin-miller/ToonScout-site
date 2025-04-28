@@ -8,6 +8,7 @@ import Header from "./Header";
 import { useToonContext } from "@/app/context/ToonContext";
 import GameSteps from "../GameSteps";
 import Chuckle from "../eggs/Chuckle";
+import SystemBanner from "./SystemBanner";
 
 const Home = () => {
   const { userId, setUserId } = useDiscordContext();
@@ -61,6 +62,8 @@ const Home = () => {
           activeModal={activeModal}
           setActiveModal={setActiveModal}
         />
+
+        <SystemBanner />
 
         {toons && toons.length > 0 ? (
           <>
