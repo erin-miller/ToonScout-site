@@ -14,6 +14,7 @@ const Home = () => {
   const { userId, setUserId } = useDiscordContext();
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const { toons } = useToonContext();
+  const [isBannerOpen, setIsBannerOpen] = useState(true);
 
   useEffect(() => {
     const checkAccessToken = async () => {
@@ -54,6 +55,10 @@ const Home = () => {
     }
   }, []);
 
+  const handleCloseBanner = () => {
+    setIsBannerOpen(false);
+  };
+
   return (
     <div className="card-container">
       <div className="home-card">
@@ -63,7 +68,9 @@ const Home = () => {
           setActiveModal={setActiveModal}
         />
 
-        <SystemBanner />
+        {isBannerOpen && (
+          <SystemBanner isOpen={isBannerOpen} onClose={handleCloseBanner} />
+        )}
 
         {toons && toons.length > 0 ? (
           <>
