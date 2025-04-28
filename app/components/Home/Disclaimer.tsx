@@ -9,9 +9,13 @@ const Disclaimer: React.FC = () => {
 
   const openModal = (modalName: string) => setActiveModal(modalName);
   const closeModal = () => setActiveModal(null);
+  const version = process.env.NEXT_PUBLIC_VERSION || "v0.0.0";
 
   return (
-    <div className="disclaimer-text">
+    <div className="disclaimer-text relative">
+      <div className="absolute left-3 top-2.5 bg-blue-400 text-white text-sm font-bold px-2 py-1 rounded-full shadow-md">
+        {version}
+      </div>
       <div className="space-x-4">
         <button onClick={() => openModal("about")} className="modal-btn">
           About
