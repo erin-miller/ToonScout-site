@@ -5,6 +5,7 @@ import {
   GagsTab,
   TasksTab,
   ActivityTab,
+  InvasionsTab,
 } from "./TabList";
 import "/styles/tabs.css";
 import { useState } from "react";
@@ -62,6 +63,11 @@ const TabContainer = () => {
       disabled: toons[activeIndex].data.data.tasks.length <= 0,
     },
     { title: "Activities", component: ActivityTab },
+    {
+      title: "Invasions",
+      component: InvasionsTab,
+      tooltip: "Displays Currently active invasions.",
+    },
   ];
 
   const [selectedTab, setSelectedTab] = useState<TabComponent>(TabList[0]); // Default to "Overview"

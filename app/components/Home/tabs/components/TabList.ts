@@ -4,5 +4,14 @@ import SuitTab from "../SuitTab";
 import GagsTab from "../GagsTab";
 import TasksTab from "../TasksTab";
 import ActivityTab from "../ActivityTab";
+import InvasionsTab from "../InvasionsTab";
 
-export { InfoTab, FishTab, SuitTab, GagsTab, TasksTab, ActivityTab };
+export {
+  InfoTab,
+  FishTab,
+  SuitTab,
+  GagsTab,
+  TasksTab,
+  ActivityTab,
+  InvasionsTab,
+};

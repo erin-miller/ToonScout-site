@@ -1,9 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { TabProps } from "./components/TabComponent";
 import AnimatedTabContent from "../../animations/AnimatedTab";
 import { Task, StoredToonData } from "@/app/types";
+import TaskTabNotifications from "./components/TaskTabNotifications";
+import {
+  getNotificationSettings,
+  setNotificationSettings,
+} from "@/app/utils/invasionUtils";
 
 const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
+  // Notification bell state
+  const initialSettings = getNotificationSettings();
+  const [notificationsEnabled, setNotificationsEnabled] = useState<boolean>(
+    initialSettings.notificationsEnabled
+  );
+  const [toastEnabled, setToastEnabled] = useState(
+    initialSettings.toastEnabled
+  );
+  const [soundEnabled, setSoundEnabled] = useState(
+    initialSettings.soundEnabled
+  );
+  const [toastPersistent, setToastPersistent] = useState(
+    initialSettings.toastPersistent
+  );
+  const [soundRepeat, setSoundRepeat] = useState(initialSettings.soundRepeat);
+  const [soundRepeatInterval, setSoundRepeatInterval] = useState(
+    initialSettings.soundRepeatInterval
+  );
+  const [nativeNotifEnabled, setNativeNotifEnabled] = useState(
+    initialSettings.nativeNotifEnabled
+  );
+
+  const [showSettings, setShowSettings] = useState(false);
+
+  useEffect(() => {
+    setNotificationSettings({
+      notificationsEnabled,
+      toastEnabled,
+      soundEnabled,
+      toastPersistent,
+      soundRepeat,
+      soundRepeatInterval,
+      nativeNotifEnabled,
+    });
+  }, [
+    notificationsEnabled,
+    toastEnabled,
+    soundEnabled,
+    toastPersistent,
+    soundRepeat,
+    soundRepeatInterval,
+    nativeNotifEnabled,
+  ]);
+
+  // Request browser notification permission if enabled
+  useEffect(() => {
+    if (
+      nativeNotifEnabled &&
+      typeof window !== "undefined" &&
+      "Notification" in window
+    ) {
+      if (Notification.permission === "default") {
+        Notification.requestPermission();
+      }
+    }
+  }, [nativeNotifEnabled]);
+
   // pulled from ToonScout bot
   function getTasks(toons: StoredToonData) {
     const toontasks = toons.data.data.tasks;
@@ -77,6 +139,7 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
 
   return (
     <AnimatedTabContent>
+      <TaskTabNotifications />
       <div className="grid md:grid-rows-2 md:grid-cols-2 grid-rows-4">
         {tasks.map((task, index) => (
           <div key={index} className="task-container">
@@ -107,10 +170,8 @@ const TasksTab: React.FC<TabProps> = ({ toon: toons }) => {
                 )}
                 {task.progress && renderProgress(task.progress)}
               </div>
-              <div className="mt-auto px-2">
-                {task.reward && (
-                  <p className="task-reward">Reward: {task.reward}</p>
-                )}
+              <div className="mt-auto pb-4">
+                {task.reward && <p className="task-reward">{task.reward}</p>}
               </div>
             </div>
           </div>
