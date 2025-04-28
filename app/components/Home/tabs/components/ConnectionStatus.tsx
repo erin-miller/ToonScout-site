@@ -35,7 +35,7 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
 
     const interval = setInterval(updateStatus, 60000);
     return () => clearInterval(interval);
-  }, [activeIndex, toon?.data]);
+  }, [activeIndex, toon?.data, activePorts]);
 
   const handleStatusClick = () => {
     setActiveModal("connect");
