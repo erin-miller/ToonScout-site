@@ -21,8 +21,8 @@ const HomePage: React.FC = () => {
   const toon = toons[activeIndex] ?? null;
 
   useEffect(() => {
-    initScoutWebSocket();
     initWebSocket(setIsConnected, addPort, removePort, addToon);
+    initScoutWebSocket();
 
     const existingToons = localStorage.getItem("toonData");
     if (existingToons) {
