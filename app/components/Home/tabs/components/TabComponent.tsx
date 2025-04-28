@@ -64,7 +64,7 @@ const TabContainer = () => {
     {
       title: "Invasions",
       component: InvasionsTab,
-      tooltip: "Currently active invasions.",
+      tooltip: "Displays Currently active invasions.",
     },
   ];
 

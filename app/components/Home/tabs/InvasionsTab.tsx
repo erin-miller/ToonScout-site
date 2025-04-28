@@ -86,14 +86,14 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
                   exit={{ y: -40, opacity: 0 }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   layout
-                  className={`p-4 border rounded-xl bg-white dark:bg-gray-1100 shadow-md space-y-2 ${
+                  className={`p-4 border-2 rounded-xl bg-white dark:bg-gray-1100 shadow-md space-y-2 ${
                     isRelevant
                       ? "border-yellow-400 ring-2 ring-yellow-300 dark:ring-yellow-500"
                       : ""
                   }`}
                 >
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                    <h3 className="font-bold text-xl md:text-2xl text-pink-700 dark:text-pink-300 flex items-center gap-3">
+                  <div className="flex flex-row items-center justify-between gap-2">
+                    <div className="flex items-center gap-3">
                       {(() => {
                         const img = getCogImage(invasion.cog);
                         return img ? (
@@ -105,14 +105,19 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
                           />
                         ) : null;
                       })()}
-                      {sanitizeCogName(invasion.cog)}
-                      {isRelevant && (
-                        <span className="ml-2 px-2 py-0.5 rounded bg-yellow-200 text-yellow-900 text-xs font-semibold">
-                          Relevant
-                        </span>
-                      )}
-                    </h3>
-                    <div className="flex items-center gap-2 text-blue-900 dark:text-blue-300">
+                      <h3 className="font-bold text-xl md:text-2xl text-pink-700 dark:text-pink-300 flex items-center gap-2 mt-0">
+                        {sanitizeCogName(invasion.cog)}
+                        {isRelevant && (
+                          <span className="ml-2 px-2 py-0.5 rounded bg-yellow-200 text-yellow-900 text-xs font-semibold">
+                            Relevant
+                          </span>
+                        )}
+                      </h3>
+                    </div>
+                    <div
+                      className="flex items-center gap-2 text-blue-900 dark:text-blue-300"
+                      style={{ alignSelf: "flex-start" }}
+                    >
                       <FaGlobe className="inline-block mr-1" />
                       <span className="font-semibold">{invasion.district}</span>
                     </div>
