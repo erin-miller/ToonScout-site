@@ -14,7 +14,7 @@ const Chuckle: React.FC = () => {
   const meow = () => {
     const audio = new Audio("/sounds/cat_question.ogg");
     audio.play();
-  }
+  };
 
   const createChuckle = () => {
     const elem = document.createElement("img");
@@ -44,7 +44,7 @@ const Chuckle: React.FC = () => {
         document.body.removeChild(elem);
       }, 1000);
     }, COOLDOWN);
-  }
+  };
 
   useEffect(() => {
     let seq: string[] = [];
