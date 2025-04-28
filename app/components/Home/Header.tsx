@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
           }`}
           onClick={() => {
             if (!isDisabled) {
-              resetWebSocket();
+              resetWebSocket(setIsConnected, addPort, removePort, addToon);
               setIsDisabled(true);
               setTimeout(() => setIsDisabled(false), 10000);
             }

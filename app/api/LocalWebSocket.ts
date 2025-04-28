@@ -24,20 +24,24 @@ export const initWebSocket = (
   connectWebSocket();
 };
 
-export const resetWebSocket = () => {
+export const resetWebSocket = (
+  setIsConnectedFn: (isConnected: boolean) => void,
+  addActivePortFn: (port: number) => void,
+  removeActivePortFn: (port: number) => void,
+  addToonFn: (data: any) => void
+) => {
   DEFAULT_PORTS.forEach(async (port) => {
     const socket = sockets[port];
     if (socket) {
       socket.close();
     }
   });
-  console.log("Resetting...");
   setTimeout(() => {
     console.log("Reset pushed!");
     active = [];
     sockets = {};
-    connectWebSocket();
-  }, 5000); // just wait a hot second...
+    initWebSocket(setIsConnectedFn, addActivePortFn, removeActivePortFn, addToonFn);
+  }, 2000); // just wait a hot second...
 };
 
 const connectWebSocket = () => {
