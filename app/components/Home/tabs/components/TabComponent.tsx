@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useToonContext } from "@/app/context/ToonContext";
 import { StoredToonData } from "@/app/types";
 import { hasNoSuit } from "./utils";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 
 export interface TabProps {
   toon: StoredToonData;
@@ -26,6 +27,7 @@ export type TabComponent = {
 
 const TabContainer = () => {
   const { activeIndex, toons } = useToonContext();
+  const MAX_TABS = 4;
 
   const toon = toons[activeIndex];
 
@@ -64,7 +66,11 @@ const TabContainer = () => {
 
   const [selectedTab, setSelectedTab] = useState<TabComponent>(TabList[0]); // Default to "Overview"
   const [pose, setPose] = useState<string>("waving");
+  const [currPage, setCurrPage] = useState(0);
+  const totalPages = Math.ceil(TabList.length / MAX_TABS);
+  const visibleTabs = TabList.slice(currPage * MAX_TABS, (currPage + 1) * MAX_TABS);
 
+  // change pages if the toon has no suits so that the tab is disabled properly
   if (selectedTab.title == "Suits" && hasNoSuit(toon)) {
     setSelectedTab(TabList[1]);
   }
@@ -98,21 +104,55 @@ const TabContainer = () => {
     setPose(poses[next]);
   };
 
+  const handleNextPage = () => {
+    setCurrPage((prev) => Math.min(prev + 1, totalPages - 1));
+  }
+
+  const handlePrevPage = () => {
+    setCurrPage((prev) => Math.max(prev - 1, 0));
+  }
+    
   return (
     <div>
       {/* list of tabs */}
-      <div className="tab-container">
-        {TabList.map((tab) => (
-          <button
-            key={tab.title}
-            className="tab-btn"
-            aria-selected={selectedTab.title == tab.title ? true : false}
-            onClick={() => handleTabChange(tab)}
-            disabled={tab.disabled}
-          >
-            {tab.title}
+      <div>
+        {/* full tab list for larger screens */}
+        <div className="tab-container hidden lg:flex">
+          {TabList.map((tab) => (
+            <button
+              key={tab.title}
+              className="tab-btn"
+              aria-selected={selectedTab.title === tab.title}
+              onClick={() => handleTabChange(tab)}
+              disabled={tab.disabled}
+            >
+              {tab.title}
+            </button>
+          ))}
+        </div>
+
+        {/* paginated tab list for smaller screens */}
+        <div className="tab-container flex lg:hidden">
+          <button className="rounded-lg tab-btn" onClick={handlePrevPage} disabled={currPage == 0}>
+            <FaAngleLeft />
           </button>
-        ))}
+
+          {visibleTabs.map((tab) => (
+            <button
+              key={tab.title}
+              className="tab-btn"
+              aria-selected={selectedTab.title === tab.title}
+              onClick={() => handleTabChange(tab)}
+              disabled={tab.disabled}
+            >
+              {tab.title}
+            </button>
+          ))}
+
+          <button className="rounded-lg tab-btn" onClick={handleNextPage} disabled={currPage === totalPages - 1}>
+            <FaAngleRight />
+          </button>
+        </div>
       </div>
 
       {/* tab display */}
