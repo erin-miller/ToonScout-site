@@ -37,11 +37,10 @@ export const resetWebSocket = (
     }
   });
   setTimeout(() => {
-    console.log("Reset pushed!");
     active = [];
     sockets = {};
     initWebSocket(setIsConnectedFn, addActivePortFn, removeActivePortFn, addToonFn);
-  }, 2000); // just wait a hot second...
+  }, 1000); // just wait a hot second...
 };
 
 const connectWebSocket = () => {
@@ -107,8 +106,8 @@ const connectWebSocket = () => {
     });
 
     socket.addEventListener("close", () => {
-      updateConnectionStatus();
       cleanupWebSocket(port);
+      updateConnectionStatus();
     });
   });
 };
