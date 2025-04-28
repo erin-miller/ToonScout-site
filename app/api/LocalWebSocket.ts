@@ -1,14 +1,9 @@
 import { StoredToonData } from "../types";
 
 const DEFAULT_PORTS = [1547, 1548, 1549, 1550, 1551, 1552, 1553, 1554];
-const RECONNECT_DELAY = 10000;
-const RECONNECT_INTERVAL = 5000;
-const MAX_RETRIES = 5;
 
 let sockets: { [port: number]: WebSocket | null } = {};
-let contReqInterval: NodeJS.Timeout | null = null;
 let active: number[] = [];
-let retries: { [port: number]: number } = {};
 
 let setIsConnected: (isConnected: boolean) => void;
 let addActivePort: (port: number) => void;
@@ -30,7 +25,6 @@ export const initWebSocket = (
 };
 
 export const resetWebSocket = () => {
-  stopContinuousRequests();
   DEFAULT_PORTS.forEach(async (port) => {
     const socket = sockets[port];
     if (socket) {
@@ -53,20 +47,14 @@ const connectWebSocket = () => {
       return;
     }
 
-    if (retries[port] && retries[port] >= MAX_RETRIES) {
-      return;
-    }
-
     const socket = new WebSocket(`ws://localhost:${port}`);
     sockets[port] = socket;
 
     socket.addEventListener("open", () => {
-      retries[port] = 0; // reset on successful connection
       socket.send(
         JSON.stringify({ authorization: initAuthToken(), name: "ToonScout" })
       );
       socket.send(JSON.stringify({ request: "all" }));
-      startContinuousRequests();
     });
 
     socket.addEventListener("message", (event) => {
@@ -117,21 +105,12 @@ const connectWebSocket = () => {
     socket.addEventListener("close", () => {
       updateConnectionStatus();
       cleanupWebSocket(port);
-      if (active.length === 0) {
-        stopContinuousRequests();
-      }
-
-      retries[port] = (retries[port] || 0) + 1;
-      if (retries[port] < MAX_RETRIES) {
-        setTimeout(() => connectWebSocket(), RECONNECT_DELAY);
-      }
     });
   });
 };
 
 function cleanupWebSocket(port: number) {
   removePort(port);
-  retries[port] = 0;
   const socket = sockets[port];
   if (socket) {
     socket.removeEventListener("open", () => {});
@@ -139,26 +118,6 @@ function cleanupWebSocket(port: number) {
     socket.removeEventListener("error", () => {});
     socket.removeEventListener("close", () => {});
     sockets[port] = null;
-  }
-}
-
-function startContinuousRequests() {
-  if (contReqInterval) return;
-
-  contReqInterval = setInterval(() => {
-    // Send requests for each socket
-    Object.values(sockets).forEach((socket) => {
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({ request: "all" }));
-      }
-    });
-  }, RECONNECT_INTERVAL);
-}
-
-function stopContinuousRequests() {
-  if (contReqInterval) {
-    clearInterval(contReqInterval);
-    contReqInterval = null;
   }
 }
 
