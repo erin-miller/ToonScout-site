@@ -1,9 +1,13 @@
 import { StoredToonData } from "../types";
 
 const DEFAULT_PORTS = [1547, 1548, 1549, 1550, 1551, 1552, 1553, 1554];
+<<<<<<< HEAD
 const REQ_INTERVAL = 5000;
 
 let contReqInterval: NodeJS.Timeout | null = null;
+=======
+
+>>>>>>> 178c2368be05feab41eed36b95c8e9d29ef438e0
 let sockets: { [port: number]: WebSocket | null } = {};
 let active: number[] = [];
 
@@ -29,11 +33,15 @@ export const initWebSocket = (
 const connectWebSocket = () => {
   DEFAULT_PORTS.forEach((port) => {
     const curr = sockets[port];
+<<<<<<< HEAD
     if (
       curr &&
       curr.readyState !== WebSocket.CLOSED &&
       curr.readyState !== WebSocket.CLOSING
     ) {
+=======
+    if (curr && curr.readyState !== WebSocket.CLOSED && curr.readyState !== WebSocket.CLOSING) {
+>>>>>>> 178c2368be05feab41eed36b95c8e9d29ef438e0
       return;
     }
 
@@ -45,7 +53,10 @@ const connectWebSocket = () => {
         JSON.stringify({ authorization: initAuthToken(), name: "ToonScout" })
       );
       socket.send(JSON.stringify({ request: "all" }));
+<<<<<<< HEAD
       startContinuousRequests();
+=======
+>>>>>>> 178c2368be05feab41eed36b95c8e9d29ef438e0
     });
 
     socket.addEventListener("message", (event) => {
@@ -96,9 +107,12 @@ const connectWebSocket = () => {
     socket.addEventListener("close", () => {
       cleanupWebSocket(port);
       updateConnectionStatus();
+<<<<<<< HEAD
       if (active.length === 0) {
         stopContinuousRequests();
       }
+=======
+>>>>>>> 178c2368be05feab41eed36b95c8e9d29ef438e0
     });
   });
 };
@@ -115,6 +129,7 @@ function cleanupWebSocket(port: number) {
   }
 }
 
+<<<<<<< HEAD
 function startContinuousRequests() {
   if (contReqInterval) return;
 
@@ -135,6 +150,8 @@ function stopContinuousRequests() {
   }
 }
 
+=======
+>>>>>>> 178c2368be05feab41eed36b95c8e9d29ef438e0
 function updateConnectionStatus() {
   setIsConnected(active.length > 0);
 }
