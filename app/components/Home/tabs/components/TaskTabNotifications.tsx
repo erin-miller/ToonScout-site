@@ -21,6 +21,7 @@ const TaskTabNotifications: React.FC = () => {
     setNativeNotifEnabled,
   } = useTaskTabNotifications();
   const [showSettings, setShowSettings] = useState(false);
+  const tooltip = "Receive invasion alerts for matching tasks if enabled.";
 
   useEffect(() => {
     if (
@@ -37,6 +38,14 @@ const TaskTabNotifications: React.FC = () => {
   return (
     <>
       <div className="flex justify-end items-center mb-2 gap-2 relative z-20">
+        <div className="relative px-2 group">
+          <span className="border-4 border-pink-900 dark:border-pink-100 rounded-full w-6 h-6 flex items-center justify-center text-base">
+            ?
+          </span>
+          <div className="hidden group-hover:block absolute text-base bg-white border border-gray-700 text-gray-900 p-2 transform -translate-x-[90%] ml-2 w-64 text-center">
+            {tooltip}
+          </div>
+        </div>
         <button
           className="text-2xl p-2 focus:outline-none"
           title={
