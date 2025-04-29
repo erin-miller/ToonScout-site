@@ -66,7 +66,7 @@ const TabContainer = () => {
     {
       title: "Invasions",
       component: InvasionsTab,
-      tooltip: "Displays Currently active invasions.",
+      tooltip: "Displays currently active invasions.",
     },
   ];
 
@@ -74,7 +74,10 @@ const TabContainer = () => {
   const [pose, setPose] = useState<string>("waving");
   const [currPage, setCurrPage] = useState(0);
   const totalPages = Math.ceil(TabList.length / MAX_TABS);
-  const visibleTabs = TabList.slice(currPage * MAX_TABS, (currPage + 1) * MAX_TABS);
+  const visibleTabs = TabList.slice(
+    currPage * MAX_TABS,
+    (currPage + 1) * MAX_TABS
+  );
 
   // change pages if the toon has no suits so that the tab is disabled properly
   if (selectedTab.title == "Suits" && hasNoSuit(toon)) {
@@ -112,12 +115,12 @@ const TabContainer = () => {
 
   const handleNextPage = () => {
     setCurrPage((prev) => Math.min(prev + 1, totalPages - 1));
-  }
+  };
 
   const handlePrevPage = () => {
     setCurrPage((prev) => Math.max(prev - 1, 0));
-  }
-    
+  };
+
   return (
     <div>
       {/* list of tabs */}
@@ -139,7 +142,11 @@ const TabContainer = () => {
 
         {/* paginated tab list for smaller screens */}
         <div className="tab-container flex lg:hidden">
-          <button className="rounded-lg tab-btn" onClick={handlePrevPage} disabled={currPage == 0}>
+          <button
+            className="rounded-lg tab-btn"
+            onClick={handlePrevPage}
+            disabled={currPage == 0}
+          >
             <FaAngleLeft />
           </button>
 
@@ -155,7 +162,11 @@ const TabContainer = () => {
             </button>
           ))}
 
-          <button className="rounded-lg tab-btn" onClick={handleNextPage} disabled={currPage === totalPages - 1}>
+          <button
+            className="rounded-lg tab-btn"
+            onClick={handleNextPage}
+            disabled={currPage === totalPages - 1}
+          >
             <FaAngleRight />
           </button>
         </div>
