@@ -37,7 +37,7 @@ const TaskTabNotifications: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-end items-center mb-2 gap-2 relative z-20">
+      <div className="flex justify-end items-center mb-2 relative z-20">
         <div className="relative px-2 group">
           <span className="border-4 border-pink-900 dark:border-pink-100 rounded-full w-6 h-6 flex items-center justify-center text-base">
             ?
