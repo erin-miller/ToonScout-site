@@ -6,14 +6,9 @@ import { useToonContext } from "@/app/context/ToonContext";
 import {
   getRelevantInvasionsForTasks,
   sanitizeCogName,
+  getCogImage,
 } from "@/app/utils/invasionUtils";
 import InvasionToast from "@/app/components/InvasionToast";
-
-function getCogIcon(cogName: string) {
-  if (!cogName) return undefined;
-  const sanitized = sanitizeCogName(cogName).replace(/ /g, "_").toLowerCase();
-  return `/cog_images/${sanitized}.png`;
-}
 
 function playNotificationSound(repeat: number, interval: number) {
   let played = 0;
@@ -88,7 +83,7 @@ export function useInvasionNotifications({
     ) => {
       if (options.showToast) {
         setToastMsg(msg);
-        setCogIcon(cogs.length === 1 ? getCogIcon(cogs[0]) : undefined);
+        setCogIcon(cogs.length === 1 ? getCogImage(cogs[0]) : undefined);
         setShowToast(true);
       }
       if (options.playSound && options.repeat && options.repeat > 0) {
