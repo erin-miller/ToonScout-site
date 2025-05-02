@@ -44,6 +44,21 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
     );
   }, [toon, displayedInvasions]);
 
+  // Resort invasions: relevant at the top
+  const sortedInvasions = useMemo(() => {
+    if (!relevantInvasions.length) return displayedInvasions;
+    const relevantKeys = new Set(
+      relevantInvasions.map((inv) => `${inv.cog}|${inv.district}`)
+    );
+    const relevant = displayedInvasions.filter((inv) =>
+      relevantKeys.has(`${inv.cog}|${inv.district}`)
+    );
+    const others = displayedInvasions.filter(
+      (inv) => !relevantKeys.has(`${inv.cog}|${inv.district}`)
+    );
+    return [...relevant, ...others];
+  }, [displayedInvasions, relevantInvasions]);
+
   // Helper to parse progress string like "123/500"
   function parseProgress(progress: string) {
     const match = progress.match(/(\d+)\s*\/\s*(\d+)/);
@@ -68,15 +83,13 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
           <div className="text-center">Loading...</div>
         ) : displayedInvasions.length > 0 ? (
           <AnimatePresence initial={false}>
-            {displayedInvasions.map((invasion) => {
+            {sortedInvasions.map((invasion) => {
               const { current, total } = parseProgress(invasion.progress);
               const percent = Math.floor((current / total) * 100);
               const elapsedMs = now - invasion.startTimestamp * 1000;
               const isRelevant = relevantInvasions.some(
                 (rel) =>
-                  rel.cog === invasion.cog &&
-                  rel.district === invasion.district &&
-                  rel.startTimestamp === invasion.startTimestamp
+                  rel.cog === invasion.cog && rel.district === invasion.district
               );
               return (
                 <motion.div
