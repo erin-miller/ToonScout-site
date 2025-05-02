@@ -104,6 +104,7 @@ const FISH_RARITY: { [key: string]: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 } = {
 const FishTab: React.FC<TabProps> = ({ toon }) => {
   const [rarity, setRarity] = useState<FishRarity[] | null>(null);
   const [caught, setCaught] = useState<string[]>([]);
+  const [catchable, setCatchable] = useState<number>(70);
 
   const [showCaught, setShowCaught] = useState<boolean>(() => {
     return JSON.parse(localStorage.getItem("showCaught") || "false");
@@ -180,6 +181,7 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
       const data = await response.json();
       setCaught(data.caught);
       setRarity(data.rarity);
+      setCatchable(data.catchable.length);
     };
 
     getFish();
@@ -206,7 +208,9 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
       <div className="fish-container">
         <div className="fish-header">
           <div className="fish-item">
-            <p>{sumFish(toon)} / 70 caught</p>
+            <p>
+              {sumFish(toon)} / {catchable} caught
+            </p>
           </div>
           <div className="fish-item">{toon.data.data.fish.rod.name} Rod</div>
         </div>
