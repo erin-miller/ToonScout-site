@@ -6,6 +6,7 @@ import {
   TasksTab,
   ActivityTab,
   InvasionsTab,
+  GardenTab,
 } from "./TabList";
 import "/styles/tabs.css";
 import { useState } from "react";
@@ -67,6 +68,10 @@ const TabContainer = () => {
       title: "Invasions",
       component: InvasionsTab,
       tooltip: "Displays currently active invasions.",
+    },
+    {
+      title: "Garden",
+      component: GardenTab,
     },
   ];
 
