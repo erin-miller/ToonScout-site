@@ -48,16 +48,13 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
   const sortedInvasions = useMemo(() => {
     if (!relevantInvasions.length) return displayedInvasions;
     const relevantKeys = new Set(
-      relevantInvasions.map(
-        (inv) => `${inv.cog}|${inv.district}|${inv.startTimestamp}`
-      )
+      relevantInvasions.map((inv) => `${inv.cog}|${inv.district}`)
     );
     const relevant = displayedInvasions.filter((inv) =>
-      relevantKeys.has(`${inv.cog}|${inv.district}|${inv.startTimestamp}`)
+      relevantKeys.has(`${inv.cog}|${inv.district}`)
     );
     const others = displayedInvasions.filter(
-      (inv) =>
-        !relevantKeys.has(`${inv.cog}|${inv.district}|${inv.startTimestamp}`)
+      (inv) => !relevantKeys.has(`${inv.cog}|${inv.district}`)
     );
     return [...relevant, ...others];
   }, [displayedInvasions, relevantInvasions]);
@@ -92,9 +89,7 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
               const elapsedMs = now - invasion.startTimestamp * 1000;
               const isRelevant = relevantInvasions.some(
                 (rel) =>
-                  rel.cog === invasion.cog &&
-                  rel.district === invasion.district &&
-                  rel.startTimestamp === invasion.startTimestamp
+                  rel.cog === invasion.cog && rel.district === invasion.district
               );
               return (
                 <motion.div
