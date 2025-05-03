@@ -10,6 +10,7 @@ const config: Config = {
   ],
   safelist: [
     "dark",
+    "scale-up",
     "bg-blue-400",
     "bg-blue-500",
     "bg-blue-600",
