@@ -72,6 +72,8 @@ const TabContainer = () => {
     {
       title: "Garden",
       component: GardenTab,
+      tooltip:
+        "Golden border flowers will progress your experience and allow you to grow higher bean combinations.",
     },
   ];
 
