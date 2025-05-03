@@ -78,6 +78,13 @@ const GardenTab: React.FC<TabProps> = ({ toon }) => {
     }));
   };
 
+  const removeDupes = (arr: FlowerResponse[]) => {
+    return arr.filter(
+      (flower) =>
+        !progress.some((progFlower) => progFlower.name === flower.name)
+    );
+  };
+
   const renderFlowers = (flowers: FlowerResponse[], borderColor: string) => {
     return flowers.map((flower: FlowerResponse, index: number) => {
       const { name, combo: flowerCombo } = flower;
@@ -154,7 +161,8 @@ const GardenTab: React.FC<TabProps> = ({ toon }) => {
           {/* flowers */}
           <div className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-2">
             {renderFlowers(progress, "amber-500")}
-            {flowerType >= 2 && renderFlowers(plantable, "pink-500")}
+            {flowerType >= 2 &&
+              renderFlowers(removeDupes(plantable), "pink-500")}
             {flowerType === 3 && renderFlowers(missing, "gray-600")}
           </div>
         </>
