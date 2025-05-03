@@ -59,7 +59,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 
           {/* global settings */}
           <h3 className="text-3xl font-bold text-gray-900 mt-5">
-            Global Settings
+            Tab Settings
           </h3>
 
           <FishSettingsItem />
