@@ -72,7 +72,7 @@ const FishSettingsItem: React.FC = () => {
                 checked={showCaught}
                 id="caught"
                 onChange={(e) => setShowCaught(e.target.checked)}
-                className="w-4 h-4 cursor-pointer"
+                className="w-5 h-5 cursor-pointer"
               />
               <label
                 htmlFor="caught"
@@ -88,7 +88,7 @@ const FishSettingsItem: React.FC = () => {
                 checked={showTime}
                 id="catchTime"
                 onChange={(e) => setShowTime(e.target.checked)}
-                className="w-4 h-4 cursor-pointer"
+                className="w-5 h-5 cursor-pointer"
               />
               <label
                 htmlFor="catchTime"
