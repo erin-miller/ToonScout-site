@@ -3,7 +3,9 @@ import AnimatedTabContent from "@/app/components/animations/AnimatedTab";
 import { TabProps } from "./components/TabComponent";
 import { sumFish } from "./components/utils";
 import { FishRarity } from "@/app/types";
-import { FaFilter } from "react-icons/fa";
+import { FaCog } from "react-icons/fa";
+import ToonSettingsModal from "../modals/ToonSettingsModal";
+import { useToonContext } from "@/app/context/ToonContext";
 const API_LINK = process.env.NEXT_PUBLIC_API_HTTP;
 
 const RARITY_INDEX: { [key: number]: "VC" | "C" | "R" | "VR" | "ER" | "UR" } = {
@@ -102,41 +104,50 @@ const FISH_RARITY: { [key: string]: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 } = {
 };
 
 const FishTab: React.FC<TabProps> = ({ toon }) => {
+  const { activeIndex } = useToonContext();
   const [rarity, setRarity] = useState<FishRarity[] | null>(null);
   const [caught, setCaught] = useState<string[]>([]);
   const [catchable, setCatchable] = useState<number>(70);
-
-  const [showCaught, setShowCaught] = useState<boolean>(() => {
-    return JSON.parse(localStorage.getItem("showCaught") || "false");
-  });
+  const [showSettingsModal, setShowSettingsModal] = useState<boolean>(false);
 
   const [bucketType, setBucketType] = useState<1 | 2>(() => {
     return JSON.parse(localStorage.getItem("bucketType") || "1");
+  });
+
+  const [showCaught, setShowCaught] = useState<boolean>(() => {
+    return JSON.parse(localStorage.getItem("showCaught") || "false");
   });
 
   const [showTime, setShowTime] = useState<boolean>(() => {
     return JSON.parse(localStorage.getItem("showTime") || "false");
   });
 
-  const [showModal, setShowModal] = useState<boolean>(() => {
-    return JSON.parse(localStorage.getItem("showModal") || "false");
+  window.addEventListener("fishChange", (event) => {
+    const storedBucketType = parseInt(
+      localStorage.getItem("bucketType") || "1"
+    );
+    if (storedBucketType !== bucketType) {
+      setBucketType(storedBucketType as 1 | 2);
+    }
+
+    const storedShowCaught = JSON.parse(
+      localStorage.getItem("showCaught") || "false"
+    );
+    if (storedShowCaught !== showCaught) {
+      setShowCaught(storedShowCaught);
+    }
+
+    const storedShowTime = JSON.parse(
+      localStorage.getItem("showTime") || "false"
+    );
+    if (storedShowTime !== showTime) {
+      setShowTime(storedShowTime);
+    }
   });
 
-  useEffect(() => {
-    localStorage.setItem("showCaught", JSON.stringify(showCaught));
-  }, [showCaught]);
-
-  useEffect(() => {
-    localStorage.setItem("bucketType", JSON.stringify(bucketType));
-  }, [bucketType]);
-
-  useEffect(() => {
-    localStorage.setItem("showTime", JSON.stringify(showTime));
-  }, [showTime]);
-
-  useEffect(() => {
-    localStorage.setItem("showModal", JSON.stringify(showModal));
-  }, [showModal]);
+  const toggleSettingsModal = () => {
+    setShowSettingsModal(!showSettingsModal);
+  };
 
   const probabilityTooltip =
     bucketType === 2
@@ -187,221 +198,119 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
     getFish();
   }, [toon?.data]);
 
-  const showModalHandler = () => {
-    setShowModal(!showModal);
-  };
-
-  const handleBucketTypeChange = (value: 1 | 2) => {
-    setBucketType(value);
-  };
-
-  const handleShowCaughtChange = (value: boolean) => {
-    setShowCaught(value);
-  };
-
-  const handleShowTimeChange = (value: boolean) => {
-    setShowTime(value);
-  };
-
   return (
-    <AnimatedTabContent>
-      <div className="fish-container">
-        <div className="fish-header">
-          <div className="fish-item">
-            <p>
-              {sumFish(toon)} / {catchable} caught
-            </p>
+    <>
+      <AnimatedTabContent>
+        <div className="fish-container">
+          <div className="fish-header">
+            <div className="fish-item">
+              <p>
+                {sumFish(toon)} / {catchable} caught
+              </p>
+            </div>
+            <div className="fish-item">{toon.data.data.fish.rod.name} Rod</div>
           </div>
-          <div className="fish-item">{toon.data.data.fish.rod.name} Rod</div>
-        </div>
-        <div className="fish-table relative">
-          <div className="flex text-xl md:text-2xl xl:text-3xl pb-2 ml-5 mr-9 space-x-2">
-            <div className="fish-table-header w-2/3">Fish</div>
-            <div className="fish-table-header w-2/3">Location</div>
-            <div className="fish-table-header w-2/3">
-              Probability
-              <div className="relative px-2 group">
-                <span className="border-4 border-pink-900 dark:border-pink-100 rounded-full w-6 h-6 flex items-center justify-center text-base">
-                  ?
-                </span>
-                <div className="hidden group-hover:block absolute text-base bg-white border border-gray-700 text-gray-900 p-2 transform -translate-x-[90%] ml-2 w-64 text-center">
-                  {probabilityTooltip}
+          <div className="fish-table relative">
+            <div className="flex text-xl md:text-2xl xl:text-3xl pb-2 ml-5 mr-9 space-x-2">
+              <div className="fish-table-header w-2/3">Fish</div>
+              <div className="fish-table-header w-2/3">Location</div>
+              <div className="fish-table-header w-2/3">
+                Probability
+                <div className="relative px-2 group">
+                  <span className="border-4 border-pink-900 dark:border-pink-100 rounded-full w-6 h-6 flex items-center justify-center text-base">
+                    ?
+                  </span>
+                  <div className="hidden group-hover:block absolute text-base bg-white border border-gray-700 text-gray-900 p-2 transform -translate-x-[90%] ml-2 w-64 text-center">
+                    {probabilityTooltip}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              className={`fish-table-header w-1/3 ${
-                showTime ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              Time
-            </div>
-            <button
-              className="scale-up absolute right-2 h-8 w-8 bg-violet-800 rounded-full flex items-center justify-center"
-              onClick={showModalHandler}
-            >
-              <FaFilter className="h-4 w-4 text-white" />
-            </button>
-          </div>
-
-          {/* MODAL */}
-          {showModal && (
-            <div className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900 rounded-md bg-opacity-60 flex justify-center items-center z-50 dark:text-gray-1000">
-              <div className="absolute bg-gray-100 dark:bg-gray-200 border-4 border-gagblue p-6 rounded-lg shadow-lg">
-                <div
-                  className={`${
-                    rarity && rarity.length > 0 ? "block" : "hidden"
-                  }`}
-                >
-                  <div className="text-2xl font-semibold">Bucket Type</div>
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      name="bucketType"
-                      id="confidentBuckets"
-                      checked={bucketType === 1}
-                      onChange={() => handleBucketTypeChange(1)}
-                      className="w-5 h-5 cursor-pointer"
-                    />
-                    <label
-                      className="text-lg cursor-pointer hover:text-blue-600"
-                      htmlFor="confidentBuckets"
-                    >
-                      Confident (90%)
-                    </label>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="radio"
-                      name="bucketType"
-                      id="avgBuckets"
-                      checked={bucketType === 2}
-                      onChange={() => handleBucketTypeChange(2)}
-                      className="w-5 h-5 cursor-pointer"
-                    />
-                    <label
-                      className="text-lg cursor-pointer hover:text-blue-600"
-                      htmlFor="avgBuckets"
-                    >
-                      Average
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="text-2xl font-semibold">Other</div>
-
-                  <div className="space-y-1">
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={showCaught}
-                        id="caught"
-                        onChange={(e) =>
-                          handleShowCaughtChange(e.target.checked)
-                        }
-                        className="w-4 h-4 cursor-pointer"
-                      />
-                      <label
-                        htmlFor="caught"
-                        className="text-lg cursor-pointer hover:text-blue-600"
-                      >
-                        Show Caught Fish
-                      </label>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        checked={showTime}
-                        id="catchTime"
-                        onChange={(e) => handleShowTimeChange(e.target.checked)}
-                        className="w-4 h-4 cursor-pointer"
-                      />
-                      <label
-                        htmlFor="catchTime"
-                        className="text-lg cursor-pointer hover:text-blue-600"
-                      >
-                        Show Estimated Time to Catch
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Close button in the top-right corner */}
-                <button
-                  onClick={showModalHandler}
-                  className="absolute -top-0 right-0 text-2xl text-blue-700 
-            hover:text-blue-900 w-8 h-8 flex justify-center items-stretch"
-                >
-                  &times;
-                </button>
+              <div
+                className={`fish-table-header w-1/3 ${
+                  showTime ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                Time
               </div>
+              <button
+                className="scale-up absolute right-2 h-8 w-8 bg-violet-800 rounded-full flex items-center justify-center"
+                onClick={toggleSettingsModal}
+              >
+                <FaCog className="h-4 w-4 text-white" />
+              </button>
             </div>
-          )}
 
-          <div className="fishtank fish-scrollbar">
-            {rarity && rarity.length > 0 ? (
-              rarity.map((item, index) => {
-                const itemRarity = RARITY_INDEX[FISH_RARITY[item.name]];
-                const rarityColor = RARITY_COLORS[itemRarity];
-                return (
-                  <div className="fish" key={index}>
-                    <div className="fish-info w-2/3 text-left gap-2">
-                      <div
-                        className={`flex items-center justify-center rounded-full w-8 text-base bg-${rarityColor}-500 dark:grayscale-[30%]`}
-                      >
-                        {itemRarity}
+            <div className="fishtank fish-scrollbar">
+              {rarity && rarity.length > 0 ? (
+                rarity.map((item, index) => {
+                  const itemRarity = RARITY_INDEX[FISH_RARITY[item.name]];
+                  const rarityColor = RARITY_COLORS[itemRarity];
+                  return (
+                    <div className="fish" key={index}>
+                      <div className="fish-info w-2/3 text-left gap-2">
+                        <div
+                          className={`flex items-center justify-center rounded-full w-8 text-base bg-${rarityColor}-500 dark:grayscale-[30%]`}
+                        >
+                          {itemRarity}
+                        </div>
+                        {item.name}
                       </div>
-                      {item.name}
-                    </div>
 
-                    <div className="fish-info w-2/3 text-left">
-                      {item.location}
-                    </div>
+                      <div className="fish-info w-2/3 text-left">
+                        {item.location}
+                      </div>
 
-                    <div className="fish-info w-2/3 text-left">
-                      <span>
-                        {(item.probability * 100).toFixed(2)}% or{" "}
-                        {getBuckets(item)} buckets
-                      </span>
-                    </div>
-                    <div
-                      className={`fish-info w-1/3 text-left ${
-                        showTime ? "opacity-100" : "opacity-0"
-                      }`}
-                    >
-                      <span>{getTime(item)}</span>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <p className="fish">No new fish available to catch!</p>
-            )}
-            {showCaught &&
-              caught &&
-              caught.map((fish, index) => {
-                const itemRarity = RARITY_INDEX[FISH_RARITY[fish]];
-                const rarityColor = RARITY_COLORS[itemRarity];
-                return (
-                  <div className="fish uncaught-fish" key={index}>
-                    <div className="flex justify-center items-center text-pink-900">
+                      <div className="fish-info w-2/3 text-left">
+                        <span>
+                          {(item.probability * 100).toFixed(2)}% or{" "}
+                          {getBuckets(item)} buckets
+                        </span>
+                      </div>
                       <div
-                        className={`rounded-full w-8 text-base bg-${rarityColor}-500 opacity-60 dark:opacity-80 text-pink-800 dark:text-gray-1000 dark:grayscale-[30%]`}
+                        className={`fish-info w-1/3 text-left ${
+                          showTime ? "opacity-100" : "opacity-0"
+                        }`}
                       >
-                        {itemRarity}
+                        <span>{getTime(item)}</span>
                       </div>
                     </div>
-                    <div className="fish-info w-2/3 text-left">{fish}</div>
-                  </div>
-                );
-              })}
+                  );
+                })
+              ) : (
+                <p className="fish">No new fish available to catch!</p>
+              )}
+              {showCaught &&
+                caught &&
+                caught.map((fish, index) => {
+                  const itemRarity = RARITY_INDEX[FISH_RARITY[fish]];
+                  const rarityColor = RARITY_COLORS[itemRarity];
+                  return (
+                    <div className="fish uncaught-fish" key={index}>
+                      <div className="flex justify-center items-center text-pink-900">
+                        <div
+                          className={`rounded-full w-8 text-base bg-${rarityColor}-500 opacity-60 dark:opacity-80 text-pink-800 dark:text-gray-1000 dark:grayscale-[30%]`}
+                        >
+                          {itemRarity}
+                        </div>
+                      </div>
+                      <div className="fish-info w-2/3 text-left">{fish}</div>
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         </div>
-      </div>
-    </AnimatedTabContent>
+      </AnimatedTabContent>
+
+      {showSettingsModal && (
+        <ToonSettingsModal
+          toon={toon}
+          index={activeIndex}
+          isOpen={showSettingsModal}
+          onClose={toggleSettingsModal}
+        />
+      )}
+    </>
   );
 };
 
