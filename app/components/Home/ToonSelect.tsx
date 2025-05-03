@@ -86,13 +86,15 @@ const ToonSelect = () => {
               {getRemaining()}
             </div>
           </div>
-          <ToonSettingsModal
-            toon={selectedToon}
-            index={selectedIndex}
-            isOpen={isModalOpen}
-            onClose={() => setModalOpen(false)}
-          />
         </AnimatedTabContent>
+      )}
+      {isModalOpen && (
+        <ToonSettingsModal
+          toon={selectedToon}
+          index={selectedIndex}
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+        />
       )}
     </div>
   );
