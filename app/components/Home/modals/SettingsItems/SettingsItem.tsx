@@ -9,7 +9,7 @@ const SettingsItem: React.FC<SettingsItemProps> = ({ label, children }) => {
   return (
     <div className="text-2xl flex flex-col gap-2 font-semibold">
       <span>{label}</span>
-      <div>{children}</div>
+      <div className="font-normal">{children}</div>
     </div>
   );
 };

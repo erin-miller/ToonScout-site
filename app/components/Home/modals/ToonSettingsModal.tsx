@@ -3,6 +3,7 @@ import Modal from "../../Modal";
 import { StoredToonData } from "@/app/types";
 import { useToonContext } from "@/app/context/ToonContext";
 import { FaLock, FaUnlock, FaCog, FaTrash } from "react-icons/fa";
+import FishSettingsItem from "./SettingsItems/FishSettingsItem";
 import GardenSettingsItem from "./SettingsItems/GardenSettingsItem";
 
 type SettingsModalProps = {
@@ -33,14 +34,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="px-2">
+      <div className="px-2 items-start justify-start text-left">
         <h3 className="text-3xl font-bold text-gray-900">
           {toon.data.data.toon.name}
         </h3>
-        <div className="flex flex-col items-left gap-2 mb-4">
+        <div className="flex flex-col items-start gap-2 mb-4">
           {/* individual settings */}
           {/* lock */}
-          <div className="flex items-center gap-2">
+          <div className="flex gap-2">
             <button
               className="flex items-center gap-2 text-xl"
               onClick={() => toggleLock(index)}
@@ -61,12 +62,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
             Global Settings
           </h3>
 
-          {/* fish settings */}
-          <div className="text-2xl flex items-center gap-2 font-semibold">
-            <span>Fishing</span>
-          </div>
-
-          {/* gardening settings */}
+          <FishSettingsItem />
           <GardenSettingsItem />
         </div>
 
