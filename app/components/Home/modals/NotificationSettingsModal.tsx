@@ -36,35 +36,53 @@ const NotificationSettingsModal: React.FC<NotificationSettingsModalProps> = ({
 }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="text-2xl font-bold mb-4">Notification Settings</div>
-      <div className="flex flex-col gap-4 text-base">
-        <label>
+      <div className="text-3xl font-bold mb-4">Notification Settings</div>
+      <div className="flex flex-col gap-4 text-lg">
+        <div className="flex items-center space-x-2">
           <input
             type="checkbox"
+            id="popupEnabled"
             checked={toastEnabled}
             onChange={(e) => setToastEnabled(e.target.checked)}
-            className="mr-1"
+            className="w-5 h-5 cursor-pointer"
           />
-          Popup
-        </label>
-        <label>
+          <label
+            className="cursor-pointer hover:text-blue-600"
+            htmlFor="popupEnabled"
+          >
+            Popup
+          </label>
+        </div>
+        <div className="flex items-center space-x-2">
           <input
             type="checkbox"
+            id="soundEnabled"
             checked={soundEnabled}
             onChange={(e) => setSoundEnabled(e.target.checked)}
-            className="mr-1"
+            className="w-5 h-5 cursor-pointer"
           />
-          Sound
-        </label>
-        <label>
+          <label
+            className="cursor-pointer hover:text-blue-600"
+            htmlFor="soundEnabled"
+          >
+            Sound
+          </label>
+        </div>
+        <div className="flex items-center space-x-2">
           <input
             type="checkbox"
+            id="toastPersistent"
             checked={toastPersistent}
             onChange={(e) => setToastPersistent(e.target.checked)}
-            className="mr-1"
+            className="w-5 h-5 cursor-pointer"
           />
-          Popup requires manual dismiss (X)
-        </label>
+          <label
+            className="cursor-pointer hover:text-blue-600"
+            htmlFor="toastPersistent"
+          >
+            Popup requires manual dismiss (X)
+          </label>
+        </div>
         <label>
           Sound:
           <select
