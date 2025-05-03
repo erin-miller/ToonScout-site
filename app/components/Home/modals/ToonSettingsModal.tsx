@@ -25,6 +25,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 
   useEffect(() => {
     localStorage.setItem("flowerType", JSON.stringify(flowerType));
+    window.dispatchEvent(new Event("flowerChange"));
   }, [flowerType]);
 
   const toggleLock = (index: number) => {
@@ -70,6 +71,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
           <h3 className="text-3xl font-bold text-gray-900 mt-5">
             Global Settings
           </h3>
+
           {/* gardening settings */}
           <div className="text-2xl flex items-center gap-2 font-semibold">
             <span>Gardening Display</span>
