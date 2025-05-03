@@ -43,7 +43,7 @@ const ToonSelect = () => {
     setModalOpen(true);
     setSelectedToon(toon);
     setSelectedIndex(index);
-  }
+  };
 
   return (
     <div className="relative flex items-center text-gray-900 dark:text-gray-100 z-50">
@@ -88,12 +88,14 @@ const ToonSelect = () => {
           </div>
         </AnimatedTabContent>
       )}
-    <ToonSettingsModal
-                  toon={selectedToon}
-                  index={selectedIndex}
-                  isOpen={isModalOpen}
-                  onClose={() => setModalOpen(false)}
-                />
+      {isModalOpen && (
+        <ToonSettingsModal
+          toon={selectedToon}
+          index={selectedIndex}
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

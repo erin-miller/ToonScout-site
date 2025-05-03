@@ -5,6 +5,7 @@ import GagsTab from "../GagsTab";
 import TasksTab from "../TasksTab";
 import ActivityTab from "../ActivityTab";
 import InvasionsTab from "../InvasionsTab";
+import GardenTab from "../GardenTab";
 
 export {
   InfoTab,
@@ -14,4 +15,5 @@ export {
   TasksTab,
   ActivityTab,
   InvasionsTab,
+  GardenTab,
 };

@@ -10,6 +10,7 @@ const config: Config = {
   ],
   safelist: [
     "dark",
+    "scale-up",
     "bg-blue-400",
     "bg-blue-500",
     "bg-blue-600",
@@ -79,6 +80,8 @@ const config: Config = {
     "bg-yellow-300",
     "bg-orange-300",
     "bg-purple-300",
+    "border-amber-500",
+    "border-gray-600",
   ],
   theme: {
     extend: {

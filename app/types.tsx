@@ -90,6 +90,14 @@ interface Flower {
   shovel: {
     id: number;
     name: string;
+    curSkill: number;
+    maxSkill: number;
+  };
+  wateringCan: {
+    id: number;
+    name: string;
+    curSkill: number;
+    maxSkill: number;
   };
   collection: Record<
     number,
