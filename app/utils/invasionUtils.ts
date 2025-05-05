@@ -49,7 +49,7 @@ export function getRelevantInvasionsForTasks(
 function normalize(str: string) {
   return str
     .toLowerCase()
-    .replace(/[^a-z0-9 ]/g, "")
+    .replace(/[^a-z0-9 &]/g, "")
     .trim();
 }
 
@@ -59,6 +59,8 @@ function getCogNameVariants(cog: any) {
   if (cog.fullname) names.push(cog.fullname);
   // Add plural forms (simple heuristic)
   names.forEach((n) => {
+    // edge case of Movers & Shakers instead of just Mover & Shakers
+    if (n.startsWith("Mover")) n = n.replace("Mover", "Movers");
     if (!n.endsWith("s")) names.push(n + "s");
   });
   return names.map(normalize);
