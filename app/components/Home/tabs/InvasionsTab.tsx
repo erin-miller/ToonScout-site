@@ -101,7 +101,7 @@ const InvasionsTab: React.FC<TabProps> = ({ toon }) => {
                   layout
                   className={`p-4 border-2 rounded-xl bg-white dark:bg-gray-1100 shadow-md space-y-2 ${
                     isRelevant
-                      ? "border-yellow-400 ring-2 ring-yellow-300 dark:ring-yellow-500"
+                      ? "border-yellow-400 border-2 dark:ring-yellow-500"
                       : ""
                   }`}
                 >
