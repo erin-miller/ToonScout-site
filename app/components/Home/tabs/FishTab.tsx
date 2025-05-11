@@ -150,19 +150,19 @@ const FishTab: React.FC<TabProps> = ({ toon }) => {
   };
 
   const probabilityTooltip =
-    bucketType === 2
+    bucketType === 1
       ? "The average toon will catch the fish in the amount of buckets listed."
       : "You have a 90% chance to catch the fish in the amount of buckets listed.";
 
   const getBuckets = (fish: FishRarity) => {
-    if (bucketType === 2) {
+    if (bucketType === 1) {
       return fish.buckets.avgBuckets;
     }
     return fish.buckets.confBuckets;
   };
 
   const getTime = (fish: FishRarity) => {
-    if (bucketType === 2) {
+    if (bucketType === 1) {
       return processTime(fish.buckets.avgTime);
     }
     return processTime(fish.buckets.confTime);

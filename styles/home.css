@@ -1,5 +1,9 @@
 @import "@/styles/globals.css";
 
+.scale-up {
+  @apply transition-transform duration-200 hover:scale-110;
+}
+
 .home-card {
   @apply bg-gray-200 rounded-xl shadow-md text-center border-2
   border-white mt-8 w-full md:w-5/6 lg:w-4/5 xl:w-3/4 2xl:w-2/3

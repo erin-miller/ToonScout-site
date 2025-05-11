@@ -31,26 +31,9 @@ const FishSettingsItem: React.FC = () => {
             <input
               type="radio"
               name="bucketType"
-              id="confidentBuckets"
+              id="avgBuckets"
               checked={bucketType === 1}
               onChange={() => setBucketType(1)}
-              className="w-5 h-5 cursor-pointer"
-            />
-            <label
-              className="text-lg cursor-pointer hover:text-blue-600"
-              htmlFor="confidentBuckets"
-            >
-              Confident (90%)
-            </label>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <input
-              type="radio"
-              name="bucketType"
-              id="avgBuckets"
-              checked={bucketType === 2}
-              onChange={() => setBucketType(2)}
               className="w-5 h-5 cursor-pointer"
             />
             <label
@@ -58,6 +41,23 @@ const FishSettingsItem: React.FC = () => {
               htmlFor="avgBuckets"
             >
               Average
+            </label>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="bucketType"
+              id="confidentBuckets"
+              checked={bucketType === 2}
+              onChange={() => setBucketType(2)}
+              className="w-5 h-5 cursor-pointer"
+            />
+            <label
+              className="text-lg cursor-pointer hover:text-blue-600"
+              htmlFor="confidentBuckets"
+            >
+              Confident (90%)
             </label>
           </div>
         </div>
