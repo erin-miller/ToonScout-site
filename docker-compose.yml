@@ -1,0 +1,29 @@
+services:
+  site:
+    container_name: ts-site
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - /app/.next
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      # used for redirection after discord auth
+      - NEXT_PUBLIC_BASE_URI=https://scouttoon.info/
+      # discord bot client id (default is ToonScout's)
+      - NEXT_PUBLIC_CLIENT_ID=1286517155315322950
+      # api endpoints
+      - NEXT_PUBLIC_API_HTTP=http://localhost:3001
+      - NEXT_PUBLIC_API_WSS=ws://localhost:3001
+      # google analytics id
+      - NEXT_PUBLIC_GA_ID=G-SNDEYLE0QL
+      # discord support server
+      - NEXT_PUBLIC_DISCORD_INVITE=https://discord.gg/Qb929SrdRP
+      # banner settings
+      - NEXT_PUBLIC_SYSTEM_BANNER_ENABLED=true
+      - NEXT_PUBLIC_SYSTEM_BANNER_TYPE=WARNING
+      - NEXT_PUBLIC_SYSTEM_BANNER_MSG=Hello world!
+      - NEXT_PUBLIC_VERSION=dev
